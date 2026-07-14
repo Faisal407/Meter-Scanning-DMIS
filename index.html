@@ -18,374 +18,327 @@
   --red:#C0392B;--rbg:#FADBD8;--rdk:#7B241C;
   --amb:#B8860B;--abg:#FEF9E7;--adk:#7D6608;
   --pur:#6C3483;--pbg:#F5EEF8;--pdk:#4A235A;
-  --gray:#F4F4F4;--bdr:#DDD;--txt:#1C1C1C;--mut:#666;
-  --wht:#FFF;--rad:12px;
+  --gray:#F4F4F4;--bdr:#DDD;--txt:#1C1C1C;--mut:#666;--wht:#FFF;--rad:12px;
 }
 body{background:#F0F2F5;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;color:var(--txt);min-height:100vh}
-
-/* SPLASH */
 #splash{position:fixed;inset:0;background:var(--blue);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:9999;color:#fff;text-align:center;padding:20px}
 #splash h1{font-size:26px;font-weight:700;margin-bottom:6px}
 #splash p{font-size:13px;opacity:0.7;margin-bottom:28px}
-.spinner{width:36px;height:36px;border:3px solid rgba(255,255,255,0.3);border-top-color:#fff;border-radius:50%;animation:spin 0.8s linear infinite}
+.spinner{width:36px;height:36px;border:3px solid rgba(255,255,255,0.3);border-top-color:#fff;border-radius:50%;animation:spin .8s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
-#splash-msg{font-size:12px;margin-top:14px;opacity:0.6}
-
-/* PROJECT SCREEN */
+#splash-msg{font-size:12px;margin-top:14px;opacity:.6}
 #pscreen{position:fixed;inset:0;background:#F0F2F5;z-index:998;display:none;overflow-y:auto}
-.pscreen-inner{padding:14px;max-width:480px;margin:0 auto}
+.pi{padding:14px;max-width:480px;margin:0 auto}
 .phead{background:linear-gradient(135deg,var(--blue),var(--mid));color:#fff;border-radius:14px;padding:18px;margin-bottom:14px;text-align:center}
 .phead h2{font-size:20px;font-weight:700;margin-bottom:3px}
-.phead p{font-size:12px;opacity:0.75}
-
-/* CARDS */
+.phead p{font-size:12px;opacity:.75}
 .card{background:var(--wht);border-radius:var(--rad);padding:14px;margin-bottom:12px;border:1px solid var(--bdr)}
-.ctitle{font-size:11px;font-weight:600;color:var(--mut);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:10px}
-
-/* PROJECT CARDS */
+.ct{font-size:11px;font-weight:600;color:var(--mut);text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px}
 .pcard{background:var(--wht);border-radius:var(--rad);padding:14px;margin-bottom:10px;border:1.5px solid var(--bdr);cursor:pointer;position:relative}
-.pcard:active{border-color:var(--acc);background:#f8fbff}
-.pcard-name{font-size:15px;font-weight:600;color:var(--txt)}
-.pcard-meta{font-size:12px;color:var(--mut);margin-top:3px}
-.pcard-pid{font-size:11px;font-family:monospace;background:var(--gray);color:var(--mid);padding:3px 8px;border-radius:6px;display:inline-block;margin-top:6px;font-weight:600}
-.pcard-stats{display:flex;gap:6px;margin-top:8px;flex-wrap:wrap}
-.pst{font-size:11px;padding:3px 10px;border-radius:20px;font-weight:500}
-.pst.g{background:var(--gbg);color:var(--gdk)}.pst.r{background:var(--rbg);color:var(--rdk)}.pst.b{background:#EBF5FB;color:var(--mid)}.pst.a{background:var(--abg);color:var(--adk)}
-.pcard-del{position:absolute;top:12px;right:12px;background:var(--rbg);border:none;color:var(--red);border-radius:6px;padding:4px 9px;font-size:12px;cursor:pointer;font-family:inherit}
-
-/* BIG ACTION BUTTONS */
-.big-btn{border-radius:12px;padding:15px;text-align:center;cursor:pointer;margin-bottom:10px;border:none;width:100%;font-family:inherit}
-.big-btn-create{background:var(--mid);color:#fff}
-.big-btn-join{background:var(--gbg);color:var(--gdk);border:1.5px solid var(--grn)}
-.big-btn-title{font-size:16px;font-weight:600;margin-bottom:3px}
-.big-btn-sub{font-size:12px;opacity:0.8}
-
-/* SHARE PANEL */
-.share-panel{background:var(--pbg);border:1.5px solid var(--pur);border-radius:12px;padding:14px;margin-bottom:12px}
-.share-title{font-size:13px;font-weight:600;color:var(--pdk);margin-bottom:8px}
-.pid-display{font-size:28px;font-weight:700;font-family:monospace;color:var(--pur);text-align:center;letter-spacing:3px;padding:12px;background:var(--wht);border-radius:10px;border:1.5px solid var(--pur);margin-bottom:8px}
+.pcard:active{border-color:var(--acc)}
+.pname{font-size:15px;font-weight:600}.pmeta{font-size:12px;color:var(--mut);margin-top:3px}
+.ppid{font-size:12px;font-family:monospace;background:var(--pbg);color:var(--pur);padding:4px 10px;border-radius:6px;display:inline-block;margin-top:6px;font-weight:700;letter-spacing:1px}
+.psts{display:flex;gap:6px;margin-top:8px;flex-wrap:wrap}
+.ps{font-size:11px;padding:3px 10px;border-radius:20px;font-weight:500}
+.ps.g{background:var(--gbg);color:var(--gdk)}.ps.r{background:var(--rbg);color:var(--rdk)}.ps.b{background:#EBF5FB;color:var(--mid)}.ps.a{background:var(--abg);color:var(--adk)}
+.pdel{position:absolute;top:12px;right:12px;background:var(--rbg);border:none;color:var(--red);border-radius:6px;padding:4px 9px;font-size:12px;cursor:pointer;font-family:inherit}
+.bb{border-radius:12px;padding:14px;text-align:center;cursor:pointer;margin-bottom:10px;border:none;width:100%;font-family:inherit}
+.bb-c{background:var(--mid);color:#fff}.bb-j{background:var(--gbg);color:var(--gdk);border:1.5px solid var(--grn)}.bb-s{background:var(--pbg);color:var(--pdk);border:1.5px solid var(--pur)}
+.bbt{font-size:16px;font-weight:600;margin-bottom:3px}.bbs{font-size:12px;opacity:.8}
+.sp{background:var(--pbg);border:1.5px solid var(--pur);border-radius:12px;padding:14px;margin-bottom:12px}
+.spt{font-size:13px;font-weight:600;color:var(--pdk);margin-bottom:8px}
+.pid-disp{font-size:26px;font-weight:700;font-family:monospace;color:var(--pur);text-align:center;letter-spacing:3px;padding:12px;background:var(--wht);border-radius:10px;border:1.5px solid var(--pur);margin-bottom:8px}
 .pid-hint{font-size:11px;color:var(--pdk);text-align:center;line-height:1.5}
-
-/* FORM */
-.flabel{font-size:13px;font-weight:500;margin-bottom:5px;display:block;margin-top:10px;color:var(--txt)}
-.fhint{font-size:11px;color:var(--mut);margin-top:3px;line-height:1.4}
+.fl{font-size:13px;font-weight:500;margin-bottom:5px;display:block;margin-top:10px;color:var(--txt)}
+.fh{font-size:11px;color:var(--mut);margin-top:3px;line-height:1.4}
 input[type=text],input[type=number],textarea,select{width:100%;padding:11px 13px;border:1.5px solid var(--bdr);border-radius:10px;font-size:15px;background:var(--wht);color:var(--txt);outline:none;font-family:inherit}
 input:focus,textarea:focus{border-color:var(--acc)}
-textarea{resize:none;font-size:13px;font-family:monospace}
-.smsg{border-radius:8px;padding:9px 12px;font-size:13px;margin-top:8px;font-weight:500;display:none;line-height:1.4}
-.smsg.ok{background:var(--gbg);color:var(--gdk);display:block}
-.smsg.err{background:var(--rbg);color:var(--rdk);display:block}
-.smsg.ld{background:var(--abg);color:var(--adk);display:block}
-
-.cpills{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
+textarea{resize:none;font-size:12px;font-family:monospace}
+.sm{border-radius:8px;padding:9px 12px;font-size:13px;margin-top:8px;font-weight:500;display:none;line-height:1.5;word-break:break-all}
+.sm.ok{background:var(--gbg);color:var(--gdk);display:block}
+.sm.err{background:var(--rbg);color:var(--rdk);display:block}
+.sm.ld{background:var(--abg);color:var(--adk);display:block}
+.sm.inf{background:#EBF5FB;color:var(--mid);display:block}
+.cps{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
 .cp{padding:6px 14px;border-radius:20px;border:1.5px solid var(--bdr);font-size:13px;cursor:pointer;font-weight:500;background:var(--wht);font-family:inherit}
 .cp.sel{background:var(--mid);color:#fff;border-color:var(--mid)}
-
-/* BUTTONS */
 .btn{display:block;width:100%;padding:12px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;border:none;font-family:inherit;text-align:center}
-.btn-p{background:var(--mid);color:#fff}
-.btn-g{background:var(--grn);color:#fff}
-.btn-stop{background:var(--red);color:#fff}
-.btn-out{background:transparent;color:var(--mid);border:1.5px solid var(--mid);padding:10px}
-.btn-sm{background:var(--gray);color:var(--txt);border-radius:8px;padding:6px 12px;font-size:12px;font-weight:500;cursor:pointer;border:1px solid var(--bdr);font-family:inherit}
-.btn-danger{background:var(--red);color:#fff;border-radius:8px;padding:6px 12px;font-size:12px;cursor:pointer;border:none;font-family:inherit}
-.btn-pur{background:var(--pur);color:#fff}
+.bp{background:var(--mid);color:#fff}.bg{background:var(--grn);color:#fff}.bst{background:var(--red);color:#fff}.bo{background:transparent;color:var(--mid);border:1.5px solid var(--mid);padding:10px}.bpu{background:var(--pur);color:#fff}
+.bsm{background:var(--gray);color:var(--txt);border-radius:8px;padding:6px 12px;font-size:12px;font-weight:500;cursor:pointer;border:1px solid var(--bdr);font-family:inherit}
+.bda{background:var(--red);color:#fff;border-radius:8px;padding:6px 12px;font-size:12px;cursor:pointer;border:none;font-family:inherit}
 .row{display:flex;gap:8px}
-
-/* MAIN APP */
 #header{background:var(--blue);color:#fff;padding:11px 14px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
-#proj-title{font-size:14px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:160px}
-#proj-sub{font-size:10px;opacity:0.7;margin-top:1px}
-#hdr-r{display:flex;align-items:center;gap:6px;flex-shrink:0}
-#loaded-badge{background:rgba(255,255,255,0.2);border-radius:20px;padding:3px 9px;font-size:11px;font-weight:500}
+#ptitle{font-size:14px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:155px}
+#psub{font-size:10px;opacity:.7;margin-top:1px}
+#lbadge{background:rgba(255,255,255,.2);border-radius:20px;padding:3px 9px;font-size:11px;font-weight:500}
 #tab-bar{display:flex;background:var(--wht);border-bottom:1px solid var(--bdr);position:sticky;top:52px;z-index:99}
 .tab{flex:1;padding:10px 2px;text-align:center;font-size:11px;font-weight:500;color:var(--mut);border-bottom:3px solid transparent;cursor:pointer}
 .tab.active{color:var(--mid);border-bottom-color:var(--mid)}
-.screen{display:none;padding:12px;min-height:calc(100vh - 100px)}
-.screen.active{display:block}
-
-/* RESULT BOX */
-#result-box{border-radius:16px;padding:18px 14px;text-align:center;margin-bottom:10px;border:2.5px solid var(--bdr);background:var(--wht);transition:all 0.2s;min-height:108px;display:flex;flex-direction:column;align-items:center;justify-content:center}
-#result-box.found{background:var(--gbg);border-color:var(--grn)}
-#result-box.notfound{background:var(--rbg);border-color:var(--red)}
-#result-box.dup{background:var(--abg);border-color:var(--amb)}
-#ri{font-size:40px;margin-bottom:4px}
-#rs{font-size:22px;font-weight:700}
-#rm{font-size:15px;font-weight:600;margin-top:4px;font-family:monospace;letter-spacing:1px}
-#rd{font-size:12px;margin-top:4px;opacity:0.85}
-#sync-st{text-align:center;font-size:11px;padding:2px 0;min-height:16px;margin-bottom:4px}
-
-/* CAMERA */
-#reader-wrap{border-radius:12px;overflow:hidden;background:#000;position:relative;margin-bottom:8px}
+.screen{display:none;padding:12px;min-height:calc(100vh - 100px)}.screen.active{display:block}
+#rbox{border-radius:16px;padding:18px 14px;text-align:center;margin-bottom:10px;border:2.5px solid var(--bdr);background:var(--wht);transition:all .2s;min-height:108px;display:flex;flex-direction:column;align-items:center;justify-content:center}
+#rbox.found{background:var(--gbg);border-color:var(--grn)}
+#rbox.notfound{background:var(--rbg);border-color:var(--red)}
+#rbox.dup{background:var(--abg);border-color:var(--amb)}
+#ri{font-size:40px;margin-bottom:4px}#rs{font-size:22px;font-weight:700}#rm{font-size:15px;font-weight:600;margin-top:4px;font-family:monospace;letter-spacing:1px}#rd{font-size:12px;margin-top:4px;opacity:.85}
+#sst{text-align:center;font-size:11px;padding:2px 0;min-height:16px;margin-bottom:4px}
+#rw{border-radius:12px;overflow:hidden;background:#000;position:relative;margin-bottom:8px}
 #reader video{width:100%;display:block}
-#scan-ov{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:210px;height:100px;border:2px solid rgba(30,240,150,0.9);border-radius:6px;pointer-events:none;display:none}
-#scan-ov::before{content:'';position:absolute;top:-2px;left:-2px;width:20px;height:20px;border-top:4px solid #1ef096;border-left:4px solid #1ef096;border-radius:3px 0 0 0}
-#scan-ov::after{content:'';position:absolute;bottom:-2px;right:-2px;width:20px;height:20px;border-bottom:4px solid #1ef096;border-right:4px solid #1ef096;border-radius:0 0 3px 0}
-#scan-line{position:absolute;left:8px;right:8px;height:2px;background:rgba(30,240,150,0.85);animation:sl 1.8s ease-in-out infinite}
-@keyframes sl{0%,100%{top:15%}50%{top:85%}}
-#cdbar-w{height:4px;background:var(--gray);border-radius:2px;margin-bottom:6px;overflow:hidden;display:none}
-#cdbar{height:100%;background:var(--acc);border-radius:2px;width:100%}
-
-/* LOG */
+#sov{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:210px;height:100px;border:2px solid rgba(30,240,150,.9);border-radius:6px;pointer-events:none;display:none}
+#sov::before{content:'';position:absolute;top:-2px;left:-2px;width:20px;height:20px;border-top:4px solid #1ef096;border-left:4px solid #1ef096;border-radius:3px 0 0 0}
+#sov::after{content:'';position:absolute;bottom:-2px;right:-2px;width:20px;height:20px;border-bottom:4px solid #1ef096;border-right:4px solid #1ef096;border-radius:0 0 3px 0}
+#sl2{position:absolute;left:8px;right:8px;height:2px;background:rgba(30,240,150,.85);animation:sla 1.8s ease-in-out infinite}
+@keyframes sla{0%,100%{top:15%}50%{top:85%}}
+#cdw{height:4px;background:var(--gray);border-radius:2px;margin-bottom:6px;overflow:hidden;display:none}
+#cdb{height:100%;background:var(--acc);border-radius:2px;width:100%}
 .li{display:flex;align-items:center;gap:10px;padding:10px 12px;border-bottom:1px solid var(--bdr)}
 .li:last-child{border-bottom:none}
-.li.fi{background:rgba(29,158,117,0.06)}.li.ni{background:rgba(192,57,43,0.06)}.li.di{background:rgba(184,134,11,0.06)}
+.li.fi{background:rgba(29,158,117,.06)}.li.ni{background:rgba(192,57,43,.06)}.li.di{background:rgba(184,134,11,.06)}
 .lic{font-size:20px;width:26px;text-align:center;flex-shrink:0}
 .lin{flex:1;min-width:0}
-.lnum{font-size:14px;font-weight:600;font-family:monospace;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.ldesc{font-size:11px;margin-top:1px}
-.ldesc.f{color:var(--gdk)}.ldesc.n{color:var(--rdk)}.ldesc.d{color:var(--adk)}
-.ldev{font-size:10px;color:var(--mut);margin-top:1px}
-.lwb{font-size:10px;margin-top:1px}
-.lwb.ok{color:var(--gdk)}.lwb.err{color:var(--rdk)}
-.lr{text-align:right;flex-shrink:0}
-.ltime{font-size:11px;color:var(--mut)}
-.lempty{text-align:center;padding:30px;color:var(--mut);font-size:14px}
-
-/* STATS */
-.sgrid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px}
+.lnu{font-size:14px;font-weight:600;font-family:monospace;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.lde{font-size:11px;margin-top:1px}.lde.f{color:var(--gdk)}.lde.n{color:var(--rdk)}.lde.d{color:var(--adk)}
+.ldv{font-size:10px;color:var(--mut);margin-top:1px}
+.lwb{font-size:10px;margin-top:1px}.lwb.ok{color:var(--gdk)}.lwb.err{color:var(--rdk)}
+.lr{text-align:right;flex-shrink:0}.lt{font-size:11px;color:var(--mut)}
+.le{text-align:center;padding:30px;color:var(--mut);font-size:14px}
+.sg{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px}
 .sc{background:var(--wht);border-radius:10px;padding:12px;text-align:center;border:1px solid var(--bdr)}
-.sn{font-size:28px;font-weight:700;line-height:1}
-.sl{font-size:11px;color:var(--mut);margin-top:3px}
+.sn{font-size:28px;font-weight:700;line-height:1}.sl{font-size:11px;color:var(--mut);margin-top:3px}
 .sc.g .sn{color:var(--grn)}.sc.r .sn{color:var(--red)}.sc.a .sn{color:var(--amb)}.sc.b .sn{color:var(--mid)}
-
-/* TOGGLE */
-.trow{display:flex;align-items:center;justify-content:space-between;padding:4px 0;margin-bottom:8px}
-.tgl{position:relative;width:44px;height:24px;cursor:pointer;flex-shrink:0}
-.tgl input{opacity:0;width:0;height:0}
-.tsl{position:absolute;inset:0;background:#ccc;border-radius:12px;transition:0.2s}
-.tsl:before{content:'';position:absolute;width:18px;height:18px;left:3px;top:3px;background:#fff;border-radius:50%;transition:0.2s}
-input:checked+.tsl{background:var(--grn)}
-input:checked+.tsl:before{transform:translateX(20px)}
-
-/* ANIMATIONS */
-@keyframes pg{0%{box-shadow:0 0 0 0 rgba(29,158,117,0.5)}100%{box-shadow:0 0 0 18px rgba(29,158,117,0)}}
-@keyframes pr{0%{box-shadow:0 0 0 0 rgba(192,57,43,0.5)}100%{box-shadow:0 0 0 18px rgba(192,57,43,0)}}
-@keyframes pa{0%{box-shadow:0 0 0 0 rgba(184,134,11,0.5)}100%{box-shadow:0 0 0 18px rgba(184,134,11,0)}}
-.pg{animation:pg 0.45s ease-out}.pr{animation:pr 0.45s ease-out}.pa{animation:pa 0.45s ease-out}
+.tr{display:flex;align-items:center;justify-content:space-between;padding:4px 0;margin-bottom:8px}
+.tg{position:relative;width:44px;height:24px;cursor:pointer;flex-shrink:0}
+.tg input{opacity:0;width:0;height:0}
+.ts{position:absolute;inset:0;background:#ccc;border-radius:12px;transition:.2s}
+.ts:before{content:'';position:absolute;width:18px;height:18px;left:3px;top:3px;background:#fff;border-radius:50%;transition:.2s}
+input:checked+.ts{background:var(--grn)}
+input:checked+.ts:before{transform:translateX(20px)}
+@keyframes pg{0%{box-shadow:0 0 0 0 rgba(29,158,117,.5)}100%{box-shadow:0 0 0 18px rgba(29,158,117,0)}}
+@keyframes pr{0%{box-shadow:0 0 0 0 rgba(192,57,43,.5)}100%{box-shadow:0 0 0 18px rgba(192,57,43,0)}}
+@keyframes pa{0%{box-shadow:0 0 0 0 rgba(184,134,11,.5)}100%{box-shadow:0 0 0 18px rgba(184,134,11,0)}}
+.pg{animation:pg .45s ease-out}.pr{animation:pr .45s ease-out}.pa{animation:pa .45s ease-out}
+/* TEST PANEL */
+.test-row{display:flex;align-items:center;gap:8px;margin-top:6px}
+.test-dot{width:10px;height:10px;border-radius:50%;background:var(--gray);flex-shrink:0}
+.test-dot.ok{background:var(--grn)}.test-dot.err{background:var(--red)}.test-dot.ld{background:var(--amb)}
 </style>
 </head>
 <body>
 
-<!-- SPLASH -->
 <div id="splash">
   <h1>DMIS Meter Scanner</h1>
   <p>SNGPL — Faisalabad-D</p>
   <div class="spinner"></div>
-  <div id="splash-msg">Loading...</div>
+  <div id="splash-msg">Loading saved projects...</div>
 </div>
 
-<!-- ══ PROJECT SCREEN ══════════════════════════════════════════════════════ -->
+<!-- PROJECT SCREEN -->
 <div id="pscreen">
-<div class="pscreen-inner">
-
-  <div class="phead">
-    <h2>📂 DMIS Meter Scanner</h2>
-    <p>Projects sync across all devices</p>
-  </div>
+<div class="pi">
+  <div class="phead"><h2>📂 DMIS Meter Scanner</h2><p>Projects auto-sync across all devices</p></div>
 
   <!-- DEVICE NAME -->
   <div class="card">
-    <div class="ctitle">👤 Your device / name</div>
+    <div class="ct">👤 Your name / device</div>
     <div class="row">
-      <input type="text" id="dev-name" placeholder="e.g. Asif — Phone 1" style="flex:1;font-size:14px">
-      <button class="btn-sm" onclick="saveDevName()" style="white-space:nowrap">Save</button>
+      <input type="text" id="dname" placeholder="e.g. Asif — Phone 1" style="flex:1;font-size:14px">
+      <button class="bsm" onclick="saveDev()">Save</button>
     </div>
-    <div class="fhint">Your name shows on every scan so supervisor knows who scanned each meter</div>
-    <div id="dev-msg" class="smsg"></div>
+    <div class="fh">Your name appears on every scan in the log</div>
+    <div id="dmsg" class="sm"></div>
   </div>
 
-  <!-- CREATE / JOIN BUTTONS -->
-  <button class="big-btn big-btn-create" onclick="showCreate()">
-    <div class="big-btn-title">＋ Create New Project</div>
-    <div class="big-btn-sub">Start new batch — get shareable Project ID</div>
+  <!-- 3 BUTTONS -->
+  <button class="bb bb-c" onclick="showCreate()">
+    <div class="bbt">＋ Create New Project</div>
+    <div class="bbs">Start new batch — generates unique Project ID</div>
   </button>
-
-  <button class="big-btn big-btn-join" onclick="showJoin()">
-    <div class="big-btn-title">🔗 Join Existing Project</div>
-    <div class="big-btn-sub">Enter Project ID shared by supervisor</div>
+  <button class="bb bb-j" onclick="showJoin()">
+    <div class="bbt">🔗 Join by Project ID</div>
+    <div class="bbs">Enter DMIS-XXXXXX code shared by supervisor</div>
+  </button>
+  <button class="bb bb-s" onclick="showPasteJoin()">
+    <div class="bbt">📋 Join by Share Code</div>
+    <div class="bbs">Paste the full share code received on WhatsApp</div>
   </button>
 
   <!-- CREATE FORM -->
-  <div id="create-form" style="display:none" class="card">
-    <div class="ctitle">Create new project</div>
-    <label class="flabel" style="margin-top:0">Project name</label>
-    <input type="text" id="c-name" placeholder="e.g. DMIS July 2026 Batch-1">
-    <label class="flabel">Google Sheet ID</label>
-    <input type="text" id="c-sid" placeholder="44-character ID from Sheet URL" style="font-family:monospace;font-size:13px">
-    <div class="fhint">From URL: docs.google.com/spreadsheets/d/<strong>ID_HERE</strong>/edit</div>
-    <label class="flabel">Sheet tab name</label>
-    <input type="text" id="c-sname" value="Master Sheet PSW">
-    <label class="flabel">Meter number column</label>
-    <div class="cpills" id="c-rc">
-      <div class="cp sel" onclick="selPill('c-rc',this,'A')">A</div>
-      <div class="cp" onclick="selPill('c-rc',this,'B')">B</div>
-      <div class="cp" onclick="selPill('c-rc',this,'C')">C</div>
-      <div class="cp" onclick="selPill('c-rc',this,'D')">D</div>
-      <div class="cp" onclick="selPill('c-rc',this,'E')">E</div>
+  <div id="cform" style="display:none" class="card">
+    <div class="ct">Create new project</div>
+    <label class="fl" style="margin-top:0">Project name</label>
+    <input type="text" id="cn" placeholder="e.g. DMIS July 2026 Batch-1">
+    <label class="fl">Google Sheet ID</label>
+    <input type="text" id="cs" placeholder="Paste 44-char Sheet ID from URL" style="font-family:monospace;font-size:12px">
+    <div class="fh">From URL: docs.google.com/spreadsheets/d/<strong>ID_HERE</strong>/edit</div>
+    <label class="fl">Sheet tab name (exact)</label>
+    <input type="text" id="csn" value="Master Sheet PSW">
+    <label class="fl">Apps Script Web App URL</label>
+    <input type="text" id="cu" placeholder="https://script.google.com/macros/s/.../exec">
+    <div class="fh">Paste URL from Apps Script deployment</div>
+    <!-- TEST CONNECTION -->
+    <div class="test-row">
+      <div class="test-dot" id="td1"></div>
+      <span style="font-size:12px;color:var(--mut)">Apps Script connection</span>
+      <button class="bsm" onclick="testConn('cu','td1','tm1')" style="margin-left:auto">Test</button>
     </div>
-    <label class="flabel">Apps Script URL (for write-back & sync)</label>
-    <input type="text" id="c-surl" placeholder="https://script.google.com/macros/s/.../exec">
-    <label class="flabel">Write status to column</label>
-    <div class="cpills" id="c-wc">
-      <div class="cp" onclick="selPill('c-wc',this,'')">None</div>
-      <div class="cp sel" onclick="selPill('c-wc',this,'C')">C</div>
-      <div class="cp" onclick="selPill('c-wc',this,'D')">D</div>
-      <div class="cp" onclick="selPill('c-wc',this,'E')">E</div>
-      <div class="cp" onclick="selPill('c-wc',this,'F')">F</div>
-      <div class="cp" onclick="selPill('c-wc',this,'G')">G</div>
+    <div id="tm1" class="sm"></div>
+    <label class="fl">Meter number column</label>
+    <div class="cps" id="crc">
+      <div class="cp sel" onclick="sp('crc',this,'A')">A</div>
+      <div class="cp" onclick="sp('crc',this,'B')">B</div>
+      <div class="cp" onclick="sp('crc',this,'C')">C</div>
+      <div class="cp" onclick="sp('crc',this,'D')">D</div>
+      <div class="cp" onclick="sp('crc',this,'E')">E</div>
     </div>
-    <div id="c-msg" class="smsg"></div>
+    <label class="fl">Write status to column</label>
+    <div class="cps" id="cwc">
+      <div class="cp" onclick="sp('cwc',this,'')">None</div>
+      <div class="cp sel" onclick="sp('cwc',this,'C')">C</div>
+      <div class="cp" onclick="sp('cwc',this,'D')">D</div>
+      <div class="cp" onclick="sp('cwc',this,'E')">E</div>
+      <div class="cp" onclick="sp('cwc',this,'F')">F</div>
+      <div class="cp" onclick="sp('cwc',this,'G')">G</div>
+    </div>
+    <div id="cmsg" class="sm"></div>
     <div class="row" style="margin-top:12px">
-      <button class="btn btn-p" onclick="createProject()" style="flex:1">Create Project</button>
-      <button class="btn btn-out" onclick="document.getElementById('create-form').style.display='none'" style="width:80px">Cancel</button>
+      <button class="btn bp" onclick="createProj()" style="flex:1">Create Project</button>
+      <button class="btn bo" onclick="document.getElementById('cform').style.display='none'" style="width:80px">Cancel</button>
     </div>
   </div>
 
-  <!-- JOIN FORM -->
-  <div id="join-form" style="display:none" class="card">
-    <div class="ctitle">Join existing project</div>
-    <label class="flabel" style="margin-top:0">Enter Project ID</label>
-    <input type="text" id="j-pid" placeholder="DMIS-XXXXXX" style="font-family:monospace;font-size:20px;text-align:center;text-transform:uppercase;letter-spacing:3px" maxlength="11" oninput="this.value=this.value.toUpperCase()">
-    <div class="fhint" style="text-align:center;margin-top:6px">Ask your supervisor or team lead for the Project ID</div>
-    <div id="j-msg" class="smsg"></div>
+  <!-- JOIN BY ID FORM -->
+  <div id="jform" style="display:none" class="card">
+    <div class="ct">Join by Project ID</div>
+    <label class="fl" style="margin-top:0">Project ID</label>
+    <input type="text" id="jpid" placeholder="DMIS-XXXXXX" style="font-family:monospace;font-size:22px;text-align:center;text-transform:uppercase;letter-spacing:3px" maxlength="11" oninput="this.value=this.value.toUpperCase()">
+    <div class="fh" style="text-align:center;margin-top:4px">Enter the 11-character code shared by supervisor</div>
+    <div id="jmsg" class="sm"></div>
     <div class="row" style="margin-top:12px">
-      <button class="btn btn-g" onclick="joinProject()" style="flex:1">Join Project</button>
-      <button class="btn btn-out" onclick="document.getElementById('join-form').style.display='none'" style="width:80px">Cancel</button>
+      <button class="btn bg" onclick="joinByID()" style="flex:1">Join Project</button>
+      <button class="btn bo" onclick="document.getElementById('jform').style.display='none'" style="width:80px">Cancel</button>
+    </div>
+  </div>
+
+  <!-- JOIN BY SHARE CODE FORM -->
+  <div id="scform" style="display:none" class="card">
+    <div class="ct">Join by Share Code</div>
+    <label class="fl" style="margin-top:0">Paste share code (from WhatsApp)</label>
+    <textarea id="scpaste" rows="4" placeholder="Paste the share code here..."></textarea>
+    <div id="scmsg" class="sm"></div>
+    <div class="row" style="margin-top:12px">
+      <button class="btn bg" onclick="joinByCode()" style="flex:1">Join Project</button>
+      <button class="btn bo" onclick="document.getElementById('scform').style.display='none'" style="width:80px">Cancel</button>
     </div>
   </div>
 
   <!-- PROJECT LIST -->
-  <div style="font-size:13px;font-weight:600;color:var(--mut);margin-bottom:8px;margin-top:4px">YOUR PROJECTS</div>
-  <div id="proj-list"><div class="lempty">No projects yet</div></div>
+  <div style="font-size:12px;font-weight:600;color:var(--mut);margin:4px 0 8px">YOUR PROJECTS</div>
+  <div id="plist"><div class="le">No projects yet</div></div>
 
-  <!-- APPS SCRIPT INSTRUCTIONS -->
-  <div class="card" style="margin-top:12px;background:var(--abg);border-color:var(--amb)">
-    <div class="ctitle" style="color:var(--adk)">⚙️ One-time Apps Script setup (enables sync + write-back)</div>
-    <div style="font-size:12px;color:var(--adk);line-height:1.9;margin-bottom:10px">
-      <strong>Step 1:</strong> Open Google Sheet → Extensions → Apps Script<br>
-      <strong>Step 2:</strong> Delete existing code → paste code below<br>
-      <strong>Step 3:</strong> Save (Ctrl+S) → Deploy → New deployment<br>
-      <strong>Step 4:</strong> Type = Web App · Execute as = Me · Access = Anyone<br>
-      <strong>Step 5:</strong> Deploy → Authorize → Copy Web App URL<br>
-      <strong>Step 6:</strong> Paste URL when creating project
+  <!-- APPS SCRIPT CODE -->
+  <div class="card" style="margin-top:4px;background:var(--abg);border-color:var(--amb)">
+    <div class="ct" style="color:var(--adk)">⚙️ Apps Script setup (one time only)</div>
+    <div style="font-size:12px;color:var(--adk);line-height:1.9;margin-bottom:8px">
+      <strong>1.</strong> Google Sheet → Extensions → Apps Script<br>
+      <strong>2.</strong> Delete all code → paste code below → Save (Ctrl+S)<br>
+      <strong>3.</strong> Deploy → New deployment → Web App<br>
+      <strong>4.</strong> Execute as: <strong>Me</strong> · Who has access: <strong>Anyone</strong><br>
+      <strong>5.</strong> Deploy → Authorize → Copy URL → use when creating project
     </div>
-    <textarea readonly onclick="this.select()" id="script-code" style="height:220px;font-size:11px;background:#fff;color:#1C1C1C">function doGet(e){
+    <textarea readonly onclick="this.select()" id="ascode" style="height:230px;background:#fff;color:#1C1C1C;font-size:10.5px">function doGet(e){
   try{
     var p=e.parameter;
     var ss=SpreadsheetApp.openById(p.sheetId);
     var sh=ss.getSheetByName(p.sheetName);
+    if(!sh)return out({success:false,msg:'Sheet tab not found: '+p.sheetName});
 
-    // READ meter list
+    if(p.action==='ping')
+      return out({success:true,msg:'Connected OK',sheetId:p.sheetId,tab:p.sheetName});
+
     if(p.action==='read'){
-      var col=ci(p.col);
-      var vals=sh.getRange(1,col,sh.getLastRow()||1,1).getValues();
-      var list=vals.map(r=>String(r[0]).trim()).filter(r=>r.length>1);
-      return out({success:true,meters:list});
+      var col=ci(p.col||'A');
+      var n=Math.max(sh.getLastRow(),1);
+      var vals=sh.getRange(1,col,n,1).getValues();
+      var list=vals.map(function(r){return String(r[0]).trim();}).filter(function(r){return r.length>1;});
+      return out({success:true,meters:list,count:list.length});
     }
 
-    // STORE project config (for join by ID)
     if(p.action==='saveproject'){
-      var ms=ss.getSheetByName('_Projects')||ss.insertSheet('_Projects');
-      if(ms.getLastRow()===0)
-        ms.appendRow(['ProjectID','Config','CreatedBy','CreatedAt']);
-      // check if already exists
-      var data=ms.getDataRange().getValues();
+      var ps=ss.getSheetByName('_Projects');
+      if(!ps){ps=ss.insertSheet('_Projects');ps.appendRow(['PID','Config','CreatedBy','CreatedAt']);}
+      var data=ps.getDataRange().getValues();
       for(var i=1;i<data.length;i++){
-        if(data[i][0]===p.pid){
-          ms.getRange(i+1,2).setValue(p.config);
-          return out({success:true,action:'updated'});
-        }
+        if(data[i][0]===p.pid){ps.getRange(i+1,2).setValue(p.config);return out({success:true,action:'updated'});}
       }
-      ms.appendRow([p.pid,p.config,p.createdBy,new Date().toLocaleString()]);
+      ps.appendRow([p.pid,p.config,p.createdBy||'',new Date().toLocaleString()]);
       return out({success:true,action:'created'});
     }
 
-    // FETCH project config by ID (for join)
     if(p.action==='getproject'){
-      var ms2=ss.getSheetByName('_Projects');
-      if(!ms2) return out({success:false,msg:'No projects found'});
-      var rows=ms2.getDataRange().getValues();
+      var ps2=ss.getSheetByName('_Projects');
+      if(!ps2)return out({success:false,msg:'_Projects tab not found'});
+      var rows=ps2.getDataRange().getValues();
       for(var j=1;j<rows.length;j++){
-        if(rows[j][0]===p.pid)
-          return out({success:true,config:rows[j][1],createdBy:rows[j][2]});
+        if(rows[j][0]===p.pid)return out({success:true,config:rows[j][1],createdBy:rows[j][2]});
       }
-      return out({success:false,msg:'Project ID not found'});
+      return out({success:false,msg:'Project ID not found: '+p.pid});
     }
 
-    // WRITE scan to log tab
     if(p.action==='writelog'){
-      var ls=ss.getSheetByName('Scan Log')||ss.insertSheet('Scan Log');
-      if(ls.getLastRow()===0)
-        ls.appendRow(['Meter','Status','Device','Time','Project','ProjectID']);
-      ls.appendRow([p.meter,p.status,p.device,
-        new Date().toLocaleString(),p.project,p.pid||'']);
+      var ls=ss.getSheetByName('Scan Log');
+      if(!ls){ls=ss.insertSheet('Scan Log');ls.appendRow(['Meter','Status','Device','Time','Project','PID']);}
+      ls.appendRow([p.meter,p.status,p.device||'',new Date().toLocaleString(),p.project||'',p.pid||'']);
       return out({success:true});
     }
 
-    // WRITE status to meter row
-    if(p.action==='writestatus'&&p.writeCol){
-      var mc=ci(p.meterCol),wc=ci(p.writeCol);
+    if(p.action==='writestatus'){
+      var mc=ci(p.meterCol||'A'),wc2=ci(p.writeCol||'C');
+      if(!p.writeCol||p.writeCol==='')return out({success:true,msg:'writeCol not set'});
       var d2=sh.getDataRange().getValues();
       for(var k=0;k<d2.length;k++){
         if(String(d2[k][mc-1]).trim()===String(p.meter).trim()){
-          sh.getRange(k+1,wc).setValue(p.status);
-          sh.getRange(k+1,wc+1).setValue(new Date().toLocaleString());
-          sh.getRange(k+1,wc+2).setValue(p.device||'');
+          sh.getRange(k+1,wc2).setValue(p.status);
+          sh.getRange(k+1,wc2+1).setValue(new Date().toLocaleString());
+          if(p.device)sh.getRange(k+1,wc2+2).setValue(p.device);
           return out({success:true,row:k+1});
         }
       }
-      return out({success:false,msg:'Meter not found in sheet'});
+      return out({success:false,msg:'Meter not found in column '+p.meterCol+': '+p.meter});
     }
 
-    // READ scan log for a project
     if(p.action==='readlog'){
       var ls2=ss.getSheetByName('Scan Log');
-      if(!ls2) return out({success:true,rows:[]});
+      if(!ls2)return out({success:true,rows:[]});
       var rws=ls2.getDataRange().getValues();
       rws.shift();
-      var pid2=p.pid||'';
-      if(pid2) rws=rws.filter(r=>r[5]===pid2);
-      return out({success:true,rows:rws.slice(-300)});
+      if(p.pid)rws=rws.filter(function(r){return r[5]===p.pid;});
+      return out({success:true,rows:rws.slice(-200)});
     }
 
-    return out({success:true});
+    return out({success:false,msg:'Unknown action: '+p.action});
   }catch(err){
     return out({success:false,msg:err.toString()});
   }
 }
-function ci(c){
-  c=String(c).toUpperCase();var n=0;
-  for(var i=0;i<c.length;i++)n=n*26+(c.charCodeAt(i)-64);
-  return n;
-}
-function out(o){
-  return ContentService.createTextOutput(JSON.stringify(o))
-    .setMimeType(ContentService.MimeType.JSON);
-}
+function ci(c){c=String(c).toUpperCase();var n=0;for(var i=0;i<c.length;i++)n=n*26+(c.charCodeAt(i)-64);return n;}
+function out(o){return ContentService.createTextOutput(JSON.stringify(o)).setMimeType(ContentService.MimeType.JSON);}
 function doPost(e){return doGet(e);}</textarea>
-    <div class="row" style="margin-top:8px">
-      <button onclick="document.getElementById('script-code').select();document.execCommand('copy');alert('✅ Code copied! Paste into Apps Script editor.')" class="btn btn-p" style="flex:1;font-size:13px;padding:10px">Copy Apps Script Code</button>
-    </div>
-  </div>
-
-</div><!-- pscreen-inner -->
-</div><!-- pscreen -->
-
-<!-- ══ MAIN APP ════════════════════════════════════════════════════════════ -->
-<div id="mapp" style="display:none">
-
-<div id="header">
-  <div style="min-width:0;flex:1">
-    <div id="proj-title">DMIS Scanner</div>
-    <div id="proj-sub">Loading...</div>
-  </div>
-  <div id="hdr-r">
-    <div id="loaded-badge">0 loaded</div>
-    <button onclick="switchProj()" style="background:rgba(255,255,255,0.2);border:none;color:#fff;border-radius:8px;padding:5px 9px;font-size:11px;cursor:pointer;font-family:inherit;white-space:nowrap">Switch</button>
+    <button onclick="document.getElementById('ascode').select();document.execCommand('copy');alert('✅ Code copied — paste into Apps Script editor')" class="btn bp" style="margin-top:8px;padding:10px;font-size:13px">📋 Copy Apps Script Code</button>
   </div>
 </div>
+</div>
 
+<!-- MAIN APP -->
+<div id="mapp" style="display:none">
+<div id="header">
+  <div style="min-width:0;flex:1">
+    <div id="ptitle">DMIS Scanner</div>
+    <div id="psub">Loading...</div>
+  </div>
+  <div style="display:flex;align-items:center;gap:6px;flex-shrink:0">
+    <div id="lbadge">0 loaded</div>
+    <button onclick="switchProj()" style="background:rgba(255,255,255,.2);border:none;color:#fff;border-radius:8px;padding:5px 9px;font-size:11px;cursor:pointer;font-family:inherit">Switch</button>
+  </div>
+</div>
 <div id="tab-bar">
   <div class="tab active" onclick="showTab('scan')">📷 Scan</div>
   <div class="tab" onclick="showTab('log')">📋 Log</div>
@@ -393,119 +346,127 @@ function doPost(e){return doGet(e);}</textarea>
   <div class="tab" onclick="showTab('setup')">⚙️ Setup</div>
 </div>
 
-<!-- SCAN -->
+<!-- SCAN TAB -->
 <div class="screen active" id="screen-scan">
-  <div id="result-box">
+  <div id="rbox">
     <div id="ri">📷</div>
     <div id="rs" style="font-size:15px;color:var(--mut);font-weight:400">Ready to scan</div>
     <div id="rm"></div>
     <div id="rd" style="color:var(--mut)">Load meter list in Setup tab</div>
   </div>
-  <div id="sync-st"></div>
-  <div id="cdbar-w"><div id="cdbar"></div></div>
+  <div id="sst"></div>
+  <div id="cdw"><div id="cdb"></div></div>
   <div class="card" style="padding:10px">
-    <div id="reader-wrap"><div id="reader"></div><div id="scan-ov"><div id="scan-line"></div></div></div>
-    <div id="cam-st" style="text-align:center;font-size:12px;color:var(--mut);padding:4px 0 6px">Camera not started</div>
-    <button class="btn btn-p" id="cam-btn" onclick="toggleCam()">▶ Start Camera</button>
+    <div id="rw"><div id="reader"></div><div id="sov"><div id="sl2"></div></div></div>
+    <div id="camst" style="text-align:center;font-size:12px;color:var(--mut);padding:4px 0 6px">Camera not started</div>
+    <button class="btn bp" id="cbtn" onclick="toggleCam()">▶ Start Camera</button>
   </div>
   <div class="card">
-    <div class="ctitle">Manual / Bluetooth scanner input</div>
+    <div class="ct">Manual / Bluetooth scanner</div>
     <div class="row">
-      <input type="text" id="min" placeholder="Meter number" inputmode="numeric" autocomplete="off"
-        onkeydown="if(event.key==='Enter'){let v=this.value.trim();if(v){processCode(v);this.value=''}}">
-      <button onclick="let v=document.getElementById('min').value.trim();if(v){processCode(v);document.getElementById('min').value=''}"
-        style="background:var(--mid);color:#fff;border:none;border-radius:10px;padding:0 14px;font-size:18px;cursor:pointer;flex-shrink:0">→</button>
+      <input type="text" id="min2" placeholder="Meter number" inputmode="numeric" autocomplete="off" onkeydown="if(event.key==='Enter'){let v=this.value.trim();if(v){processCode(v);this.value=''}}">
+      <button onclick="let v=document.getElementById('min2').value.trim();if(v){processCode(v);document.getElementById('min2').value=''}" style="background:var(--mid);color:#fff;border:none;border-radius:10px;padding:0 14px;font-size:18px;cursor:pointer;flex-shrink:0">→</button>
     </div>
   </div>
 </div>
 
-<!-- LOG -->
+<!-- LOG TAB -->
 <div class="screen" id="screen-log">
   <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
     <div style="font-size:14px;font-weight:600">All device scans</div>
     <div style="display:flex;gap:6px">
-      <button class="btn-sm" onclick="refreshLog()">↻ Sync</button>
-      <button class="btn-sm" onclick="exportCSV()">CSV</button>
-      <button class="btn-danger" onclick="clearLog()">Clear</button>
+      <button class="bsm" onclick="refreshLog()">↻ Sync</button>
+      <button class="bsm" onclick="exportCSV()">CSV</button>
+      <button class="bda" onclick="clearLog()">Clear</button>
     </div>
   </div>
   <div style="display:flex;gap:6px;margin-bottom:8px;flex-wrap:wrap">
-    <button class="btn-sm" id="fa" onclick="flog('all')">All</button>
-    <button class="btn-sm" id="ff" onclick="flog('found')">Found</button>
-    <button class="btn-sm" id="fn" onclick="flog('notfound')">Not found</button>
-    <button class="btn-sm" id="fd" onclick="flog('dup')">Duplicate</button>
+    <button class="bsm" id="fa" onclick="flog('all')">All</button>
+    <button class="bsm" id="ff" onclick="flog('found')">Found</button>
+    <button class="bsm" id="fn" onclick="flog('notfound')">Not found</button>
+    <button class="bsm" id="fd" onclick="flog('dup')">Duplicate</button>
   </div>
-  <div class="card" style="padding:0;overflow:hidden">
-    <div id="log-list"><div class="lempty">No scans yet</div></div>
-  </div>
+  <div class="card" style="padding:0;overflow:hidden"><div id="llist"><div class="le">No scans yet</div></div></div>
 </div>
 
-<!-- STATS -->
+<!-- STATS TAB -->
 <div class="screen" id="screen-stats">
-  <div class="sgrid">
-    <div class="sc b"><div class="sn" id="st-t">0</div><div class="sl">Total scanned</div></div>
-    <div class="sc g"><div class="sn" id="st-f">0</div><div class="sl">Found</div></div>
-    <div class="sc r"><div class="sn" id="st-n">0</div><div class="sl">Not found</div></div>
-    <div class="sc a"><div class="sn" id="st-d">0</div><div class="sl">Duplicates</div></div>
+  <div class="sg">
+    <div class="sc b"><div class="sn" id="stt">0</div><div class="sl">Total scanned</div></div>
+    <div class="sc g"><div class="sn" id="stf">0</div><div class="sl">Found</div></div>
+    <div class="sc r"><div class="sn" id="stn">0</div><div class="sl">Not found</div></div>
+    <div class="sc a"><div class="sn" id="std">0</div><div class="sl">Duplicates</div></div>
   </div>
   <div class="card">
-    <div class="ctitle">Progress</div>
-    <div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:4px"><span>Found / Scanned</span><span id="pf" style="font-weight:600;color:var(--grn)">0%</span></div>
-    <div style="background:var(--gray);border-radius:6px;height:10px;overflow:hidden;margin-bottom:10px"><div id="bf" style="height:100%;background:var(--grn);border-radius:6px;width:0%;transition:width 0.4s"></div></div>
-    <div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:4px"><span>Found / In list</span><span id="pl" style="font-weight:600;color:var(--mid)">0%</span></div>
-    <div style="background:var(--gray);border-radius:6px;height:10px;overflow:hidden"><div id="bl" style="height:100%;background:var(--mid);border-radius:6px;width:0%;transition:width 0.4s"></div></div>
+    <div class="ct">Progress</div>
+    <div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:4px"><span>Found / Scanned</span><span id="spf" style="font-weight:600;color:var(--grn)">0%</span></div>
+    <div style="background:var(--gray);border-radius:6px;height:10px;overflow:hidden;margin-bottom:10px"><div id="sbf" style="height:100%;background:var(--grn);border-radius:6px;width:0%;transition:width .4s"></div></div>
+    <div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:4px"><span>Found / In list</span><span id="spl" style="font-weight:600;color:var(--mid)">0%</span></div>
+    <div style="background:var(--gray);border-radius:6px;height:10px;overflow:hidden"><div id="sbl" style="height:100%;background:var(--mid);border-radius:6px;width:0%;transition:width .4s"></div></div>
   </div>
-  <!-- PROJECT ID SHARE BOX -->
-  <div class="share-panel">
-    <div class="share-title">🔗 Share this project with your team</div>
-    <div class="pid-display" id="share-pid">—</div>
-    <div class="pid-hint">Share this Project ID with your team<br>They enter it in "Join Project" to sync to same data</div>
-    <button class="btn btn-pur" onclick="sharePID()" style="margin-top:10px;padding:10px;font-size:13px">Share Project ID via WhatsApp / SMS</button>
+  <!-- SHARE PANEL -->
+  <div class="sp">
+    <div class="spt">🔗 Share this project with your team</div>
+    <div class="pid-disp" id="spid">—</div>
+    <div class="pid-hint">Share the Project ID above — team enters it in "Join by Project ID"<br><br>OR share the full code below for instant join (no Sheet ID needed)</div>
+    <textarea id="sharecode" readonly onclick="this.select()" rows="3" style="margin-top:8px;font-size:11px;background:var(--wht);color:var(--pdk);border-color:var(--pur)"></textarea>
+    <div class="row" style="margin-top:8px">
+      <button class="btn bpu" onclick="shareWA()" style="flex:1;padding:10px;font-size:13px">Share via WhatsApp</button>
+      <button class="bsm" onclick="copyCode()" style="white-space:nowrap">Copy code</button>
+    </div>
   </div>
   <div class="card">
-    <div class="ctitle">Session info</div>
+    <div class="ct">Session info</div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;font-size:13px">
-      <div><span style="color:var(--mut)">Project ID</span><br><strong id="si-pid" style="font-family:monospace;color:var(--pur)">—</strong></div>
-      <div><span style="color:var(--mut)">Meters loaded</span><br><strong id="si-loaded">0</strong></div>
-      <div><span style="color:var(--mut)">Your device</span><br><strong id="si-dev" style="font-size:12px">—</strong></div>
-      <div><span style="color:var(--mut)">Last sync</span><br><strong id="si-sync" style="font-size:12px">—</strong></div>
-      <div><span style="color:var(--mut)">Created by</span><br><strong id="si-cby" style="font-size:12px">—</strong></div>
-      <div><span style="color:var(--mut)">Write-back OK</span><br><strong id="wb-ok" style="color:var(--grn)">0</strong></div>
+      <div><span style="color:var(--mut)">Project ID</span><br><strong id="sipid" style="font-family:monospace;color:var(--pur);font-size:12px">—</strong></div>
+      <div><span style="color:var(--mut)">Meters loaded</span><br><strong id="siloaded">0</strong></div>
+      <div><span style="color:var(--mut)">Your device</span><br><strong id="sidev" style="font-size:12px">—</strong></div>
+      <div><span style="color:var(--mut)">Last sync</span><br><strong id="sisync" style="font-size:12px">—</strong></div>
+      <div><span style="color:var(--mut)">Created by</span><br><strong id="sicby" style="font-size:12px">—</strong></div>
+      <div><span style="color:var(--mut)">Written to sheet</span><br><strong id="wbok" style="color:var(--grn)">0</strong></div>
     </div>
   </div>
 </div>
 
-<!-- SETUP -->
+<!-- SETUP TAB -->
 <div class="screen" id="screen-setup">
   <div class="card">
-    <div class="ctitle">📋 Meter list</div>
-    <label class="flabel" style="margin-top:0">Sheet ID (read only)</label>
-    <input type="text" id="s-sid" readonly style="background:var(--gray);font-family:monospace;font-size:12px">
-    <label class="flabel">Sheet tab name</label>
-    <input type="text" id="s-sname">
-    <label class="flabel">Meter number column</label>
-    <div class="cpills" id="rc-pills">
+    <div class="ct">📋 Meter list</div>
+    <label class="fl" style="margin-top:0">Sheet tab name</label>
+    <input type="text" id="ssn">
+    <label class="fl">Meter number column</label>
+    <div class="cps" id="rcp">
       <div class="cp sel" onclick="selRC(this,'A')">A</div>
       <div class="cp" onclick="selRC(this,'B')">B</div>
       <div class="cp" onclick="selRC(this,'C')">C</div>
       <div class="cp" onclick="selRC(this,'D')">D</div>
       <div class="cp" onclick="selRC(this,'E')">E</div>
     </div>
-    <button class="btn btn-p" onclick="loadMeters()" style="margin-top:12px;padding:11px;font-size:14px">↻ Reload meter list</button>
-    <div id="load-msg" class="smsg"></div>
+    <label class="fl">Apps Script URL</label>
+    <input type="text" id="surl2" placeholder="https://script.google.com/macros/s/.../exec">
+    <!-- CONNECTION TEST -->
+    <div style="background:var(--gray);border-radius:10px;padding:12px;margin-top:10px">
+      <div style="font-size:13px;font-weight:600;margin-bottom:8px">🔌 Connection test</div>
+      <div class="test-row"><div class="test-dot" id="td2"></div><span style="font-size:12px">Apps Script reachable</span><button class="bsm" onclick="testConn('surl2','td2','tm2')" style="margin-left:auto">Test</button></div>
+      <div id="tm2" class="sm"></div>
+      <div class="test-row" style="margin-top:6px"><div class="test-dot" id="td3"></div><span style="font-size:12px">Meter list readable</span><button class="bsm" onclick="testRead()" style="margin-left:auto">Test</button></div>
+      <div id="tm3" class="sm"></div>
+      <div class="test-row" style="margin-top:6px"><div class="test-dot" id="td4"></div><span style="font-size:12px">Write to sheet works</span><button class="bsm" onclick="testWrite()" style="margin-left:auto">Test</button></div>
+      <div id="tm4" class="sm"></div>
+    </div>
+    <button class="btn bp" onclick="loadMeters()" style="margin-top:10px;padding:11px;font-size:14px">↻ Load meter list</button>
+    <div id="lmsg" class="sm"></div>
   </div>
 
   <div class="card">
-    <div class="ctitle">✍️ Write-back settings</div>
-    <div class="trow">
-      <span style="font-size:14px">Enable write-back to sheet</span>
-      <label class="tgl"><input type="checkbox" id="wb-en" onchange="document.getElementById('wb-cfg').style.display=this.checked?'block':'none'"><span class="tsl"></span></label>
+    <div class="ct">✍️ Write-back to sheet</div>
+    <div class="tr">
+      <span style="font-size:14px">Enable write-back</span>
+      <label class="tg"><input type="checkbox" id="wben" onchange="document.getElementById('wbcfg').style.display=this.checked?'block':'none'"><span class="ts"></span></label>
     </div>
-    <div id="wb-cfg" style="display:none">
-      <label class="flabel" style="margin-top:0">Apps Script URL</label>
-      <input type="text" id="s-surl" placeholder="https://script.google.com/macros/s/.../exec">
-      <label class="flabel">Write status to column</label>
-      <div class="cpills" id="wc-pills">
+    <div id="wbcfg" style="display:none">
+      <label class="fl" style="margin-top:0">Write status to column</label>
+      <div class="cps" id="wcp">
         <div class="cp" onclick="selWC(this,'')">None</div>
         <div class="cp sel" onclick="selWC(this,'C')">C</div>
         <div class="cp" onclick="selWC(this,'D')">D</div>
@@ -513,479 +474,538 @@ function doPost(e){return doGet(e);}</textarea>
         <div class="cp" onclick="selWC(this,'F')">F</div>
         <div class="cp" onclick="selWC(this,'G')">G</div>
       </div>
-      <label class="flabel">Status text when FOUND</label>
-      <input type="text" id="s-sfound" value="SCANNED ✓">
-      <label class="flabel">Status text when NOT FOUND (blank = skip)</label>
-      <input type="text" id="s-snotfound" placeholder="Leave blank to skip">
+      <label class="fl">Status text when FOUND</label>
+      <input type="text" id="ssfound" value="SCANNED ✓">
+      <label class="fl">Status text when NOT FOUND (blank = skip)</label>
+      <input type="text" id="ssnf" placeholder="Leave blank to skip">
+
+      <!-- WRITE-BACK TEST -->
+      <div style="background:var(--gbg);border-radius:10px;padding:12px;margin-top:12px;border:1px solid var(--grn)">
+        <div style="font-size:13px;font-weight:600;color:var(--gdk);margin-bottom:6px">🧪 Test Write-back (status to meter row)</div>
+        <label class="fl" style="margin-top:0;color:var(--gdk)">Enter a real meter number from your list to test</label>
+        <input type="text" id="wb-test-meter" placeholder="e.g. 12345678" style="font-family:monospace">
+        <div class="test-row" style="margin-top:8px">
+          <div class="test-dot" id="td5"></div>
+          <span style="font-size:12px">Status written to meter row in sheet</span>
+          <button class="bsm" onclick="testWriteBack()" style="margin-left:auto;background:var(--grn);color:#fff;border-color:var(--grn)">Test Write-back</button>
+        </div>
+        <div id="tm5" class="sm"></div>
+      </div>
     </div>
+
+    <!-- SAVE SETTINGS BUTTON -->
+    <button class="btn bg" onclick="saveSettings()" style="margin-top:12px;padding:11px;font-size:14px">💾 Save All Settings</button>
+    <div id="save-msg" class="sm"></div>
   </div>
 
   <div class="card">
-    <div class="ctitle">🔊 Scanner settings</div>
-    <div class="trow"><span style="font-size:14px">Beep on scan</span><label class="tgl"><input type="checkbox" id="beep-en" checked><span class="tsl"></span></label></div>
-    <div class="trow"><span style="font-size:14px">Vibrate on scan</span><label class="tgl"><input type="checkbox" id="vib-en" checked><span class="tsl"></span></label></div>
-    <label class="flabel">Scan cooldown (seconds)</label>
-    <input type="number" id="cd-sec" value="2" min="1" max="10" style="width:100px">
+    <div class="ct">🔊 Scanner settings</div>
+    <div class="tr"><span style="font-size:14px">Beep on scan</span><label class="tg"><input type="checkbox" id="been" checked><span class="ts"></span></label></div>
+    <div class="tr"><span style="font-size:14px">Vibrate on scan</span><label class="tg"><input type="checkbox" id="vben" checked><span class="ts"></span></label></div>
+    <label class="fl">Scan cooldown (seconds)</label>
+    <input type="number" id="cds" value="2" min="1" max="10" style="width:90px">
   </div>
 
   <div class="card">
-    <div class="ctitle">📝 Offline — paste list</div>
-    <textarea id="paste-box" placeholder="One meter number per line&#10;12345678&#10;23456789"></textarea>
-    <button class="btn btn-out" onclick="loadPasted()" style="margin-top:8px;font-size:14px;padding:10px">Load pasted list</button>
-    <div id="paste-msg" class="smsg"></div>
+    <div class="ct">📝 Offline — paste list</div>
+    <textarea id="pasteb" placeholder="One meter per line&#10;12345678&#10;23456789"></textarea>
+    <button class="btn bo" onclick="loadPasted()" style="margin-top:8px;font-size:14px;padding:10px">Load pasted list</button>
+    <div id="pmsg" class="sm"></div>
   </div>
 </div>
-
 </div><!-- mapp -->
 
 <script>
-// ══ STATE ══════════════════════════════════════════════════════════════════
-let projects={}, curPID=null, curProj=null;
-let meterSet=new Set(), scanLog=[], scannedMap=new Map();
-let stats={t:0,f:0,n:0,d:0}, wbStats={ok:0,err:0};
-let scanner=null, camRun=false, inCD=false;
-let curFilter='all', readCol='A', writeCol='C';
-let deviceName='', autoRT=null, lastSync=null;
-
-// ══ AUDIO ══════════════════════════════════════════════════════════════════
-let aCtx=null;
-function gAC(){if(!aCtx)aCtx=new(window.AudioContext||window.webkitAudioContext)();return aCtx;}
-function beep(f,d,t='square',v=0.4){if(!document.getElementById('beep-en').checked)return;try{const c=gAC(),o=c.createOscillator(),g=c.createGain();o.connect(g);g.connect(c.destination);o.type=t;o.frequency.value=f;g.gain.setValueAtTime(v,c.currentTime);g.gain.exponentialRampToValueAtTime(0.001,c.currentTime+d);o.start(c.currentTime);o.stop(c.currentTime+d);}catch(e){}}
-function bF(){beep(1200,0.1);setTimeout(()=>beep(1600,0.1),120);}
-function bN(){beep(350,0.35,'sawtooth',0.5);}
-function bD(){beep(800,0.08);setTimeout(()=>beep(800,0.08),150);setTimeout(()=>beep(800,0.08),300);}
-
-// ══ INIT ═══════════════════════════════════════════════════════════════════
+// ── STATE ──────────────────────────────────────────────────────────────────
+let projects={},curPID=null,curProj=null;
+let meterSet=new Set(),scanLog=[],scannedMap=new Map();
+let stats={t:0,f:0,n:0,d:0},wbStats={ok:0,err:0};
+let scanner=null,camRun=false,inCD=false;
+let curFilter='all',readCol='A',writeCol='C';
+let devName='',autoRT=null;
+// ── AUDIO ──────────────────────────────────────────────────────────────────
+let aC=null;
+function gAC(){if(!aC)aC=new(window.AudioContext||window.webkitAudioContext)();return aC;}
+function beep(f,d,t='square',v=0.4){if(!document.getElementById('been').checked)return;try{const c=gAC(),o=c.createOscillator(),g=c.createGain();o.connect(g);g.connect(c.destination);o.type=t;o.frequency.value=f;g.gain.setValueAtTime(v,c.currentTime);g.gain.exponentialRampToValueAtTime(0.001,c.currentTime+d);o.start(c.currentTime);o.stop(c.currentTime+d);}catch(e){}}
+function bF(){beep(1200,.1);setTimeout(()=>beep(1600,.1),120);}
+function bN(){beep(350,.35,'sawtooth',.5);}
+function bD(){beep(800,.08);setTimeout(()=>beep(800,.08),150);setTimeout(()=>beep(800,.08),300);}
+// ── INIT ───────────────────────────────────────────────────────────────────
 window.onload=function(){
   loadLocal();
-  deviceName=localStorage.getItem('dmis_dev')||'';
-  if(deviceName) document.getElementById('dev-name').value=deviceName;
+  devName=localStorage.getItem('dmis_dev')||'';
+  if(devName)document.getElementById('dname').value=devName;
   setTimeout(()=>{
     document.getElementById('splash').style.display='none';
-    if(curPID&&projects[curPID]){openProject(curPID);}
-    else showPScreen();
-  },1000);
+    if(curPID&&projects[curPID])openProject(curPID);
+    else showPS();
+  },900);
   document.addEventListener('touchstart',()=>{try{gAC().resume();}catch(e){}},{once:true});
 };
-
-// ══ PERSIST ════════════════════════════════════════════════════════════════
+// ── PERSIST ────────────────────────────────────────────────────────────────
 function saveLocal(){try{localStorage.setItem('dmis_p',JSON.stringify(projects));localStorage.setItem('dmis_cur',curPID||'');}catch(e){}}
 function loadLocal(){try{const p=localStorage.getItem('dmis_p');if(p)projects=JSON.parse(p);const c=localStorage.getItem('dmis_cur');if(c&&projects[c])curPID=c;}catch(e){}}
 function saveLog(){try{if(curPID)localStorage.setItem('dmis_log_'+curPID,JSON.stringify(scanLog.slice(0,500)));}catch(e){}}
-function saveDevName(){deviceName=document.getElementById('dev-name').value.trim()||'Unknown';localStorage.setItem('dmis_dev',deviceName);showM(document.getElementById('dev-msg'),'✅ Saved as: '+deviceName,'ok');document.getElementById('si-dev').textContent=deviceName;}
-
-// ══ PROJECT ID GENERATOR ═══════════════════════════════════════════════════
-function genPID(){
-  const c='ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
-  let id='DMIS-';
-  for(let i=0;i<6;i++)id+=c[Math.floor(Math.random()*c.length)];
-  return id;
+function saveDev(){devName=document.getElementById('dname').value.trim()||'Unknown';localStorage.setItem('dmis_dev',devName);showM(document.getElementById('dmsg'),'✅ Saved: '+devName,'ok');document.getElementById('sidev').textContent=devName;}
+// ── ENCODE/DECODE ──────────────────────────────────────────────────────────
+function encode(obj){try{return btoa(unescape(encodeURIComponent(JSON.stringify(obj))));}catch(e){return '';}}
+function decode(str){try{return JSON.parse(decodeURIComponent(escape(atob(str.trim()))));}catch(e){return null;}}
+// ── PROJECT ID ─────────────────────────────────────────────────────────────
+function genPID(){const c='ABCDEFGHJKLMNPQRSTUVWXYZ23456789';let id='DMIS-';for(let i=0;i<6;i++)id+=c[Math.floor(Math.random()*c.length)];return id;}
+// ── PROJECT SCREEN ─────────────────────────────────────────────────────────
+function showPS(){stopCam();if(autoRT){clearInterval(autoRT);autoRT=null;}document.getElementById('mapp').style.display='none';document.getElementById('pscreen').style.display='block';renderPL();}
+function showCreate(){document.getElementById('cform').style.display='block';document.getElementById('jform').style.display='none';document.getElementById('scform').style.display='none';document.getElementById('cn').focus();}
+function showJoin(){document.getElementById('jform').style.display='block';document.getElementById('cform').style.display='none';document.getElementById('scform').style.display='none';document.getElementById('jpid').focus();}
+function showPasteJoin(){document.getElementById('scform').style.display='block';document.getElementById('cform').style.display='none';document.getElementById('jform').style.display='none';document.getElementById('scpaste').focus();}
+function switchProj(){showPS();}
+// ── TEST CONNECTION ────────────────────────────────────────────────────────
+async function testConn(urlId,dotId,msgId){
+  const url=document.getElementById(urlId).value.trim();
+  const sid=document.getElementById(urlId==='cu'?'cs':'s-sid2')?.value.trim()||curProj?.sid||'';
+  const sn=document.getElementById(urlId==='cu'?'csn':'ssn')?.value.trim()||curProj?.sname||'Master Sheet PSW';
+  const dot=document.getElementById(dotId);
+  const msg=document.getElementById(msgId);
+  if(!url){showM(msg,'Enter Apps Script URL first','err');return;}
+  dot.className='test-dot ld';showM(msg,'Testing connection...','ld');
+  try{
+    const params=new URLSearchParams({action:'ping',sheetId:sid||'TEST',sheetName:sn||'TEST'});
+    const res=await fetch(url+'?'+params,{redirect:'follow'});
+    const txt=await res.text();
+    // find JSON in response
+    const match=txt.match(/\{.*\}/s);
+    if(match){
+      const data=JSON.parse(match[0]);
+      if(data.success){dot.className='test-dot ok';showM(msg,'✅ Connected! Sheet accessible.','ok');}
+      else{dot.className='test-dot err';showM(msg,'⚠️ Script reached but error: '+data.msg,'err');}
+    }else{dot.className='test-dot ok';showM(msg,'✅ Script reachable (response received)','ok');}
+  }catch(e){dot.className='test-dot err';showM(msg,'❌ Cannot reach script: '+e.message+'\n\nCheck: 1) URL is correct 2) Deployed as Web App 3) Access = Anyone','err');}
 }
-
-// ══ PROJECT SCREEN ═════════════════════════════════════════════════════════
-function showPScreen(){
-  stopCam();
-  if(autoRT){clearInterval(autoRT);autoRT=null;}
-  document.getElementById('mapp').style.display='none';
-  document.getElementById('pscreen').style.display='block';
-  renderProjList();
+async function testRead(){
+  const url=document.getElementById('surl2').value.trim()||curProj?.surl||'';
+  const msg=document.getElementById('tm3');const dot=document.getElementById('td3');
+  if(!url){showM(msg,'Enter Apps Script URL first','err');return;}
+  dot.className='test-dot ld';showM(msg,'Testing meter list read...','ld');
+  try{
+    const params=new URLSearchParams({action:'read',sheetId:curProj?.sid||'',sheetName:document.getElementById('ssn').value||curProj?.sname||'Master Sheet PSW',col:readCol});
+    const res=await fetch(url+'?'+params);
+    const data=await res.json();
+    if(data.success){dot.className='test-dot ok';showM(msg,'✅ Read OK — '+data.count+' meters found in sheet','ok');}
+    else{dot.className='test-dot err';showM(msg,'❌ Read failed: '+data.msg,'err');}
+  }catch(e){dot.className='test-dot err';showM(msg,'❌ Error: '+e.message,'err');}
 }
-function showCreate(){document.getElementById('create-form').style.display='block';document.getElementById('join-form').style.display='none';document.getElementById('c-name').focus();}
-function showJoin(){document.getElementById('join-form').style.display='block';document.getElementById('create-form').style.display='none';document.getElementById('j-pid').focus();}
-function switchProj(){showPScreen();}
-
-// ══ CREATE PROJECT ═════════════════════════════════════════════════════════
-async function createProject(){
-  const name=document.getElementById('c-name').value.trim();
-  const sid=document.getElementById('c-sid').value.trim();
-  const sname=document.getElementById('c-sname').value.trim()||'Master Sheet PSW';
-  const surl=document.getElementById('c-surl').value.trim();
-  const rc=getSelPill('c-rc')||'A';
-  const wc=getSelPill('c-wc')||'C';
-  const msg=document.getElementById('c-msg');
+async function testWrite(){
+  const url=document.getElementById('surl2').value.trim()||curProj?.surl||'';
+  const msg=document.getElementById('tm4');const dot=document.getElementById('td4');
+  if(!url){showM(msg,'Enter Apps Script URL first','err');return;}
+  dot.className='test-dot ld';showM(msg,'Testing write to Scan Log...','ld');
+  try{
+    const params=new URLSearchParams({action:'writelog',sheetId:curProj?.sid||'',sheetName:curProj?.sname||'Master Sheet PSW',meter:'TEST-METER',status:'TEST',device:'Test Device',project:'Test',pid:'TEST'});
+    const res=await fetch(url+'?'+params);
+    const data=await res.json();
+    if(data.success){dot.className='test-dot ok';showM(msg,'✅ Write OK — check Scan Log tab in your Google Sheet','ok');}
+    else{dot.className='test-dot err';showM(msg,'❌ Write failed: '+data.msg,'err');}
+  }catch(e){dot.className='test-dot err';showM(msg,'❌ Error: '+e.message,'err');}
+}
+// ── CREATE PROJECT ─────────────────────────────────────────────────────────
+async function createProj(){
+  const name=document.getElementById('cn').value.trim();
+  const sid=document.getElementById('cs').value.trim();
+  const sname=document.getElementById('csn').value.trim()||'Master Sheet PSW';
+  const surl=document.getElementById('cu').value.trim();
+  const rc=getSelP('crc')||'A';
+  const wc=getSelP('cwc')||'C';
+  const msg=document.getElementById('cmsg');
   if(!name){showM(msg,'Enter project name','err');return;}
   if(!sid){showM(msg,'Enter Google Sheet ID','err');return;}
   showM(msg,'Creating project...','ld');
   const pid=genPID();
   const proj={pid,name,sid,sname,surl,readCol:rc,writeCol:wc,
-    created:new Date().toISOString(),createdBy:deviceName||'Unknown',
+    created:new Date().toISOString(),createdBy:devName||'Unknown',
     stats:{t:0,f:0,n:0,d:0},log:[]};
-  projects[pid]=proj;
-  curPID=pid;
-  saveLocal();
-  // Save to Google Sheet for sharing (if surl given)
-  if(surl){
+  projects[pid]=proj;curPID=pid;saveLocal();
+  // Try to save to sheet for Join by ID
+  if(surl&&sid){
     try{
-      const cfg=btoa(JSON.stringify({pid,name,sid,sname,surl,readCol:rc,writeCol:wc,createdBy:deviceName||'Unknown'}));
-      const params=new URLSearchParams({action:'saveproject',sheetId:sid,sheetName:sname,pid,config:cfg,createdBy:deviceName||'Unknown'});
-      await fetch(surl+'?'+params);
-    }catch(e){}
-  }
-  showM(msg,'✅ Project created! ID: '+pid,'ok');
-  setTimeout(()=>openProject(pid),800);
+      const cfg=encode({pid,name,sid,sname,surl,readCol:rc,writeCol:wc,createdBy:devName||'Unknown'});
+      const params=new URLSearchParams({action:'saveproject',sheetId:sid,sheetName:sname,pid,config:cfg,createdBy:devName||'Unknown'});
+      const res=await fetch(surl+'?'+params);
+      const data=await res.json();
+      if(data.success)showM(msg,'✅ Project created & saved to sheet! ID: '+pid,'ok');
+      else showM(msg,'✅ Project created locally. ID: '+pid+'\n(Sheet save: '+data.msg+')','ok');
+    }catch(e){showM(msg,'✅ Project created! ID: '+pid+'\n(Could not save to sheet — share code still works)','ok');}
+  }else{showM(msg,'✅ Project created! ID: '+pid,'ok');}
+  setTimeout(()=>openProject(pid),900);
 }
-
-// ══ JOIN PROJECT ═══════════════════════════════════════════════════════════
-async function joinProject(){
-  const pidInput=document.getElementById('j-pid').value.trim().toUpperCase();
-  const msg=document.getElementById('j-msg');
-  if(!pidInput||pidInput.length<6){showM(msg,'Enter valid Project ID (e.g. DMIS-K7X9NM)','err');return;}
-  // check if already have locally
-  if(projects[pidInput]){
-    showM(msg,'✅ Project found locally — opening...','ok');
-    setTimeout(()=>openProject(pidInput),600);
-    return;
+// ── JOIN BY ID ─────────────────────────────────────────────────────────────
+async function joinByID(){
+  const pid=document.getElementById('jpid').value.trim().toUpperCase();
+  const msg=document.getElementById('jmsg');
+  if(!pid||pid.length<6){showM(msg,'Enter valid Project ID (e.g. DMIS-K7X9NM)','err');return;}
+  // Check local first
+  if(projects[pid]){showM(msg,'✅ Found locally — opening...','ok');setTimeout(()=>openProject(pid),600);return;}
+  // Need sheet to fetch — ask for script URL
+  showM(msg,'Project not on this device. Enter the Apps Script URL and Sheet ID from the project creator to fetch it.','inf');
+  let ex=document.getElementById('jex');
+  if(!ex){
+    ex=document.createElement('div');ex.id='jex';
+    ex.innerHTML=`<label class="fl">Apps Script URL (from creator)</label>
+      <input type="text" id="jsu" placeholder="https://script.google.com/macros/s/.../exec">
+      <label class="fl">Google Sheet ID (from creator)</label>
+      <input type="text" id="jsi" placeholder="Sheet ID" style="font-family:monospace;font-size:12px">
+      <button class="btn bg" onclick="fetchJoin('${pid}')" style="margin-top:10px;padding:11px">Fetch & Join</button>`;
+    document.getElementById('jform').appendChild(ex);
   }
-  // need to fetch from Google Sheet — but we don't know which sheet
-  // ask user for the sheet ID or script URL
-  showM(msg,'Project not found locally. If you have the Apps Script URL, enter it below to fetch from sheet.','err');
-  // show extra input
-  let extraDiv=document.getElementById('j-extra');
-  if(!extraDiv){
-    extraDiv=document.createElement('div');
-    extraDiv.id='j-extra';
-    extraDiv.innerHTML=`
-      <label class="flabel" style="margin-top:10px">Apps Script URL (from project creator)</label>
-      <input type="text" id="j-surl" placeholder="https://script.google.com/macros/s/.../exec">
-      <label class="flabel">Google Sheet ID (from project creator)</label>
-      <input type="text" id="j-sid" placeholder="Sheet ID" style="font-family:monospace;font-size:13px">
-      <button class="btn btn-g" onclick="fetchAndJoin('${pidInput}')" style="margin-top:10px;padding:11px;font-size:14px">Fetch & Join Project</button>`;
-    document.getElementById('join-form').appendChild(extraDiv);
-  }
-  extraDiv.style.display='block';
+  ex.style.display='block';
 }
-
-async function fetchAndJoin(pid){
-  const surl=document.getElementById('j-surl').value.trim();
-  const sid=document.getElementById('j-sid').value.trim();
-  const msg=document.getElementById('j-msg');
-  if(!surl||!sid){showM(msg,'Enter both Apps Script URL and Sheet ID','err');return;}
-  showM(msg,'Fetching project from sheet...','ld');
+async function fetchJoin(pid){
+  const surl=document.getElementById('jsu')?.value.trim();
+  const sid=document.getElementById('jsi')?.value.trim();
+  const msg=document.getElementById('jmsg');
+  if(!surl||!sid){showM(msg,'Enter Apps Script URL and Sheet ID','err');return;}
+  showM(msg,'Fetching project from Google Sheet...','ld');
   try{
     const params=new URLSearchParams({action:'getproject',sheetId:sid,sheetName:'Master Sheet PSW',pid});
     const res=await fetch(surl+'?'+params);
     const data=await res.json();
-    if(!data.success){showM(msg,'Project ID not found: '+pid,'err');return;}
-    const cfg=JSON.parse(atob(data.config));
+    if(!data.success){showM(msg,'❌ '+data.msg+'\n\nMake sure the project was created with this Sheet ID and Apps Script URL.','err');return;}
+    const cfg=decode(data.config);
+    if(!cfg){showM(msg,'❌ Could not decode project config','err');return;}
     const proj={...cfg,stats:{t:0,f:0,n:0,d:0},log:[],joined:true,joinedAt:new Date().toISOString()};
-    projects[pid]=proj;
-    curPID=pid;
-    saveLocal();
-    showM(msg,'✅ Joined project: '+cfg.name,'ok');
+    projects[pid]=proj;curPID=pid;saveLocal();
+    showM(msg,'✅ Joined: '+cfg.name,'ok');
     setTimeout(()=>openProject(pid),700);
-  }catch(e){showM(msg,'Failed to fetch project. Check URL and Sheet ID.','err');}
+  }catch(e){showM(msg,'❌ Network error: '+e.message,'err');}
 }
-
-// ══ OPEN PROJECT ═══════════════════════════════════════════════════════════
+// ── JOIN BY SHARE CODE ─────────────────────────────────────────────────────
+function joinByCode(){
+  const raw=document.getElementById('scpaste').value.trim();
+  const msg=document.getElementById('scmsg');
+  if(!raw){showM(msg,'Paste share code first','err');return;}
+  // Extract base64 from text (share message may have extra text)
+  const lines=raw.split('\n');
+  let code=null;
+  for(const line of lines){
+    const t=line.trim();
+    if(t.length>100&&!t.includes(' ')){code=t;break;}
+  }
+  if(!code){
+    // try whole text if single line
+    if(raw.length>100&&!raw.includes('\n'))code=raw;
+  }
+  if(!code){showM(msg,'Could not find share code in pasted text. Make sure you copied the full code.','err');return;}
+  const cfg=decode(code);
+  if(!cfg||!cfg.pid||!cfg.sid){showM(msg,'❌ Invalid share code — ask the project creator to share again','err');return;}
+  if(projects[cfg.pid]){showM(msg,'✅ Already have this project — opening...','ok');setTimeout(()=>openProject(cfg.pid),600);return;}
+  const proj={...cfg,stats:{t:0,f:0,n:0,d:0},log:[],joined:true,joinedAt:new Date().toISOString()};
+  projects[cfg.pid]=proj;curPID=cfg.pid;saveLocal();
+  showM(msg,'✅ Joined project: '+cfg.name+' ('+cfg.pid+')','ok');
+  setTimeout(()=>openProject(cfg.pid),700);
+}
+// ── OPEN PROJECT ───────────────────────────────────────────────────────────
 function openProject(pid){
-  curPID=pid;
-  curProj=projects[pid];
+  curPID=pid;curProj=projects[pid];
   if(!curProj)return;
-  // restore log from local
   try{const lg=localStorage.getItem('dmis_log_'+pid);if(lg)curProj.log=JSON.parse(lg);}catch(e){}
   scanLog=curProj.log||[];
   stats=curProj.stats||{t:0,f:0,n:0,d:0};
   scannedMap=new Map();
   scanLog.forEach(e=>{if(!scannedMap.has(e.norm))scannedMap.set(e.norm,{time:new Date(e.time),found:e.found});});
   wbStats={ok:0,err:0};
-  readCol=curProj.readCol||'A';
-  writeCol=curProj.writeCol||'C';
-  // update UI
+  readCol=curProj.readCol||'A';writeCol=curProj.writeCol||'C';
   document.getElementById('pscreen').style.display='none';
   document.getElementById('mapp').style.display='block';
-  document.getElementById('proj-title').textContent=curProj.name;
-  document.getElementById('proj-sub').textContent='ID: '+pid+' · Tap Switch to change';
-  document.getElementById('s-sid').value=curProj.sid;
-  document.getElementById('s-sname').value=curProj.sname;
-  if(curProj.surl){document.getElementById('s-surl').value=curProj.surl;document.getElementById('wb-en').checked=true;document.getElementById('wb-cfg').style.display='block';}
-  document.getElementById('share-pid').textContent=pid;
-  document.getElementById('si-pid').textContent=pid;
-  document.getElementById('si-dev').textContent=deviceName||'(set name)';
-  document.getElementById('si-cby').textContent=curProj.createdBy||'—';
-  setSelPill2('rc-pills',readCol);
-  setSelPill2('wc-pills',writeCol);
-  updateStatBadges();
-  saveLocal();
+  document.getElementById('ptitle').textContent=curProj.name;
+  document.getElementById('psub').textContent='ID: '+pid+' · Tap Switch';
+  document.getElementById('ssn').value=curProj.sname||'Master Sheet PSW';
+  if(curProj.surl){
+    document.getElementById('surl2').value=curProj.surl;
+    document.getElementById('wben').checked=true;
+    document.getElementById('wbcfg').style.display='block';
+  }
+  // Restore write-back settings
+  if(curProj.wbEnabled!==undefined){
+    document.getElementById('wben').checked=curProj.wbEnabled;
+    document.getElementById('wbcfg').style.display=curProj.wbEnabled?'block':'none';
+  }
+  if(curProj.statusFound) document.getElementById('ssfound').value=curProj.statusFound;
+  if(curProj.statusNotFound!==undefined) document.getElementById('ssnf').value=curProj.statusNotFound;
+  // Update share panel
+  const shareObj={pid,name:curProj.name,sid:curProj.sid,sname:curProj.sname,surl:curProj.surl||'',readCol:curProj.readCol||'A',writeCol:curProj.writeCol||'C',createdBy:curProj.createdBy||''};
+  document.getElementById('spid').textContent=pid;
+  document.getElementById('sharecode').value=encode(shareObj);
+  document.getElementById('sipid').textContent=pid;
+  document.getElementById('sidev').textContent=devName||'(set name)';
+  document.getElementById('sicby').textContent=curProj.createdBy||'—';
+  setP2('rcp',readCol);setP2('wcp',writeCol);
+  updateSB();saveLocal();
   if(curProj.sid)loadMeters();
   if(autoRT)clearInterval(autoRT);
   autoRT=setInterval(refreshLog,30000);
 }
-
-// ══ RENDER PROJECT LIST ════════════════════════════════════════════════════
-function renderProjList(){
-  const list=document.getElementById('proj-list');
+// ── RENDER PROJECT LIST ────────────────────────────────────────────────────
+function renderPL(){
+  const list=document.getElementById('plist');
   const keys=Object.keys(projects);
-  if(!keys.length){list.innerHTML='<div class="lempty">No projects yet — create or join one</div>';return;}
+  if(!keys.length){list.innerHTML='<div class="le">No projects — create or join one above</div>';return;}
   list.innerHTML=keys.slice().reverse().map(k=>{
-    const p=projects[k];
-    const st=p.stats||{t:0,f:0,n:0,d:0};
+    const p=projects[k];const st=p.stats||{t:0,f:0,n:0,d:0};
     const d=new Date(p.created).toLocaleDateString('en-PK');
-    const joined=p.joined?'<span class="pst b">Joined</span>':'<span class="pst g">Created by me</span>';
     return `<div class="pcard" onclick="openProject('${k}')">
-      <button class="pcard-del" onclick="event.stopPropagation();delProj('${k}')">✕</button>
-      <div class="pcard-name">${p.name}</div>
-      <div class="pcard-meta">${p.sname} · ${d}</div>
-      <div class="pcard-pid">${k}</div>
-      <div class="pcard-stats">
-        ${joined}
-        <span class="pst b">📊 ${st.t}</span>
-        <span class="pst g">✅ ${st.f}</span>
-        <span class="pst r">❌ ${st.n}</span>
-        ${st.d?`<span class="pst a">⚠️ ${st.d}</span>`:''}
+      <button class="pdel" onclick="event.stopPropagation();delP('${k}')">✕</button>
+      <div class="pname">${p.name}</div>
+      <div class="pmeta">${p.sname} · ${d} · ${p.joined?'Joined':'Created'}</div>
+      <div class="ppid">${k}</div>
+      <div class="psts">
+        <span class="ps b">📊 ${st.t}</span>
+        <span class="ps g">✅ ${st.f}</span>
+        <span class="ps r">❌ ${st.n}</span>
+        ${st.d?`<span class="ps a">⚠️ ${st.d}</span>`:''}
       </div>
     </div>`;
   }).join('');
 }
-
-function delProj(pid){
-  if(!confirm('Delete project "'+projects[pid]?.name+'"?\nThis only removes it from this device.'))return;
-  delete projects[pid];
-  try{localStorage.removeItem('dmis_log_'+pid);}catch(e){}
-  if(curPID===pid)curPID=null;
-  saveLocal();renderProjList();
+function delP(pid){if(!confirm('Remove "'+projects[pid]?.name+'" from this device?'))return;delete projects[pid];try{localStorage.removeItem('dmis_log_'+pid);}catch(e){}if(curPID===pid)curPID=null;saveLocal();renderPL();}
+// ── SHARE ──────────────────────────────────────────────────────────────────
+function copyCode(){const el=document.getElementById('sharecode');el.select();document.execCommand('copy');alert('✅ Share code copied!');}
+function shareWA(){
+  const pid=curPID;const name=curProj?.name||'';
+  const code=document.getElementById('sharecode').value;
+  const msg=`*DMIS Meter Scanner — Join Project*\n\nProject: *${name}*\nProject ID: *${pid}*\n\nTo join on your device:\n1. Open DMIS Meter Scanner app\n2. Tap "Join by Share Code"\n3. Paste this code:\n\n${code}\n\nOR tap "Join by Project ID" and enter: *${pid}*`;
+  if(navigator.share){navigator.share({title:'Join '+name,text:msg}).catch(()=>{});}
+  else window.open('https://wa.me/?text='+encodeURIComponent(msg),'_blank');
 }
-
-// ══ SHARE PROJECT ID ═══════════════════════════════════════════════════════
-function sharePID(){
-  const pid=curProj?.pid||curPID;
-  const name=curProj?.name||'';
-  const surl=document.getElementById('s-surl').value.trim()||curProj?.surl||'';
-  const sid=curProj?.sid||'';
-  const msg=`*DMIS Meter Scanner — Join Project*\n\nProject: ${name}\nProject ID: *${pid}*\n\nApps Script URL:\n${surl}\n\nSheet ID:\n${sid}\n\nSteps:\n1. Open DMIS Meter Scanner app\n2. Tap "Join Existing Project"\n3. Enter Project ID: *${pid}*\n4. Enter Apps Script URL and Sheet ID if asked`;
-  if(navigator.share){
-    navigator.share({title:'Join DMIS Project: '+name,text:msg}).catch(()=>{});
-  } else {
-    const wa='https://wa.me/?text='+encodeURIComponent(msg);
-    window.open(wa,'_blank');
-  }
-}
-
-// ══ LOAD METERS ═══════════════════════════════════════════════════════════
+// ── LOAD METERS ────────────────────────────────────────────────────────────
 async function loadMeters(){
-  const p=curProj;
-  const sname=document.getElementById('s-sname').value.trim()||p.sname;
-  const msg=document.getElementById('load-msg');
-  const surl=document.getElementById('s-surl').value.trim()||p.surl||'';
+  const p=curProj;if(!p)return;
+  const sname=document.getElementById('ssn').value.trim()||p.sname;
+  const surl=document.getElementById('surl2').value.trim()||p.surl||'';
+  const msg=document.getElementById('lmsg');
   showM(msg,'Loading meters...','ld');
   if(surl){
     try{
       const params=new URLSearchParams({action:'read',sheetId:p.sid,sheetName:sname,col:readCol});
       const res=await fetch(surl+'?'+params);
       const data=await res.json();
-      if(data.success&&data.meters){
-        meterSet=new Set(data.meters.map(m=>norm(m)));
-        updBadge();showM(msg,'✅ '+meterSet.size+' meters loaded via Apps Script','ok');setReady();return;
-      }
-    }catch(e){}
+      if(data.success&&data.meters){meterSet=new Set(data.meters.map(m=>norm(m)));updB();showM(msg,'✅ '+meterSet.size+' meters loaded via Apps Script','ok');setRdy();return;}
+      else showM(msg,'Script error: '+data.msg+' — trying direct CSV...','ld');
+    }catch(e){showM(msg,'Script error — trying direct CSV...','ld');}
   }
-  // fallback CSV
   try{
     const url=`https://docs.google.com/spreadsheets/d/${p.sid}/gviz/tq?tqx=out:csv&sheet=${encodeURIComponent(sname)}&range=${readCol}:${readCol}`;
     const res=await fetch(url);
-    if(!res.ok)throw new Error();
+    if(!res.ok)throw new Error('Sheet not accessible (HTTP '+res.status+')');
     const text=await res.text();
     const rows=text.split('\n').map(r=>r.replace(/"/g,'').trim()).filter(r=>r.length>1);
     meterSet=new Set(rows.map(r=>norm(r)));
-    updBadge();showM(msg,'✅ '+meterSet.size+' meters loaded','ok');setReady();
-  }catch(e){showM(msg,'Failed — make sure sheet is shared (Anyone = Viewer)','err');}
+    updB();showM(msg,'✅ '+meterSet.size+' meters loaded (direct CSV)','ok');setRdy();
+  }catch(e){showM(msg,'❌ Failed: '+e.message+'\nMake sure sheet is shared as Anyone=Viewer','err');}
 }
-function loadPasted(){
-  const rows=document.getElementById('paste-box').value.split('\n').map(r=>r.trim()).filter(r=>r);
-  const msg=document.getElementById('paste-msg');
-  if(!rows.length){showM(msg,'Nothing to load','err');return;}
-  meterSet=new Set(rows.map(r=>norm(r)));
-  updBadge();showM(msg,'✅ '+meterSet.size+' meters loaded (offline)','ok');setReady();
-}
-
-// ══ CAMERA ═════════════════════════════════════════════════════════════════
+function loadPasted(){const rows=document.getElementById('pasteb').value.split('\n').map(r=>r.trim()).filter(r=>r);const msg=document.getElementById('pmsg');if(!rows.length){showM(msg,'Nothing to load','err');return;}meterSet=new Set(rows.map(r=>norm(r)));updB();showM(msg,'✅ '+meterSet.size+' meters loaded (offline)','ok');setRdy();}
+// ── CAMERA ─────────────────────────────────────────────────────────────────
 function toggleCam(){camRun?stopCam():startCam();}
 function startCam(){
-  document.getElementById('cam-st').textContent='Starting camera...';
-  document.getElementById('cam-btn').textContent='⏹ Stop Camera';
-  document.getElementById('cam-btn').className='btn btn-stop';
-  document.getElementById('scan-ov').style.display='block';
+  document.getElementById('camst').textContent='Starting camera...';
+  document.getElementById('cbtn').textContent='⏹ Stop Camera';
+  document.getElementById('cbtn').className='btn bst';
+  document.getElementById('sov').style.display='block';
   scanner=new Html5Qrcode('reader');
-  const cfg={fps:10,qrbox:{width:220,height:100},aspectRatio:1.6,
-    formatsToSupport:[Html5QrcodeSupportedFormats.CODE_128,Html5QrcodeSupportedFormats.CODE_39,Html5QrcodeSupportedFormats.EAN_13,Html5QrcodeSupportedFormats.EAN_8,Html5QrcodeSupportedFormats.UPC_A,Html5QrcodeSupportedFormats.ITF]};
+  const cfg={fps:10,qrbox:{width:220,height:100},aspectRatio:1.6,formatsToSupport:[Html5QrcodeSupportedFormats.CODE_128,Html5QrcodeSupportedFormats.CODE_39,Html5QrcodeSupportedFormats.EAN_13,Html5QrcodeSupportedFormats.EAN_8,Html5QrcodeSupportedFormats.UPC_A,Html5QrcodeSupportedFormats.ITF]};
   scanner.start({facingMode:'environment'},cfg,(code)=>{if(!inCD){startCD();processCode(code);}},null)
-    .then(()=>{camRun=true;document.getElementById('cam-st').textContent='📷 Camera active — point at barcode';})
-    .catch(err=>{document.getElementById('cam-st').textContent='Camera error: '+err;document.getElementById('cam-btn').textContent='▶ Start Camera';document.getElementById('cam-btn').className='btn btn-p';document.getElementById('scan-ov').style.display='none';});
+    .then(()=>{camRun=true;document.getElementById('camst').textContent='📷 Camera active — point at barcode';})
+    .catch(err=>{document.getElementById('camst').textContent='❌ Camera error: '+err;document.getElementById('cbtn').textContent='▶ Start Camera';document.getElementById('cbtn').className='btn bp';document.getElementById('sov').style.display='none';});
 }
-function stopCam(){
-  if(scanner){scanner.stop().then(()=>{scanner.clear();scanner=null;camRun=false;inCD=false;document.getElementById('cam-btn').textContent='▶ Start Camera';document.getElementById('cam-btn').className='btn btn-p';document.getElementById('cam-st').textContent='Camera stopped';document.getElementById('scan-ov').style.display='none';document.getElementById('cdbar-w').style.display='none';}).catch(()=>{});}
-}
-function startCD(){
-  const s=parseInt(document.getElementById('cd-sec').value)||2;
-  inCD=true;
-  const w=document.getElementById('cdbar-w'),b=document.getElementById('cdbar');
-  w.style.display='block';b.style.transition='none';b.style.width='100%';
-  setTimeout(()=>{b.style.transition=`width ${s}s linear`;b.style.width='0%';},50);
-  setTimeout(()=>{inCD=false;w.style.display='none';b.style.width='100%';},s*1000);
-}
-
-// ══ PROCESS SCAN ═══════════════════════════════════════════════════════════
+function stopCam(){if(scanner){scanner.stop().then(()=>{scanner.clear();scanner=null;camRun=false;inCD=false;document.getElementById('cbtn').textContent='▶ Start Camera';document.getElementById('cbtn').className='btn bp';document.getElementById('camst').textContent='Camera stopped';document.getElementById('sov').style.display='none';document.getElementById('cdw').style.display='none';}).catch(()=>{});}}
+function startCD(){const s=parseInt(document.getElementById('cds').value)||2;inCD=true;const w=document.getElementById('cdw'),b=document.getElementById('cdb');w.style.display='block';b.style.transition='none';b.style.width='100%';setTimeout(()=>{b.style.transition=`width ${s}s linear`;b.style.width='0%';},50);setTimeout(()=>{inCD=false;w.style.display='none';b.style.width='100%';},s*1000);}
+// ── PROCESS SCAN ───────────────────────────────────────────────────────────
 function processCode(raw){
   if(!raw||raw.length<2)return;
-  const n=norm(raw);
-  const found=meterSet.has(n);
-  const prev=scannedMap.get(n);
-  const isDup=!!prev;
-  const now=new Date();
+  const n=norm(raw);const found=meterSet.has(n);const prev=scannedMap.get(n);const isDup=!!prev;const now=new Date();
   stats.t++;if(isDup)stats.d++;else if(found)stats.f++;else stats.n++;
-  const entry={raw,norm:n,found,isDup,time:now.toISOString(),
-    prevTime:isDup?prev.time.toISOString():null,prevFound:isDup?prev.found:null,
-    device:deviceName||'Unknown',project:curProj?.name||'',pid:curPID,wbSt:'none'};
-  scanLog.unshift(entry);
-  if(!isDup)scannedMap.set(n,{time:now,found});
-  curProj.stats=stats;curProj.log=scanLog.slice(0,500);
-  saveLocal();saveLog();
-  updateStatBadges();showResult(entry);
+  const entry={raw,norm:n,found,isDup,time:now.toISOString(),prevTime:isDup?prev.time.toISOString():null,prevFound:isDup?prev.found:null,device:devName||'Unknown',project:curProj?.name||'',pid:curPID,wbSt:'none'};
+  scanLog.unshift(entry);if(!isDup)scannedMap.set(n,{time:now,found});
+  curProj.stats=stats;curProj.log=scanLog.slice(0,500);saveLocal();saveLog();updateSB();showResult(entry);
   if(isDup)bD();else if(found)bF();else bN();
-  if(navigator.vibrate&&document.getElementById('vib-en').checked){
-    if(isDup)navigator.vibrate([100,60,100]);else if(found)navigator.vibrate(80);else navigator.vibrate([200,60,200]);
-  }
-  // write to sheet
-  const surl=document.getElementById('s-surl').value.trim()||curProj?.surl||'';
+  if(navigator.vibrate&&document.getElementById('vben').checked){if(isDup)navigator.vibrate([100,60,100]);else if(found)navigator.vibrate(80);else navigator.vibrate([200,60,200]);}
+  const surl=document.getElementById('surl2').value.trim()||curProj?.surl||'';
   if(surl){
-    writeLogToSheet(surl,entry);
-    if(document.getElementById('wb-en').checked){
-      const stF=document.getElementById('s-sfound').value||'SCANNED ✓';
-      const stN=document.getElementById('s-snotfound').value||'';
+    // Auto-save surl to project if not already saved
+    if(surl&&curProj&&!curProj.surl){curProj.surl=surl;saveLocal();}
+    wLog(surl,entry);
+    const wbOn=document.getElementById('wben').checked||curProj?.wbEnabled||false;
+    if(wbOn){
+      const stF=document.getElementById('ssfound').value||curProj?.statusFound||'SCANNED ✓';
+      const stN=document.getElementById('ssnf').value||curProj?.statusNotFound||'';
       const st=found?stF:stN;
-      if(st)writeStatusToSheet(surl,entry,st);
+      if(st)wStatus(surl,entry,st);
     }
   }
 }
-
-async function writeLogToSheet(surl,e){
-  const p=curProj;
+async function wLog(surl,e){
   try{
-    const params=new URLSearchParams({action:'writelog',sheetId:p.sid,sheetName:p.sname,
-      meter:e.raw,status:e.isDup?'DUPLICATE':(e.found?'FOUND':'NOT FOUND'),
-      device:e.device,project:e.project,pid:e.pid||''});
+    const params=new URLSearchParams({action:'writelog',sheetId:curProj.sid,sheetName:curProj.sname||'Master Sheet PSW',meter:e.raw,status:e.isDup?'DUPLICATE':(e.found?'FOUND':'NOT FOUND'),device:e.device,project:e.project,pid:e.pid||''});
     await fetch(surl+'?'+params);
   }catch(err){}
 }
-async function writeStatusToSheet(surl,e,st){
-  const p=curProj;
+async function wStatus(surl,e,st){
   try{
-    const params=new URLSearchParams({action:'writestatus',sheetId:p.sid,sheetName:p.sname,
-      meterCol:readCol,writeCol,meter:e.raw,status:st,device:e.device});
+    const params=new URLSearchParams({action:'writestatus',sheetId:curProj.sid,sheetName:curProj.sname||'Master Sheet PSW',meterCol:readCol,writeCol,meter:e.raw,status:st,device:e.device});
     const res=await fetch(surl+'?'+params);
     const data=await res.json();
     e.wbSt=data.success?'ok':'err';
-    if(data.success)wbStats.ok++;else wbStats.err++;
-    document.getElementById('wb-ok').textContent=wbStats.ok;
+    if(data.success){wbStats.ok++;document.getElementById('wbok').textContent=wbStats.ok;}
+    else{wbStats.err++;}
   }catch(err){e.wbSt='err';wbStats.err++;}
 }
-
-// ══ REFRESH LOG ═════════════════════════════════════════════════════════════
+// ── REFRESH LOG ────────────────────────────────────────────────────────────
 async function refreshLog(){
-  const surl=document.getElementById('s-surl').value.trim()||curProj?.surl||'';
+  const surl=document.getElementById('surl2').value.trim()||curProj?.surl||'';
   if(!surl||!curProj)return;
-  setSyncSt('⏳ Syncing...','var(--adk)');
+  setSS('⏳ Syncing...','var(--adk)');
   try{
-    const params=new URLSearchParams({action:'readlog',sheetId:curProj.sid,sheetName:curProj.sname,pid:curPID});
+    const params=new URLSearchParams({action:'readlog',sheetId:curProj.sid,sheetName:curProj.sname||'Master Sheet PSW',pid:curPID});
     const res=await fetch(surl+'?'+params);
     const data=await res.json();
     if(data.success&&data.rows&&data.rows.length){
-      const existing=new Set(scanLog.map(e=>e.raw+'|'+e.time));
+      const ex=new Set(scanLog.map(e=>e.raw+'|'+e.time));
       data.rows.forEach(r=>{
-        const entry={raw:r[0],norm:norm(r[0]),found:r[1]==='FOUND',isDup:r[1]==='DUPLICATE',
-          time:r[2]||new Date().toISOString(),device:r[2]||'Unknown',project:r[3]||'',pid:r[4]||'',wbSt:'ok'};
-        const key=entry.raw+'|'+entry.time;
-        if(!existing.has(key)){scanLog.push(entry);existing.add(key);}
+        const entry={raw:r[0],norm:norm(r[0]),found:r[1]==='FOUND',isDup:r[1]==='DUPLICATE',time:r[2]||'',device:r[2]||'',project:r[3]||'',pid:r[4]||'',wbSt:'ok'};
+        if(!ex.has(entry.raw+'|'+entry.time)){scanLog.push(entry);ex.add(entry.raw+'|'+entry.time);}
       });
       scanLog.sort((a,b)=>new Date(b.time)-new Date(a.time));
       scanLog=scanLog.slice(0,500);
-      lastSync=new Date();
-      document.getElementById('si-sync').textContent=fmt(lastSync);
-      setSyncSt('✅ Synced','var(--gdk)');
-    }else setSyncSt('✅ Up to date','var(--gdk)');
-  }catch(e){setSyncSt('⚠️ Sync failed','var(--adk)');}
+      document.getElementById('sisync').textContent=fmt(new Date());
+      setSS('✅ Synced','var(--gdk)');
+    }else setSS('✅ Up to date','var(--gdk)');
+  }catch(e){setSS('⚠️ Sync failed','var(--adk)');}
   if(document.getElementById('screen-log').classList.contains('active'))renderLog();
 }
-function setSyncSt(msg,color){const el=document.getElementById('sync-st');el.textContent=msg;el.style.color=color;setTimeout(()=>el.textContent='',4000);}
-
-// ══ RESULT / LOG / STATS ══════════════════════════════════════════════════
+function setSS(msg,color){const el=document.getElementById('sst');el.textContent=msg;el.style.color=color;setTimeout(()=>el.textContent='',4000);}
+// ── RESULT ─────────────────────────────────────────────────────────────────
 function showResult(e){
-  const box=document.getElementById('result-box');
-  box.className='';
+  const box=document.getElementById('rbox');box.className='';
   if(e.isDup){box.classList.add('dup','pa');document.getElementById('ri').textContent='⚠️';document.getElementById('rs').textContent='DUPLICATE SCAN';document.getElementById('rs').style.color='var(--amb)';document.getElementById('rd').textContent='First scan: '+fmt(new Date(e.prevTime))+(e.prevFound?' — FOUND':' — NOT FOUND');document.getElementById('rd').style.color='var(--adk)';}
-  else if(e.found){box.classList.add('found','pg');document.getElementById('ri').textContent='✅';document.getElementById('rs').textContent='FOUND IN LIST';document.getElementById('rs').style.color='var(--gdk)';document.getElementById('rd').textContent='Meter is in Master Sheet PSW';document.getElementById('rd').style.color='var(--gdk)';}
-  else{box.classList.add('notfound','pr');document.getElementById('ri').textContent='❌';document.getElementById('rs').textContent='NOT FOUND';document.getElementById('rs').style.color='var(--rdk)';document.getElementById('rd').textContent='Meter is NOT in the list';document.getElementById('rd').style.color='var(--rdk)';}
+  else if(e.found){box.classList.add('found','pg');document.getElementById('ri').textContent='✅';document.getElementById('rs').textContent='FOUND IN LIST';document.getElementById('rs').style.color='var(--gdk)';document.getElementById('rd').textContent='Meter is in '+curProj?.sname;document.getElementById('rd').style.color='var(--gdk)';}
+  else{box.classList.add('notfound','pr');document.getElementById('ri').textContent='❌';document.getElementById('rs').textContent='NOT FOUND';document.getElementById('rs').style.color='var(--rdk)';document.getElementById('rd').textContent='Meter NOT in list';document.getElementById('rd').style.color='var(--rdk)';}
   document.getElementById('rm').textContent=e.raw;
   setTimeout(()=>box.classList.remove('pg','pr','pa'),500);
 }
-function setReady(){document.getElementById('result-box').className='';document.getElementById('ri').textContent='📷';document.getElementById('rs').textContent='Ready — '+meterSet.size+' meters loaded';document.getElementById('rs').style.color='var(--gdk)';document.getElementById('rm').textContent='';document.getElementById('rd').textContent='Start camera or use manual input';document.getElementById('rd').style.color='var(--mut)';}
-
-function flog(f){
-  curFilter=f;
-  ['fa','ff','fn','fd'].forEach((id,i)=>{const b=document.getElementById(id),on=['all','found','notfound','dup'][i]===f;b.style.background=on?'var(--mid)':'';b.style.color=on?'#fff':'';b.style.borderColor=on?'var(--mid)':'var(--bdr)';});
-  renderLog();
-}
+function setRdy(){document.getElementById('rbox').className='';document.getElementById('ri').textContent='📷';document.getElementById('rs').textContent='Ready — '+meterSet.size+' meters loaded';document.getElementById('rs').style.color='var(--gdk)';document.getElementById('rm').textContent='';document.getElementById('rd').textContent='Start camera or use manual input';document.getElementById('rd').style.color='var(--mut)';}
+// ── LOG ─────────────────────────────────────────────────────────────────────
+function flog(f){curFilter=f;['fa','ff','fn','fd'].forEach((id,i)=>{const b=document.getElementById(id),on=['all','found','notfound','dup'][i]===f;b.style.background=on?'var(--mid)':'';b.style.color=on?'#fff':'';b.style.borderColor=on?'var(--mid)':'var(--bdr)';});renderLog();}
 function renderLog(){
-  const list=document.getElementById('log-list');
+  const list=document.getElementById('llist');
   let fl=scanLog;
   if(curFilter==='found')fl=scanLog.filter(e=>e.found&&!e.isDup);
   if(curFilter==='notfound')fl=scanLog.filter(e=>!e.found&&!e.isDup);
   if(curFilter==='dup')fl=scanLog.filter(e=>e.isDup);
-  if(!fl.length){list.innerHTML='<div class="lempty">'+(scanLog.length?'No entries match':'No scans yet')+'</div>';return;}
+  if(!fl.length){list.innerHTML='<div class="le">'+(scanLog.length?'No entries match':'No scans yet')+'</div>';return;}
   list.innerHTML=fl.map(e=>{
     const cls=e.isDup?'di':(e.found?'fi':'ni');
     const ic=e.isDup?'⚠️':(e.found?'✅':'❌');
     const desc=e.isDup?('Dup — first: '+fmt(new Date(e.prevTime))+(e.prevFound?' Found':' Not found')):(e.found?'Found in list':'Not found');
     const dc=e.isDup?'d':(e.found?'f':'n');
     const wb=e.wbSt==='ok'?'<div class="lwb ok">✓ Written to sheet</div>':e.wbSt==='err'?'<div class="lwb err">✗ Write failed</div>':'';
-    return `<div class="li ${cls}">
-      <div class="lic">${ic}</div>
-      <div class="lin"><div class="lnum">${e.raw}</div><div class="ldesc ${dc}">${desc}</div><div class="ldev">👤 ${e.device||'Unknown'}</div>${wb}</div>
-      <div class="lr"><div class="ltime">${fmt(new Date(e.time))}</div></div>
-    </div>`;
+    return `<div class="li ${cls}"><div class="lic">${ic}</div><div class="lin"><div class="lnu">${e.raw}</div><div class="lde ${dc}">${desc}</div><div class="ldv">👤 ${e.device||'Unknown'}</div>${wb}</div><div class="lr"><div class="lt">${fmt(new Date(e.time))}</div></div></div>`;
   }).join('');
 }
-
-function updateStatBadges(){document.getElementById('st-t').textContent=stats.t;document.getElementById('st-f').textContent=stats.f;document.getElementById('st-n').textContent=stats.n;document.getElementById('st-d').textContent=stats.d;}
+// ── STATS ───────────────────────────────────────────────────────────────────
+function updateSB(){document.getElementById('stt').textContent=stats.t;document.getElementById('stf').textContent=stats.f;document.getElementById('stn').textContent=stats.n;document.getElementById('std').textContent=stats.d;}
 function updateStats(){
-  updateStatBadges();
+  updateSB();
   const pf=stats.t>0?Math.round(stats.f/stats.t*100):0;
   const pl=meterSet.size>0?Math.round(stats.f/meterSet.size*100):0;
-  document.getElementById('pf').textContent=pf+'%';document.getElementById('pl').textContent=pl+'%';
-  document.getElementById('bf').style.width=pf+'%';document.getElementById('bl').style.width=pl+'%';
-  document.getElementById('si-loaded').textContent=meterSet.size;
-  document.getElementById('wb-ok').textContent=wbStats.ok;
+  document.getElementById('spf').textContent=pf+'%';document.getElementById('spl').textContent=pl+'%';
+  document.getElementById('sbf').style.width=pf+'%';document.getElementById('sbl').style.width=pl+'%';
+  document.getElementById('siloaded').textContent=meterSet.size;
+  document.getElementById('wbok').textContent=wbStats.ok;
+}
+// ── EXPORT / CLEAR ──────────────────────────────────────────────────────────
+// ── SAVE SETTINGS ──────────────────────────────────────────────────────────
+function saveSettings(){
+  if(!curProj){alert('No project open');return;}
+  const surl=document.getElementById('surl2').value.trim();
+  const sname=document.getElementById('ssn').value.trim()||curProj.sname;
+  const wbEnabled=document.getElementById('wben').checked;
+  const stFound=document.getElementById('ssfound').value||'SCANNED ✓';
+  const stNF=document.getElementById('ssnf').value||'';
+  // Save all back to project object
+  curProj.surl=surl;
+  curProj.sname=sname;
+  curProj.readCol=readCol;
+  curProj.writeCol=writeCol;
+  curProj.wbEnabled=wbEnabled;
+  curProj.statusFound=stFound;
+  curProj.statusNotFound=stNF;
+  projects[curPID]=curProj;
+  saveLocal();
+  // Update share code with new surl
+  const shareObj={pid:curPID,name:curProj.name,sid:curProj.sid,sname,surl,readCol,writeCol,createdBy:curProj.createdBy||''};
+  document.getElementById('sharecode').value=encode(shareObj);
+  showM(document.getElementById('save-msg'),'✅ Settings saved — Apps Script URL, columns and status text are now stored permanently for this project','ok');
 }
 
-function exportCSV(){
-  if(!scanLog.length){alert('No log to export');return;}
-  const rows=['Meter,Status,Duplicate,Device,Time,Project,ProjectID'];
-  [...scanLog].reverse().forEach(e=>{const st=e.isDup?'DUPLICATE':(e.found?'FOUND':'NOT FOUND');rows.push(`"${e.raw}","${st}","${e.isDup}","${e.device||''}","${fmt(new Date(e.time))}","${e.project||''}","${e.pid||''}"`)});
-  const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([rows.join('\n')],{type:'text/csv'}));a.download='scan_'+curPID+'_'+new Date().toISOString().slice(0,10)+'.csv';a.click();
+// ── TEST WRITE-BACK (meter row status) ────────────────────────────────────
+async function testWriteBack(){
+  const surl=document.getElementById('surl2').value.trim()||curProj?.surl||'';
+  const meter=document.getElementById('wb-test-meter').value.trim();
+  const wCol=writeCol;
+  const stFound=document.getElementById('ssfound').value||'SCANNED ✓';
+  const dot=document.getElementById('td5');
+  const msg=document.getElementById('tm5');
+  if(!surl){showM(msg,'❌ Enter Apps Script URL above first','err');return;}
+  if(!meter){showM(msg,'❌ Enter a meter number to test write-back','err');return;}
+  if(!wCol||wCol===''){showM(msg,'❌ Select a write-back column first','err');return;}
+  if(!curProj?.sid){showM(msg,'❌ No Sheet ID found in project','err');return;}
+  dot.className='test-dot ld';
+  showM(msg,'Testing write-back — writing "'+stFound+'" to column '+wCol+' for meter '+meter+'...','ld');
+  try{
+    const params=new URLSearchParams({
+      action:'writestatus',
+      sheetId:curProj.sid,
+      sheetName:document.getElementById('ssn').value.trim()||curProj.sname||'Master Sheet PSW',
+      meterCol:readCol,
+      writeCol:wCol,
+      meter:meter,
+      status:stFound+' (TEST)',
+      device:'Test — '+devName
+    });
+    const res=await fetch(surl+'?'+params);
+    const txt=await res.text();
+    const match=txt.match(/\{.*\}/s);
+    if(match){
+      const data=JSON.parse(match[0]);
+      if(data.success){
+        dot.className='test-dot ok';
+        showM(msg,'✅ SUCCESS — Status written to row '+data.row+' in your sheet!\n\nOpen Google Sheet now — check column '+wCol+' for meter '+meter+' — you should see "'+stFound+' (TEST)"','ok');
+      }else{
+        dot.className='test-dot err';
+        showM(msg,'❌ Write failed: '+data.msg+'\n\nPossible reasons:\n1. Meter "'+meter+'" not found in column '+readCol+'\n2. Wrong sheet tab name: "'+curProj.sname+'"\n3. Column '+wCol+' is protected\n\nCheck exact meter number exists in sheet','err');
+      }
+    }else{
+      dot.className='test-dot err';
+      showM(msg,'❌ Unexpected response from Apps Script:\n'+txt.slice(0,200),'err');
+    }
+  }catch(e){
+    dot.className='test-dot err';
+    showM(msg,'❌ Network error: '+e.message+'\n\nCheck Apps Script URL is correct and deployed','err');
+  }
 }
-function clearLog(){if(!confirm('Clear all scan history for this project?'))return;scanLog=[];scannedMap.clear();stats={t:0,f:0,n:0,d:0};wbStats={ok:0,err:0};curProj.log=[];curProj.stats=stats;saveLocal();saveLog();updateStatBadges();renderLog();setReady();}
 
-// ══ TABS ═══════════════════════════════════════════════════════════════════
-function showTab(n){
-  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
-  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
-  document.getElementById('screen-'+n).classList.add('active');
-  ['scan','log','stats','setup'].forEach((k,i)=>{if(k===n)document.querySelectorAll('.tab')[i].classList.add('active');});
-  if(n==='stats')updateStats();if(n==='log'){renderLog();refreshLog();}
-}
-
-// ══ COLUMN SELECTORS ═══════════════════════════════════════════════════════
-function selRC(el,v){selPill2('rc-pills',el,v);readCol=v;if(curProj){curProj.readCol=v;saveLocal();}}
-function selWC(el,v){selPill2('wc-pills',el,v);writeCol=v;if(curProj){curProj.writeCol=v;saveLocal();}}
-function selPill(pid,el,v){document.querySelectorAll('#'+pid+' .cp').forEach(p=>p.classList.remove('sel'));el.classList.add('sel');}
-function selPill2(pid,el,v){document.querySelectorAll('#'+pid+' .cp').forEach(p=>p.classList.remove('sel'));el.classList.add('sel');}
-function setSelPill2(pid,val){document.querySelectorAll('#'+pid+' .cp').forEach(p=>{p.classList.remove('sel');if(p.textContent===val)p.classList.add('sel');});}
-function getSelPill(pid){let v='';document.querySelectorAll('#'+pid+' .cp').forEach(p=>{if(p.classList.contains('sel'))v=p.textContent;});return v;}
-
-// ══ HELPERS ════════════════════════════════════════════════════════════════
+function exportCSV(){if(!scanLog.length){alert('No log');return;}const rows=['Meter,Status,Device,Time,Project,PID'];[...scanLog].reverse().forEach(e=>{const st=e.isDup?'DUPLICATE':(e.found?'FOUND':'NOT FOUND');rows.push(`"${e.raw}","${st}","${e.device||''}","${fmt(new Date(e.time))}","${e.project||''}","${e.pid||''}"`)});const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([rows.join('\n')],{type:'text/csv'}));a.download='scan_'+curPID+'_'+new Date().toISOString().slice(0,10)+'.csv';a.click();}
+function clearLog(){if(!confirm('Clear scan history for this project?'))return;scanLog=[];scannedMap.clear();stats={t:0,f:0,n:0,d:0};wbStats={ok:0,err:0};curProj.log=[];curProj.stats=stats;saveLocal();saveLog();updateSB();renderLog();setRdy();}
+// ── TABS ────────────────────────────────────────────────────────────────────
+function showTab(n){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));document.getElementById('screen-'+n).classList.add('active');['scan','log','stats','setup'].forEach((k,i)=>{if(k===n)document.querySelectorAll('.tab')[i].classList.add('active');});if(n==='stats')updateStats();if(n==='log'){renderLog();refreshLog();}}
+// ── COL SELECTORS ────────────────────────────────────────────────────────────
+function selRC(el,v){sp('rcp',el,v);readCol=v;if(curProj){curProj.readCol=v;saveLocal();}}
+function selWC(el,v){sp('wcp',el,v);writeCol=v;if(curProj){curProj.writeCol=v;saveLocal();}}
+function sp(pid,el,v){document.querySelectorAll('#'+pid+' .cp').forEach(p=>p.classList.remove('sel'));el.classList.add('sel');}
+function setP2(pid,val){document.querySelectorAll('#'+pid+' .cp').forEach(p=>{p.classList.remove('sel');if(p.textContent===val)p.classList.add('sel');});}
+function getSelP(pid){let v='';document.querySelectorAll('#'+pid+' .cp').forEach(p=>{if(p.classList.contains('sel'))v=p.textContent;});return v;}
+// ── HELPERS ──────────────────────────────────────────────────────────────────
 function norm(v){return String(v).replace(/\s/g,'').toLowerCase();}
 function fmt(d){try{return d.toLocaleTimeString('en-PK',{hour:'2-digit',minute:'2-digit',second:'2-digit'});}catch(e){return '';}}
-function updBadge(){document.getElementById('loaded-badge').textContent=meterSet.size+' loaded';}
-function showM(el,msg,type){el.className='smsg '+type;el.textContent=msg;el.style.display='block';}
+function updB(){document.getElementById('lbadge').textContent=meterSet.size+' loaded';}
+function showM(el,msg,type){el.className='sm '+type;el.textContent=msg;el.style.display='block';}
 </script>
 </body>
 </html>
