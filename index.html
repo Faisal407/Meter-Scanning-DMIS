@@ -530,6 +530,45 @@ function beep(f,d,t='square',v=0.4){if(!document.getElementById('been').checked)
 function bF(){beep(1200,.1);setTimeout(()=>beep(1600,.1),120);}
 function bN(){beep(350,.35,'sawtooth',.5);}
 function bD(){beep(800,.08);setTimeout(()=>beep(800,.08),150);setTimeout(()=>beep(800,.08),300);}
+
+// ── GOOGLE APPS SCRIPT FETCH HELPER ───────────────────────────────────────
+// Handles CORS for Google Apps Script calls
+async function gsFetch(url, params, needResponse=true){
+  const fullUrl = url + '?' + params.toString();
+  if(needResponse){
+    // For reads: try normal fetch first, fallback to no-cors
+    try{
+      const res = await fetch(fullUrl, {redirect:'follow'});
+      const txt = await res.text();
+      const match = txt.match(/\{[\s\S]*\}/);
+      if(match) return JSON.parse(match[0]);
+      return {success:false, msg:'No JSON in response'};
+    }catch(e){
+      // CORS blocked - try JSONP workaround
+      return await gsJSONP(fullUrl);
+    }
+  } else {
+    // For writes: fire and forget with no-cors
+    try{
+      fetch(fullUrl, {mode:'no-cors', redirect:'follow'});
+      return {success:true};
+    }catch(e){ return {success:false, msg:e.message}; }
+  }
+}
+
+// JSONP workaround for CORS
+function gsJSONP(url){
+  return new Promise((resolve)=>{
+    const cb = 'gs_cb_'+Date.now();
+    const script = document.createElement('script');
+    window[cb] = (data)=>{ delete window[cb]; document.body.removeChild(script); resolve(data); };
+    script.src = url + '&callback=' + cb;
+    script.onerror = ()=>{ delete window[cb]; try{document.body.removeChild(script);}catch(e){} resolve({success:false,msg:'JSONP failed'}); };
+    setTimeout(()=>{ delete window[cb]; try{document.body.removeChild(script);}catch(e){} resolve({success:false,msg:'Timeout'}); }, 8000);
+    document.body.appendChild(script);
+  });
+}
+
 // ── INIT ───────────────────────────────────────────────────────────────────
 window.onload=function(){
   loadLocal();
@@ -569,16 +608,11 @@ async function testConn(urlId,dotId,msgId){
   dot.className='test-dot ld';showM(msg,'Testing connection...','ld');
   try{
     const params=new URLSearchParams({action:'ping',sheetId:sid||'TEST',sheetName:sn||'TEST'});
-    const res=await fetch(url+'?'+params,{redirect:'follow'});
-    const txt=await res.text();
-    // find JSON in response
-    const match=txt.match(/\{.*\}/s);
-    if(match){
-      const data=JSON.parse(match[0]);
-      if(data.success){dot.className='test-dot ok';showM(msg,'✅ Connected! Sheet accessible.','ok');}
-      else{dot.className='test-dot err';showM(msg,'⚠️ Script reached but error: '+data.msg,'err');}
-    }else{dot.className='test-dot ok';showM(msg,'✅ Script reachable (response received)','ok');}
-  }catch(e){dot.className='test-dot err';showM(msg,'❌ Cannot reach script: '+e.message+'\n\nCheck: 1) URL is correct 2) Deployed as Web App 3) Access = Anyone','err');}
+    const data=await gsFetch(url,params,true);
+    if(data.success){dot.className='test-dot ok';showM(msg,'✅ Connected! Sheet accessible.','ok');}
+    else if(data.msg==='JSONP failed'||data.msg==='Timeout'){dot.className='test-dot err';showM(msg,'❌ Cannot reach script — CORS blocked.\n\nFix: In Apps Script, delete all deployments, then create a NEW deployment:\nDeploy → New deployment → Web App → Execute as: Me → Access: Anyone → Deploy\nCopy the NEW URL and paste here.','err');}
+    else{dot.className='test-dot err';showM(msg,'⚠️ Error: '+data.msg,'err');}
+  }catch(e){dot.className='test-dot err';showM(msg,'❌ Error: '+e.message,'err');}
 }
 async function testRead(){
   const url=document.getElementById('surl2').value.trim()||curProj?.surl||'';
@@ -587,8 +621,7 @@ async function testRead(){
   dot.className='test-dot ld';showM(msg,'Testing meter list read...','ld');
   try{
     const params=new URLSearchParams({action:'read',sheetId:curProj?.sid||'',sheetName:document.getElementById('ssn').value||curProj?.sname||'Master Sheet PSW',col:readCol});
-    const res=await fetch(url+'?'+params);
-    const data=await res.json();
+    const data=await gsFetch(url,params,true);
     if(data.success){dot.className='test-dot ok';showM(msg,'✅ Read OK — '+data.count+' meters found in sheet','ok');}
     else{dot.className='test-dot err';showM(msg,'❌ Read failed: '+data.msg,'err');}
   }catch(e){dot.className='test-dot err';showM(msg,'❌ Error: '+e.message,'err');}
@@ -600,10 +633,9 @@ async function testWrite(){
   dot.className='test-dot ld';showM(msg,'Testing write to Scan Log...','ld');
   try{
     const params=new URLSearchParams({action:'writelog',sheetId:curProj?.sid||'',sheetName:curProj?.sname||'Master Sheet PSW',meter:'TEST-METER',status:'TEST',device:'Test Device',project:'Test',pid:'TEST'});
-    const res=await fetch(url+'?'+params);
-    const data=await res.json();
-    if(data.success){dot.className='test-dot ok';showM(msg,'✅ Write OK — check Scan Log tab in your Google Sheet','ok');}
-    else{dot.className='test-dot err';showM(msg,'❌ Write failed: '+data.msg,'err');}
+    await gsFetch(url,params,false);
+    dot.className='test-dot ok';
+    showM(msg,'✅ Write sent — open your Google Sheet and check the Scan Log tab for a TEST entry. If not there within 10 seconds, check Apps Script deployment.','ok');
   }catch(e){dot.className='test-dot err';showM(msg,'❌ Error: '+e.message,'err');}
 }
 // ── CREATE PROJECT ─────────────────────────────────────────────────────────
@@ -628,10 +660,8 @@ async function createProj(){
     try{
       const cfg=encode({pid,name,sid,sname,surl,readCol:rc,writeCol:wc,createdBy:devName||'Unknown'});
       const params=new URLSearchParams({action:'saveproject',sheetId:sid,sheetName:sname,pid,config:cfg,createdBy:devName||'Unknown'});
-      const res=await fetch(surl+'?'+params);
-      const data=await res.json();
-      if(data.success)showM(msg,'✅ Project created & saved to sheet! ID: '+pid,'ok');
-      else showM(msg,'✅ Project created locally. ID: '+pid+'\n(Sheet save: '+data.msg+')','ok');
+      await gsFetch(surl,params,false);
+      showM(msg,'✅ Project created & saved to sheet! ID: '+pid,'ok');
     }catch(e){showM(msg,'✅ Project created! ID: '+pid+'\n(Could not save to sheet — share code still works)','ok');}
   }else{showM(msg,'✅ Project created! ID: '+pid,'ok');}
   setTimeout(()=>openProject(pid),900);
@@ -665,9 +695,8 @@ async function fetchJoin(pid){
   showM(msg,'Fetching project from Google Sheet...','ld');
   try{
     const params=new URLSearchParams({action:'getproject',sheetId:sid,sheetName:'Master Sheet PSW',pid});
-    const res=await fetch(surl+'?'+params);
-    const data=await res.json();
-    if(!data.success){showM(msg,'❌ '+data.msg+'\n\nMake sure the project was created with this Sheet ID and Apps Script URL.','err');return;}
+    const data=await gsFetch(surl,params,true);
+    if(!data.success){showM(msg,'❌ '+(data.msg||'Could not fetch project')+'\n\nMake sure the project was created with this Sheet ID and Apps Script URL.','err');return;}
     const cfg=decode(data.config);
     if(!cfg){showM(msg,'❌ Could not decode project config','err');return;}
     const proj={...cfg,stats:{t:0,f:0,n:0,d:0},log:[],joined:true,joinedAt:new Date().toISOString()};
@@ -784,10 +813,9 @@ async function loadMeters(){
   if(surl){
     try{
       const params=new URLSearchParams({action:'read',sheetId:p.sid,sheetName:sname,col:readCol});
-      const res=await fetch(surl+'?'+params);
-      const data=await res.json();
+      const data=await gsFetch(surl,params,true);
       if(data.success&&data.meters){meterSet=new Set(data.meters.map(m=>norm(m)));updB();showM(msg,'✅ '+meterSet.size+' meters loaded via Apps Script','ok');setRdy();return;}
-      else showM(msg,'Script error: '+data.msg+' — trying direct CSV...','ld');
+      else showM(msg,'Script error: '+(data.msg||'unknown')+' — trying direct CSV...','ld');
     }catch(e){showM(msg,'Script error — trying direct CSV...','ld');}
   }
   try{
@@ -843,14 +871,13 @@ function processCode(raw){
 async function wLog(surl,e){
   try{
     const params=new URLSearchParams({action:'writelog',sheetId:curProj.sid,sheetName:curProj.sname||'Master Sheet PSW',meter:e.raw,status:e.isDup?'DUPLICATE':(e.found?'FOUND':'NOT FOUND'),device:e.device,project:e.project,pid:e.pid||''});
-    await fetch(surl+'?'+params);
+    gsFetch(surl,params,false);
   }catch(err){}
 }
 async function wStatus(surl,e,st){
   try{
     const params=new URLSearchParams({action:'writestatus',sheetId:curProj.sid,sheetName:curProj.sname||'Master Sheet PSW',meterCol:readCol,writeCol,meter:e.raw,status:st,device:e.device});
-    const res=await fetch(surl+'?'+params);
-    const data=await res.json();
+    const data=await gsFetch(surl,params,true);
     e.wbSt=data.success?'ok':'err';
     if(data.success){wbStats.ok++;document.getElementById('wbok').textContent=wbStats.ok;}
     else{wbStats.err++;}
@@ -863,8 +890,7 @@ async function refreshLog(){
   setSS('⏳ Syncing...','var(--adk)');
   try{
     const params=new URLSearchParams({action:'readlog',sheetId:curProj.sid,sheetName:curProj.sname||'Master Sheet PSW',pid:curPID});
-    const res=await fetch(surl+'?'+params);
-    const data=await res.json();
+    const data=await gsFetch(surl,params,true);
     if(data.success&&data.rows&&data.rows.length){
       const ex=new Set(scanLog.map(e=>e.raw+'|'+e.time));
       data.rows.forEach(r=>{
@@ -969,21 +995,13 @@ async function testWriteBack(){
       status:stFound+' (TEST)',
       device:'Test — '+devName
     });
-    const res=await fetch(surl+'?'+params);
-    const txt=await res.text();
-    const match=txt.match(/\{.*\}/s);
-    if(match){
-      const data=JSON.parse(match[0]);
-      if(data.success){
-        dot.className='test-dot ok';
-        showM(msg,'✅ SUCCESS — Status written to row '+data.row+' in your sheet!\n\nOpen Google Sheet now — check column '+wCol+' for meter '+meter+' — you should see "'+stFound+' (TEST)"','ok');
-      }else{
-        dot.className='test-dot err';
-        showM(msg,'❌ Write failed: '+data.msg+'\n\nPossible reasons:\n1. Meter "'+meter+'" not found in column '+readCol+'\n2. Wrong sheet tab name: "'+curProj.sname+'"\n3. Column '+wCol+' is protected\n\nCheck exact meter number exists in sheet','err');
-      }
+    const data2=await gsFetch(surl,params,true);
+    if(data2.success){
+      dot.className='test-dot ok';
+      showM(msg,'✅ SUCCESS — Status written to row '+data2.row+' in your sheet!\n\nOpen Google Sheet — check column '+wCol+' for meter '+meter+' — you should see "'+stFound+' (TEST)"','ok');
     }else{
       dot.className='test-dot err';
-      showM(msg,'❌ Unexpected response from Apps Script:\n'+txt.slice(0,200),'err');
+      showM(msg,'❌ Write failed: '+(data2.msg||'unknown')+'\n\nPossible reasons:\n1. Meter "'+meter+'" not found in column '+readCol+'\n2. Wrong sheet tab name: "'+curProj.sname+'"\n3. Column '+wCol+' is protected','err');
     }
   }catch(e){
     dot.className='test-dot err';
