@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -13,125 +13,149 @@
 <style>
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
 :root{
-  --blue:#1A3A5C;--mid:#1A5276;--accent:#2E86C1;
-  --green:#1D9E75;--gbg:#E1F5EE;--gdk:#085041;
+  --blue:#1A3A5C;--mid:#1A5276;--acc:#2E86C1;
+  --grn:#1D9E75;--gbg:#E1F5EE;--gdk:#085041;
   --red:#C0392B;--rbg:#FADBD8;--rdk:#7B241C;
   --amb:#B8860B;--abg:#FEF9E7;--adk:#7D6608;
+  --pur:#6C3483;--pbg:#F5EEF8;--pdk:#4A235A;
   --gray:#F4F4F4;--bdr:#DDD;--txt:#1C1C1C;--mut:#666;
   --wht:#FFF;--rad:12px;
 }
 body{background:#F0F2F5;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;color:var(--txt);min-height:100vh}
 
 /* SPLASH */
-#splash{position:fixed;inset:0;background:var(--blue);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:9999;color:#fff}
-#splash h1{font-size:24px;font-weight:700;margin-bottom:6px}
-#splash p{font-size:13px;opacity:0.7;margin-bottom:30px}
-#splash-spinner{width:36px;height:36px;border:3px solid rgba(255,255,255,0.3);border-top-color:#fff;border-radius:50%;animation:spin 0.8s linear infinite}
+#splash{position:fixed;inset:0;background:var(--blue);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:9999;color:#fff;text-align:center;padding:20px}
+#splash h1{font-size:26px;font-weight:700;margin-bottom:6px}
+#splash p{font-size:13px;opacity:0.7;margin-bottom:28px}
+.spinner{width:36px;height:36px;border:3px solid rgba(255,255,255,0.3);border-top-color:#fff;border-radius:50%;animation:spin 0.8s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
+#splash-msg{font-size:12px;margin-top:14px;opacity:0.6}
 
-/* PROJECT SELECTOR */
-#proj-screen{position:fixed;inset:0;background:#F0F2F5;z-index:999;display:none;overflow-y:auto;padding:16px}
-.proj-header{background:var(--blue);color:#fff;border-radius:var(--rad);padding:16px;margin-bottom:14px;text-align:center}
-.proj-header h2{font-size:18px;font-weight:700}
-.proj-header p{font-size:12px;opacity:0.75;margin-top:3px}
-.proj-card{background:var(--wht);border-radius:var(--rad);padding:14px;margin-bottom:10px;border:1.5px solid var(--bdr);cursor:pointer;transition:border-color 0.15s,box-shadow 0.15s}
-.proj-card:hover,.proj-card:active{border-color:var(--accent);box-shadow:0 2px 8px rgba(30,130,200,0.12)}
-.proj-name{font-size:16px;font-weight:600;color:var(--txt)}
-.proj-meta{font-size:12px;color:var(--mut);margin-top:3px}
-.proj-stats{display:flex;gap:10px;margin-top:8px;flex-wrap:wrap}
-.proj-stat{font-size:11px;background:var(--gray);padding:3px 10px;border-radius:20px;font-weight:500}
-.proj-stat.g{background:var(--gbg);color:var(--gdk)}
-.proj-stat.r{background:var(--rbg);color:var(--rdk)}
-.new-proj-card{background:var(--mid);border-radius:var(--rad);padding:16px;margin-bottom:10px;cursor:pointer;text-align:center;color:#fff}
-.new-proj-card:active{opacity:0.85}
-.new-proj-title{font-size:16px;font-weight:600;margin-bottom:4px}
+/* PROJECT SCREEN */
+#pscreen{position:fixed;inset:0;background:#F0F2F5;z-index:998;display:none;overflow-y:auto}
+.pscreen-inner{padding:14px;max-width:480px;margin:0 auto}
+.phead{background:linear-gradient(135deg,var(--blue),var(--mid));color:#fff;border-radius:14px;padding:18px;margin-bottom:14px;text-align:center}
+.phead h2{font-size:20px;font-weight:700;margin-bottom:3px}
+.phead p{font-size:12px;opacity:0.75}
+
+/* CARDS */
+.card{background:var(--wht);border-radius:var(--rad);padding:14px;margin-bottom:12px;border:1px solid var(--bdr)}
+.ctitle{font-size:11px;font-weight:600;color:var(--mut);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:10px}
+
+/* PROJECT CARDS */
+.pcard{background:var(--wht);border-radius:var(--rad);padding:14px;margin-bottom:10px;border:1.5px solid var(--bdr);cursor:pointer;position:relative}
+.pcard:active{border-color:var(--acc);background:#f8fbff}
+.pcard-name{font-size:15px;font-weight:600;color:var(--txt)}
+.pcard-meta{font-size:12px;color:var(--mut);margin-top:3px}
+.pcard-pid{font-size:11px;font-family:monospace;background:var(--gray);color:var(--mid);padding:3px 8px;border-radius:6px;display:inline-block;margin-top:6px;font-weight:600}
+.pcard-stats{display:flex;gap:6px;margin-top:8px;flex-wrap:wrap}
+.pst{font-size:11px;padding:3px 10px;border-radius:20px;font-weight:500}
+.pst.g{background:var(--gbg);color:var(--gdk)}.pst.r{background:var(--rbg);color:var(--rdk)}.pst.b{background:#EBF5FB;color:var(--mid)}.pst.a{background:var(--abg);color:var(--adk)}
+.pcard-del{position:absolute;top:12px;right:12px;background:var(--rbg);border:none;color:var(--red);border-radius:6px;padding:4px 9px;font-size:12px;cursor:pointer;font-family:inherit}
+
+/* BIG ACTION BUTTONS */
+.big-btn{border-radius:12px;padding:15px;text-align:center;cursor:pointer;margin-bottom:10px;border:none;width:100%;font-family:inherit}
+.big-btn-create{background:var(--mid);color:#fff}
+.big-btn-join{background:var(--gbg);color:var(--gdk);border:1.5px solid var(--grn)}
+.big-btn-title{font-size:16px;font-weight:600;margin-bottom:3px}
+.big-btn-sub{font-size:12px;opacity:0.8}
+
+/* SHARE PANEL */
+.share-panel{background:var(--pbg);border:1.5px solid var(--pur);border-radius:12px;padding:14px;margin-bottom:12px}
+.share-title{font-size:13px;font-weight:600;color:var(--pdk);margin-bottom:8px}
+.pid-display{font-size:28px;font-weight:700;font-family:monospace;color:var(--pur);text-align:center;letter-spacing:3px;padding:12px;background:var(--wht);border-radius:10px;border:1.5px solid var(--pur);margin-bottom:8px}
+.pid-hint{font-size:11px;color:var(--pdk);text-align:center;line-height:1.5}
+
+/* FORM */
+.flabel{font-size:13px;font-weight:500;margin-bottom:5px;display:block;margin-top:10px;color:var(--txt)}
+.fhint{font-size:11px;color:var(--mut);margin-top:3px;line-height:1.4}
 input[type=text],input[type=number],textarea,select{width:100%;padding:11px 13px;border:1.5px solid var(--bdr);border-radius:10px;font-size:15px;background:var(--wht);color:var(--txt);outline:none;font-family:inherit}
-input[type=text]:focus,input[type=number]:focus,textarea:focus{border-color:var(--accent)}
+input:focus,textarea:focus{border-color:var(--acc)}
 textarea{resize:none;font-size:13px;font-family:monospace}
+.smsg{border-radius:8px;padding:9px 12px;font-size:13px;margin-top:8px;font-weight:500;display:none;line-height:1.4}
+.smsg.ok{background:var(--gbg);color:var(--gdk);display:block}
+.smsg.err{background:var(--rbg);color:var(--rdk);display:block}
+.smsg.ld{background:var(--abg);color:var(--adk);display:block}
+
+.cpills{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
+.cp{padding:6px 14px;border-radius:20px;border:1.5px solid var(--bdr);font-size:13px;cursor:pointer;font-weight:500;background:var(--wht);font-family:inherit}
+.cp.sel{background:var(--mid);color:#fff;border-color:var(--mid)}
+
+/* BUTTONS */
+.btn{display:block;width:100%;padding:12px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;border:none;font-family:inherit;text-align:center}
+.btn-p{background:var(--mid);color:#fff}
+.btn-g{background:var(--grn);color:#fff}
+.btn-stop{background:var(--red);color:#fff}
+.btn-out{background:transparent;color:var(--mid);border:1.5px solid var(--mid);padding:10px}
+.btn-sm{background:var(--gray);color:var(--txt);border-radius:8px;padding:6px 12px;font-size:12px;font-weight:500;cursor:pointer;border:1px solid var(--bdr);font-family:inherit}
+.btn-danger{background:var(--red);color:#fff;border-radius:8px;padding:6px 12px;font-size:12px;cursor:pointer;border:none;font-family:inherit}
+.btn-pur{background:var(--pur);color:#fff}
+.row{display:flex;gap:8px}
 
 /* MAIN APP */
-#header{background:var(--blue);color:#fff;padding:12px 16px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
-#proj-title{font-size:15px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:180px}
+#header{background:var(--blue);color:#fff;padding:11px 14px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+#proj-title{font-size:14px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:160px}
 #proj-sub{font-size:10px;opacity:0.7;margin-top:1px}
-#hdr-right{display:flex;align-items:center;gap:8px;flex-shrink:0}
-#loaded-badge{background:rgba(255,255,255,0.2);border-radius:20px;padding:3px 10px;font-size:11px;font-weight:500;white-space:nowrap}
-#tab-bar{display:flex;background:var(--wht);border-bottom:1px solid var(--bdr);position:sticky;top:53px;z-index:99}
+#hdr-r{display:flex;align-items:center;gap:6px;flex-shrink:0}
+#loaded-badge{background:rgba(255,255,255,0.2);border-radius:20px;padding:3px 9px;font-size:11px;font-weight:500}
+#tab-bar{display:flex;background:var(--wht);border-bottom:1px solid var(--bdr);position:sticky;top:52px;z-index:99}
 .tab{flex:1;padding:10px 2px;text-align:center;font-size:11px;font-weight:500;color:var(--mut);border-bottom:3px solid transparent;cursor:pointer}
 .tab.active{color:var(--mid);border-bottom-color:var(--mid)}
 .screen{display:none;padding:12px;min-height:calc(100vh - 100px)}
 .screen.active{display:block}
-.card{background:var(--wht);border-radius:var(--rad);padding:14px;margin-bottom:12px;border:1px solid var(--bdr)}
-.ctitle{font-size:11px;font-weight:600;color:var(--mut);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:10px}
 
-/* RESULT */
-#result-box{border-radius:16px;padding:20px 14px;text-align:center;margin-bottom:10px;border:2.5px solid var(--bdr);background:var(--wht);transition:all 0.2s;min-height:110px;display:flex;flex-direction:column;align-items:center;justify-content:center}
-#result-box.found{background:var(--gbg);border-color:var(--green)}
+/* RESULT BOX */
+#result-box{border-radius:16px;padding:18px 14px;text-align:center;margin-bottom:10px;border:2.5px solid var(--bdr);background:var(--wht);transition:all 0.2s;min-height:108px;display:flex;flex-direction:column;align-items:center;justify-content:center}
+#result-box.found{background:var(--gbg);border-color:var(--grn)}
 #result-box.notfound{background:var(--rbg);border-color:var(--red)}
-#result-box.duplicate{background:var(--abg);border-color:var(--amb)}
-#ri{font-size:42px;margin-bottom:4px}
+#result-box.dup{background:var(--abg);border-color:var(--amb)}
+#ri{font-size:40px;margin-bottom:4px}
 #rs{font-size:22px;font-weight:700}
 #rm{font-size:15px;font-weight:600;margin-top:4px;font-family:monospace;letter-spacing:1px}
 #rd{font-size:12px;margin-top:4px;opacity:0.85}
-#sync-status{text-align:center;font-size:11px;padding:3px 0;min-height:18px}
+#sync-st{text-align:center;font-size:11px;padding:2px 0;min-height:16px;margin-bottom:4px}
 
 /* CAMERA */
 #reader-wrap{border-radius:12px;overflow:hidden;background:#000;position:relative;margin-bottom:8px}
 #reader video{width:100%;display:block}
-#scan-overlay{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:210px;height:100px;border:2px solid rgba(30,240,150,0.9);border-radius:6px;pointer-events:none;display:none}
-#scan-overlay::before{content:'';position:absolute;top:-2px;left:-2px;width:20px;height:20px;border-top:4px solid #1ef096;border-left:4px solid #1ef096;border-radius:3px 0 0 0}
-#scan-overlay::after{content:'';position:absolute;bottom:-2px;right:-2px;width:20px;height:20px;border-bottom:4px solid #1ef096;border-right:4px solid #1ef096;border-radius:0 0 3px 0}
-#scan-line{position:absolute;left:8px;right:8px;height:2px;background:rgba(30,240,150,0.85);animation:scanline 1.8s ease-in-out infinite}
-@keyframes scanline{0%,100%{top:15%}50%{top:85%}}
-#cdbar-wrap{height:4px;background:var(--gray);border-radius:2px;margin-bottom:6px;overflow:hidden;display:none}
-#cdbar{height:100%;background:var(--accent);border-radius:2px;width:100%}
+#scan-ov{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:210px;height:100px;border:2px solid rgba(30,240,150,0.9);border-radius:6px;pointer-events:none;display:none}
+#scan-ov::before{content:'';position:absolute;top:-2px;left:-2px;width:20px;height:20px;border-top:4px solid #1ef096;border-left:4px solid #1ef096;border-radius:3px 0 0 0}
+#scan-ov::after{content:'';position:absolute;bottom:-2px;right:-2px;width:20px;height:20px;border-bottom:4px solid #1ef096;border-right:4px solid #1ef096;border-radius:0 0 3px 0}
+#scan-line{position:absolute;left:8px;right:8px;height:2px;background:rgba(30,240,150,0.85);animation:sl 1.8s ease-in-out infinite}
+@keyframes sl{0%,100%{top:15%}50%{top:85%}}
+#cdbar-w{height:4px;background:var(--gray);border-radius:2px;margin-bottom:6px;overflow:hidden;display:none}
+#cdbar{height:100%;background:var(--acc);border-radius:2px;width:100%}
 
-/* BUTTONS */
-.btn{display:block;width:100%;padding:13px;border-radius:10px;font-size:15px;font-weight:600;cursor:pointer;border:none;font-family:inherit;text-align:center}
-.btn-p{background:var(--mid);color:#fff}
-.btn-stop{background:var(--red);color:#fff}
-.btn-s{background:transparent;color:var(--mid);border:1.5px solid var(--mid);padding:10px}
-.btn-sm{background:var(--gray);color:var(--txt);border-radius:8px;padding:6px 12px;font-size:12px;font-weight:500;cursor:pointer;border:1px solid var(--bdr);font-family:inherit}
-.btn-danger{background:var(--red);color:#fff;border-radius:8px;padding:6px 12px;font-size:12px;cursor:pointer;border:none;font-family:inherit}
+/* LOG */
+.li{display:flex;align-items:center;gap:10px;padding:10px 12px;border-bottom:1px solid var(--bdr)}
+.li:last-child{border-bottom:none}
+.li.fi{background:rgba(29,158,117,0.06)}.li.ni{background:rgba(192,57,43,0.06)}.li.di{background:rgba(184,134,11,0.06)}
+.lic{font-size:20px;width:26px;text-align:center;flex-shrink:0}
+.lin{flex:1;min-width:0}
+.lnum{font-size:14px;font-weight:600;font-family:monospace;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ldesc{font-size:11px;margin-top:1px}
+.ldesc.f{color:var(--gdk)}.ldesc.n{color:var(--rdk)}.ldesc.d{color:var(--adk)}
+.ldev{font-size:10px;color:var(--mut);margin-top:1px}
+.lwb{font-size:10px;margin-top:1px}
+.lwb.ok{color:var(--gdk)}.lwb.err{color:var(--rdk)}
+.lr{text-align:right;flex-shrink:0}
+.ltime{font-size:11px;color:var(--mut)}
+.lempty{text-align:center;padding:30px;color:var(--mut);font-size:14px}
 
 /* STATS */
 .sgrid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px}
 .sc{background:var(--wht);border-radius:10px;padding:12px;text-align:center;border:1px solid var(--bdr)}
 .sn{font-size:28px;font-weight:700;line-height:1}
 .sl{font-size:11px;color:var(--mut);margin-top:3px}
-.sc.g .sn{color:var(--green)}.sc.r .sn{color:var(--red)}.sc.a .sn{color:var(--amb)}.sc.b .sn{color:var(--mid)}
+.sc.g .sn{color:var(--grn)}.sc.r .sn{color:var(--red)}.sc.a .sn{color:var(--amb)}.sc.b .sn{color:var(--mid)}
 
-/* LOG */
-.li{display:flex;align-items:center;gap:10px;padding:10px 12px;border-bottom:1px solid var(--bdr)}
-.li:last-child{border-bottom:none}
-.li.fi{background:rgba(29,158,117,0.06)}.li.ni{background:rgba(192,57,43,0.06)}.li.di{background:rgba(184,134,11,0.06)}
-.lic{font-size:22px;width:28px;text-align:center;flex-shrink:0}
-.lin{flex:1;min-width:0}
-.linum{font-size:14px;font-weight:600;font-family:monospace;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.lidesc{font-size:11px;margin-top:1px}
-.lidesc.f{color:var(--gdk)}.lidesc.n{color:var(--rdk)}.lidesc.d{color:var(--adk)}
-.lidev{font-size:10px;color:var(--mut);margin-top:1px}
-.liright{text-align:right;flex-shrink:0}
-.litime{font-size:11px;color:var(--mut)}
-.liwb{font-size:10px;margin-top:2px}
-.liwb.ok{color:var(--gdk)}.liwb.err{color:var(--rdk)}
-.lempty{text-align:center;padding:32px;color:var(--mut);font-size:14px}
-
-/* SETUP */
-.slabel{font-size:13px;font-weight:500;margin-bottom:5px;display:block;margin-top:10px}
-.shint{font-size:11px;color:var(--mut);margin-top:3px;line-height:1.4}
-.smsg{border-radius:8px;padding:9px 12px;font-size:13px;margin-top:8px;font-weight:500;display:none;line-height:1.4}
-.smsg.ok{background:var(--gbg);color:var(--gdk);display:block}
-.smsg.err{background:var(--rbg);color:var(--rdk);display:block}
-.smsg.ld{background:var(--abg);color:var(--adk);display:block}
-.cpills{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
-.cp{padding:6px 14px;border-radius:20px;border:1.5px solid var(--bdr);font-size:13px;cursor:pointer;font-weight:500;background:var(--wht);font-family:inherit}
-.cp.sel{background:var(--mid);color:#fff;border-color:var(--mid)}
-.trow{display:flex;align-items:center;justify-content:space-between;padding:4px 0}
+/* TOGGLE */
+.trow{display:flex;align-items:center;justify-content:space-between;padding:4px 0;margin-bottom:8px}
 .tgl{position:relative;width:44px;height:24px;cursor:pointer;flex-shrink:0}
 .tgl input{opacity:0;width:0;height:0}
 .tsl{position:absolute;inset:0;background:#ccc;border-radius:12px;transition:0.2s}
 .tsl:before{content:'';position:absolute;width:18px;height:18px;left:3px;top:3px;background:#fff;border-radius:50%;transition:0.2s}
-input:checked+.tsl{background:var(--green)}
+input:checked+.tsl{background:var(--grn)}
 input:checked+.tsl:before{transform:translateX(20px)}
 
 /* ANIMATIONS */
@@ -139,9 +163,6 @@ input:checked+.tsl:before{transform:translateX(20px)}
 @keyframes pr{0%{box-shadow:0 0 0 0 rgba(192,57,43,0.5)}100%{box-shadow:0 0 0 18px rgba(192,57,43,0)}}
 @keyframes pa{0%{box-shadow:0 0 0 0 rgba(184,134,11,0.5)}100%{box-shadow:0 0 0 18px rgba(184,134,11,0)}}
 .pg{animation:pg 0.45s ease-out}.pr{animation:pr 0.45s ease-out}.pa{animation:pa 0.45s ease-out}
-
-/* DEVICE BADGE */
-.dev-badge{display:inline-block;background:var(--mid);color:#fff;font-size:10px;padding:1px 7px;border-radius:10px;font-weight:500}
 </style>
 </head>
 <body>
@@ -150,85 +171,218 @@ input:checked+.tsl:before{transform:translateX(20px)}
 <div id="splash">
   <h1>DMIS Meter Scanner</h1>
   <p>SNGPL — Faisalabad-D</p>
-  <div id="splash-spinner"></div>
-  <div id="splash-msg" style="font-size:12px;margin-top:14px;opacity:0.6">Loading...</div>
+  <div class="spinner"></div>
+  <div id="splash-msg">Loading...</div>
 </div>
 
-<!-- PROJECT SCREEN -->
-<div id="proj-screen">
-  <div class="proj-header">
+<!-- ══ PROJECT SCREEN ══════════════════════════════════════════════════════ -->
+<div id="pscreen">
+<div class="pscreen-inner">
+
+  <div class="phead">
     <h2>📂 DMIS Meter Scanner</h2>
-    <p>Select a project or create new</p>
+    <p>Projects sync across all devices</p>
   </div>
 
-  <div style="margin-bottom:14px">
-    <div style="font-size:13px;font-weight:600;margin-bottom:8px;color:var(--mut)">YOUR DEVICE</div>
-    <div style="display:flex;gap:8px;align-items:center">
-      <input type="text" id="device-name" placeholder="Enter your name (e.g. Asif - Phone 1)" style="flex:1;font-size:14px">
-      <button class="btn-sm" onclick="saveDeviceName()">Save</button>
+  <!-- DEVICE NAME -->
+  <div class="card">
+    <div class="ctitle">👤 Your device / name</div>
+    <div class="row">
+      <input type="text" id="dev-name" placeholder="e.g. Asif — Phone 1" style="flex:1;font-size:14px">
+      <button class="btn-sm" onclick="saveDevName()" style="white-space:nowrap">Save</button>
     </div>
-    <div class="shint">Your name appears in scan log so supervisor knows who scanned each meter</div>
+    <div class="fhint">Your name shows on every scan so supervisor knows who scanned each meter</div>
+    <div id="dev-msg" class="smsg"></div>
   </div>
 
-  <div class="new-proj-card" onclick="showNewProject()">
-    <div class="new-proj-title">＋ Create New Project</div>
-    <div style="font-size:12px;opacity:0.8">Start a new scanning session</div>
-  </div>
+  <!-- CREATE / JOIN BUTTONS -->
+  <button class="big-btn big-btn-create" onclick="showCreate()">
+    <div class="big-btn-title">＋ Create New Project</div>
+    <div class="big-btn-sub">Start new batch — get shareable Project ID</div>
+  </button>
 
-  <div id="new-proj-form" style="display:none;background:var(--wht);border-radius:var(--rad);padding:14px;margin-bottom:12px;border:1.5px solid var(--accent)">
-    <div style="font-size:14px;font-weight:600;margin-bottom:10px">New Project</div>
-    <label class="slabel" style="margin-top:0">Project name</label>
-    <input type="text" id="new-proj-name" placeholder="e.g. DMIS July 2026 Batch-1">
-    <label class="slabel">Google Sheet ID</label>
-    <input type="text" id="new-sheet-id" placeholder="44-character Sheet ID from URL" style="font-family:monospace;font-size:13px">
-    <label class="slabel">Sheet tab name</label>
-    <input type="text" id="new-sheet-name" value="Master Sheet PSW">
-    <label class="slabel">Meter number column</label>
-    <div class="cpills" id="new-rc-pills">
-      <div class="cp sel" onclick="selNewRC(this,'A')">A</div>
-      <div class="cp" onclick="selNewRC(this,'B')">B</div>
-      <div class="cp" onclick="selNewRC(this,'C')">C</div>
-      <div class="cp" onclick="selNewRC(this,'D')">D</div>
-      <div class="cp" onclick="selNewRC(this,'E')">E</div>
+  <button class="big-btn big-btn-join" onclick="showJoin()">
+    <div class="big-btn-title">🔗 Join Existing Project</div>
+    <div class="big-btn-sub">Enter Project ID shared by supervisor</div>
+  </button>
+
+  <!-- CREATE FORM -->
+  <div id="create-form" style="display:none" class="card">
+    <div class="ctitle">Create new project</div>
+    <label class="flabel" style="margin-top:0">Project name</label>
+    <input type="text" id="c-name" placeholder="e.g. DMIS July 2026 Batch-1">
+    <label class="flabel">Google Sheet ID</label>
+    <input type="text" id="c-sid" placeholder="44-character ID from Sheet URL" style="font-family:monospace;font-size:13px">
+    <div class="fhint">From URL: docs.google.com/spreadsheets/d/<strong>ID_HERE</strong>/edit</div>
+    <label class="flabel">Sheet tab name</label>
+    <input type="text" id="c-sname" value="Master Sheet PSW">
+    <label class="flabel">Meter number column</label>
+    <div class="cpills" id="c-rc">
+      <div class="cp sel" onclick="selPill('c-rc',this,'A')">A</div>
+      <div class="cp" onclick="selPill('c-rc',this,'B')">B</div>
+      <div class="cp" onclick="selPill('c-rc',this,'C')">C</div>
+      <div class="cp" onclick="selPill('c-rc',this,'D')">D</div>
+      <div class="cp" onclick="selPill('c-rc',this,'E')">E</div>
     </div>
-    <label class="slabel">Apps Script URL (for write-back — optional)</label>
-    <input type="text" id="new-script-url" placeholder="https://script.google.com/macros/s/.../exec">
-    <label class="slabel">Write status to column (optional)</label>
-    <div class="cpills" id="new-wc-pills">
-      <div class="cp" onclick="selNewWC(this,'')">None</div>
-      <div class="cp sel" onclick="selNewWC(this,'C')">C</div>
-      <div class="cp" onclick="selNewWC(this,'D')">D</div>
-      <div class="cp" onclick="selNewWC(this,'E')">E</div>
-      <div class="cp" onclick="selNewWC(this,'F')">F</div>
-      <div class="cp" onclick="selNewWC(this,'G')">G</div>
+    <label class="flabel">Apps Script URL (for write-back & sync)</label>
+    <input type="text" id="c-surl" placeholder="https://script.google.com/macros/s/.../exec">
+    <label class="flabel">Write status to column</label>
+    <div class="cpills" id="c-wc">
+      <div class="cp" onclick="selPill('c-wc',this,'')">None</div>
+      <div class="cp sel" onclick="selPill('c-wc',this,'C')">C</div>
+      <div class="cp" onclick="selPill('c-wc',this,'D')">D</div>
+      <div class="cp" onclick="selPill('c-wc',this,'E')">E</div>
+      <div class="cp" onclick="selPill('c-wc',this,'F')">F</div>
+      <div class="cp" onclick="selPill('c-wc',this,'G')">G</div>
     </div>
-    <div id="new-proj-msg" class="smsg"></div>
-    <div style="display:flex;gap:8px;margin-top:12px">
-      <button class="btn btn-p" onclick="createProject()" style="flex:1;padding:11px;font-size:14px">Create & Open</button>
-      <button class="btn btn-s" onclick="document.getElementById('new-proj-form').style.display='none'" style="width:80px;padding:11px;font-size:14px">Cancel</button>
+    <div id="c-msg" class="smsg"></div>
+    <div class="row" style="margin-top:12px">
+      <button class="btn btn-p" onclick="createProject()" style="flex:1">Create Project</button>
+      <button class="btn btn-out" onclick="document.getElementById('create-form').style.display='none'" style="width:80px">Cancel</button>
     </div>
   </div>
 
-  <div id="proj-list">
-    <div class="lempty">No projects yet — create one above</div>
+  <!-- JOIN FORM -->
+  <div id="join-form" style="display:none" class="card">
+    <div class="ctitle">Join existing project</div>
+    <label class="flabel" style="margin-top:0">Enter Project ID</label>
+    <input type="text" id="j-pid" placeholder="DMIS-XXXXXX" style="font-family:monospace;font-size:20px;text-align:center;text-transform:uppercase;letter-spacing:3px" maxlength="11" oninput="this.value=this.value.toUpperCase()">
+    <div class="fhint" style="text-align:center;margin-top:6px">Ask your supervisor or team lead for the Project ID</div>
+    <div id="j-msg" class="smsg"></div>
+    <div class="row" style="margin-top:12px">
+      <button class="btn btn-g" onclick="joinProject()" style="flex:1">Join Project</button>
+      <button class="btn btn-out" onclick="document.getElementById('join-form').style.display='none'" style="width:80px">Cancel</button>
+    </div>
   </div>
 
-  <div style="margin-top:12px">
-    <button class="btn btn-s" style="font-size:13px;padding:10px" onclick="showScriptInstructions()">📋 How to set up Apps Script (write-back)</button>
-  </div>
-</div>
+  <!-- PROJECT LIST -->
+  <div style="font-size:13px;font-weight:600;color:var(--mut);margin-bottom:8px;margin-top:4px">YOUR PROJECTS</div>
+  <div id="proj-list"><div class="lempty">No projects yet</div></div>
 
-<!-- MAIN APP -->
-<div id="main-app" style="display:none">
+  <!-- APPS SCRIPT INSTRUCTIONS -->
+  <div class="card" style="margin-top:12px;background:var(--abg);border-color:var(--amb)">
+    <div class="ctitle" style="color:var(--adk)">⚙️ One-time Apps Script setup (enables sync + write-back)</div>
+    <div style="font-size:12px;color:var(--adk);line-height:1.9;margin-bottom:10px">
+      <strong>Step 1:</strong> Open Google Sheet → Extensions → Apps Script<br>
+      <strong>Step 2:</strong> Delete existing code → paste code below<br>
+      <strong>Step 3:</strong> Save (Ctrl+S) → Deploy → New deployment<br>
+      <strong>Step 4:</strong> Type = Web App · Execute as = Me · Access = Anyone<br>
+      <strong>Step 5:</strong> Deploy → Authorize → Copy Web App URL<br>
+      <strong>Step 6:</strong> Paste URL when creating project
+    </div>
+    <textarea readonly onclick="this.select()" id="script-code" style="height:220px;font-size:11px;background:#fff;color:#1C1C1C">function doGet(e){
+  try{
+    var p=e.parameter;
+    var ss=SpreadsheetApp.openById(p.sheetId);
+    var sh=ss.getSheetByName(p.sheetName);
+
+    // READ meter list
+    if(p.action==='read'){
+      var col=ci(p.col);
+      var vals=sh.getRange(1,col,sh.getLastRow()||1,1).getValues();
+      var list=vals.map(r=>String(r[0]).trim()).filter(r=>r.length>1);
+      return out({success:true,meters:list});
+    }
+
+    // STORE project config (for join by ID)
+    if(p.action==='saveproject'){
+      var ms=ss.getSheetByName('_Projects')||ss.insertSheet('_Projects');
+      if(ms.getLastRow()===0)
+        ms.appendRow(['ProjectID','Config','CreatedBy','CreatedAt']);
+      // check if already exists
+      var data=ms.getDataRange().getValues();
+      for(var i=1;i<data.length;i++){
+        if(data[i][0]===p.pid){
+          ms.getRange(i+1,2).setValue(p.config);
+          return out({success:true,action:'updated'});
+        }
+      }
+      ms.appendRow([p.pid,p.config,p.createdBy,new Date().toLocaleString()]);
+      return out({success:true,action:'created'});
+    }
+
+    // FETCH project config by ID (for join)
+    if(p.action==='getproject'){
+      var ms2=ss.getSheetByName('_Projects');
+      if(!ms2) return out({success:false,msg:'No projects found'});
+      var rows=ms2.getDataRange().getValues();
+      for(var j=1;j<rows.length;j++){
+        if(rows[j][0]===p.pid)
+          return out({success:true,config:rows[j][1],createdBy:rows[j][2]});
+      }
+      return out({success:false,msg:'Project ID not found'});
+    }
+
+    // WRITE scan to log tab
+    if(p.action==='writelog'){
+      var ls=ss.getSheetByName('Scan Log')||ss.insertSheet('Scan Log');
+      if(ls.getLastRow()===0)
+        ls.appendRow(['Meter','Status','Device','Time','Project','ProjectID']);
+      ls.appendRow([p.meter,p.status,p.device,
+        new Date().toLocaleString(),p.project,p.pid||'']);
+      return out({success:true});
+    }
+
+    // WRITE status to meter row
+    if(p.action==='writestatus'&&p.writeCol){
+      var mc=ci(p.meterCol),wc=ci(p.writeCol);
+      var d2=sh.getDataRange().getValues();
+      for(var k=0;k<d2.length;k++){
+        if(String(d2[k][mc-1]).trim()===String(p.meter).trim()){
+          sh.getRange(k+1,wc).setValue(p.status);
+          sh.getRange(k+1,wc+1).setValue(new Date().toLocaleString());
+          sh.getRange(k+1,wc+2).setValue(p.device||'');
+          return out({success:true,row:k+1});
+        }
+      }
+      return out({success:false,msg:'Meter not found in sheet'});
+    }
+
+    // READ scan log for a project
+    if(p.action==='readlog'){
+      var ls2=ss.getSheetByName('Scan Log');
+      if(!ls2) return out({success:true,rows:[]});
+      var rws=ls2.getDataRange().getValues();
+      rws.shift();
+      var pid2=p.pid||'';
+      if(pid2) rws=rws.filter(r=>r[5]===pid2);
+      return out({success:true,rows:rws.slice(-300)});
+    }
+
+    return out({success:true});
+  }catch(err){
+    return out({success:false,msg:err.toString()});
+  }
+}
+function ci(c){
+  c=String(c).toUpperCase();var n=0;
+  for(var i=0;i<c.length;i++)n=n*26+(c.charCodeAt(i)-64);
+  return n;
+}
+function out(o){
+  return ContentService.createTextOutput(JSON.stringify(o))
+    .setMimeType(ContentService.MimeType.JSON);
+}
+function doPost(e){return doGet(e);}</textarea>
+    <div class="row" style="margin-top:8px">
+      <button onclick="document.getElementById('script-code').select();document.execCommand('copy');alert('✅ Code copied! Paste into Apps Script editor.')" class="btn btn-p" style="flex:1;font-size:13px;padding:10px">Copy Apps Script Code</button>
+    </div>
+  </div>
+
+</div><!-- pscreen-inner -->
+</div><!-- pscreen -->
+
+<!-- ══ MAIN APP ════════════════════════════════════════════════════════════ -->
+<div id="mapp" style="display:none">
 
 <div id="header">
   <div style="min-width:0;flex:1">
     <div id="proj-title">DMIS Scanner</div>
-    <div id="proj-sub">Tap to switch project</div>
+    <div id="proj-sub">Loading...</div>
   </div>
-  <div id="hdr-right">
+  <div id="hdr-r">
     <div id="loaded-badge">0 loaded</div>
-    <button onclick="switchProject()" style="background:rgba(255,255,255,0.2);border:none;color:#fff;border-radius:8px;padding:5px 10px;font-size:12px;cursor:pointer;font-family:inherit">Switch</button>
+    <button onclick="switchProj()" style="background:rgba(255,255,255,0.2);border:none;color:#fff;border-radius:8px;padding:5px 9px;font-size:11px;cursor:pointer;font-family:inherit;white-space:nowrap">Switch</button>
   </div>
 </div>
 
@@ -239,7 +393,7 @@ input:checked+.tsl:before{transform:translateX(20px)}
   <div class="tab" onclick="showTab('setup')">⚙️ Setup</div>
 </div>
 
-<!-- SCAN TAB -->
+<!-- SCAN -->
 <div class="screen active" id="screen-scan">
   <div id="result-box">
     <div id="ri">📷</div>
@@ -247,49 +401,46 @@ input:checked+.tsl:before{transform:translateX(20px)}
     <div id="rm"></div>
     <div id="rd" style="color:var(--mut)">Load meter list in Setup tab</div>
   </div>
-  <div id="sync-status"></div>
-  <div id="cdbar-wrap"><div id="cdbar"></div></div>
-
+  <div id="sync-st"></div>
+  <div id="cdbar-w"><div id="cdbar"></div></div>
   <div class="card" style="padding:10px">
-    <div id="reader-wrap"><div id="reader"></div><div id="scan-overlay"><div id="scan-line"></div></div></div>
+    <div id="reader-wrap"><div id="reader"></div><div id="scan-ov"><div id="scan-line"></div></div></div>
     <div id="cam-st" style="text-align:center;font-size:12px;color:var(--mut);padding:4px 0 6px">Camera not started</div>
-    <button class="btn btn-p" id="cam-btn" onclick="toggleCamera()">▶ Start Camera</button>
+    <button class="btn btn-p" id="cam-btn" onclick="toggleCam()">▶ Start Camera</button>
   </div>
-
   <div class="card">
-    <div class="ctitle">Manual / Bluetooth scanner</div>
-    <div style="display:flex;gap:8px">
+    <div class="ctitle">Manual / Bluetooth scanner input</div>
+    <div class="row">
       <input type="text" id="min" placeholder="Meter number" inputmode="numeric" autocomplete="off"
         onkeydown="if(event.key==='Enter'){let v=this.value.trim();if(v){processCode(v);this.value=''}}">
       <button onclick="let v=document.getElementById('min').value.trim();if(v){processCode(v);document.getElementById('min').value=''}"
-        style="background:var(--mid);color:#fff;border:none;border-radius:10px;padding:0 16px;font-size:18px;cursor:pointer;flex-shrink:0">→</button>
+        style="background:var(--mid);color:#fff;border:none;border-radius:10px;padding:0 14px;font-size:18px;cursor:pointer;flex-shrink:0">→</button>
     </div>
   </div>
 </div>
 
-<!-- LOG TAB -->
+<!-- LOG -->
 <div class="screen" id="screen-log">
   <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
-    <div style="font-size:14px;font-weight:600">Scan history — all devices</div>
+    <div style="font-size:14px;font-weight:600">All device scans</div>
     <div style="display:flex;gap:6px">
-      <button class="btn-sm" onclick="refreshLog()">↻</button>
+      <button class="btn-sm" onclick="refreshLog()">↻ Sync</button>
       <button class="btn-sm" onclick="exportCSV()">CSV</button>
       <button class="btn-danger" onclick="clearLog()">Clear</button>
     </div>
   </div>
-  <div style="display:flex;gap:6px;margin-bottom:10px;flex-wrap:wrap">
-    <button class="btn-sm" id="fa" onclick="filterLog('all')">All</button>
-    <button class="btn-sm" id="ff" onclick="filterLog('found')">Found</button>
-    <button class="btn-sm" id="fn" onclick="filterLog('notfound')">Not found</button>
-    <button class="btn-sm" id="fd" onclick="filterLog('dup')">Duplicate</button>
+  <div style="display:flex;gap:6px;margin-bottom:8px;flex-wrap:wrap">
+    <button class="btn-sm" id="fa" onclick="flog('all')">All</button>
+    <button class="btn-sm" id="ff" onclick="flog('found')">Found</button>
+    <button class="btn-sm" id="fn" onclick="flog('notfound')">Not found</button>
+    <button class="btn-sm" id="fd" onclick="flog('dup')">Duplicate</button>
   </div>
-  <div style="font-size:11px;color:var(--mut);margin-bottom:8px">Shows scans from ALL devices on this project</div>
   <div class="card" style="padding:0;overflow:hidden">
     <div id="log-list"><div class="lempty">No scans yet</div></div>
   </div>
 </div>
 
-<!-- STATS TAB -->
+<!-- STATS -->
 <div class="screen" id="screen-stats">
   <div class="sgrid">
     <div class="sc b"><div class="sn" id="st-t">0</div><div class="sl">Total scanned</div></div>
@@ -299,46 +450,40 @@ input:checked+.tsl:before{transform:translateX(20px)}
   </div>
   <div class="card">
     <div class="ctitle">Progress</div>
-    <div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:4px">
-      <span>Found / Scanned</span><span id="pf" style="font-weight:600;color:var(--green)">0%</span>
-    </div>
-    <div style="background:var(--gray);border-radius:6px;height:10px;overflow:hidden;margin-bottom:10px">
-      <div id="bf" style="height:100%;background:var(--green);border-radius:6px;width:0%;transition:width 0.4s"></div>
-    </div>
-    <div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:4px">
-      <span>Found / Total in list</span><span id="pl" style="font-weight:600;color:var(--mid)">0%</span>
-    </div>
-    <div style="background:var(--gray);border-radius:6px;height:10px;overflow:hidden">
-      <div id="bl" style="height:100%;background:var(--mid);border-radius:6px;width:0%;transition:width 0.4s"></div>
-    </div>
+    <div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:4px"><span>Found / Scanned</span><span id="pf" style="font-weight:600;color:var(--grn)">0%</span></div>
+    <div style="background:var(--gray);border-radius:6px;height:10px;overflow:hidden;margin-bottom:10px"><div id="bf" style="height:100%;background:var(--grn);border-radius:6px;width:0%;transition:width 0.4s"></div></div>
+    <div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:4px"><span>Found / In list</span><span id="pl" style="font-weight:600;color:var(--mid)">0%</span></div>
+    <div style="background:var(--gray);border-radius:6px;height:10px;overflow:hidden"><div id="bl" style="height:100%;background:var(--mid);border-radius:6px;width:0%;transition:width 0.4s"></div></div>
+  </div>
+  <!-- PROJECT ID SHARE BOX -->
+  <div class="share-panel">
+    <div class="share-title">🔗 Share this project with your team</div>
+    <div class="pid-display" id="share-pid">—</div>
+    <div class="pid-hint">Share this Project ID with your team<br>They enter it in "Join Project" to sync to same data</div>
+    <button class="btn btn-pur" onclick="sharePID()" style="margin-top:10px;padding:10px;font-size:13px">Share Project ID via WhatsApp / SMS</button>
   </div>
   <div class="card">
     <div class="ctitle">Session info</div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;font-size:13px">
-      <div><span style="color:var(--mut)">Project</span><br><strong id="si-proj" style="font-size:12px">—</strong></div>
+      <div><span style="color:var(--mut)">Project ID</span><br><strong id="si-pid" style="font-family:monospace;color:var(--pur)">—</strong></div>
       <div><span style="color:var(--mut)">Meters loaded</span><br><strong id="si-loaded">0</strong></div>
       <div><span style="color:var(--mut)">Your device</span><br><strong id="si-dev" style="font-size:12px">—</strong></div>
       <div><span style="color:var(--mut)">Last sync</span><br><strong id="si-sync" style="font-size:12px">—</strong></div>
-    </div>
-  </div>
-  <div class="card">
-    <div class="ctitle">Write-back to sheet</div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;font-size:13px">
-      <div><span style="color:var(--mut)">Written OK</span><br><strong id="wb-ok" style="color:var(--green)">0</strong></div>
-      <div><span style="color:var(--mut)">Failed</span><br><strong id="wb-err" style="color:var(--red)">0</strong></div>
+      <div><span style="color:var(--mut)">Created by</span><br><strong id="si-cby" style="font-size:12px">—</strong></div>
+      <div><span style="color:var(--mut)">Write-back OK</span><br><strong id="wb-ok" style="color:var(--grn)">0</strong></div>
     </div>
   </div>
 </div>
 
-<!-- SETUP TAB -->
+<!-- SETUP -->
 <div class="screen" id="screen-setup">
   <div class="card">
-    <div class="ctitle">📋 Master Meter List</div>
-    <label class="slabel" style="margin-top:0">Sheet ID</label>
-    <input type="text" id="s-sid" style="font-family:monospace;font-size:13px" readonly>
-    <label class="slabel">Sheet tab</label>
+    <div class="ctitle">📋 Meter list</div>
+    <label class="flabel" style="margin-top:0">Sheet ID (read only)</label>
+    <input type="text" id="s-sid" readonly style="background:var(--gray);font-family:monospace;font-size:12px">
+    <label class="flabel">Sheet tab name</label>
     <input type="text" id="s-sname">
-    <label class="slabel">Meter column</label>
+    <label class="flabel">Meter number column</label>
     <div class="cpills" id="rc-pills">
       <div class="cp sel" onclick="selRC(this,'A')">A</div>
       <div class="cp" onclick="selRC(this,'B')">B</div>
@@ -351,15 +496,15 @@ input:checked+.tsl:before{transform:translateX(20px)}
   </div>
 
   <div class="card">
-    <div class="ctitle">✍️ Write-back to sheet</div>
-    <div class="trow" style="margin-bottom:10px">
-      <span style="font-size:14px">Enable write-back</span>
+    <div class="ctitle">✍️ Write-back settings</div>
+    <div class="trow">
+      <span style="font-size:14px">Enable write-back to sheet</span>
       <label class="tgl"><input type="checkbox" id="wb-en" onchange="document.getElementById('wb-cfg').style.display=this.checked?'block':'none'"><span class="tsl"></span></label>
     </div>
     <div id="wb-cfg" style="display:none">
-      <label class="slabel" style="margin-top:0">Apps Script URL</label>
+      <label class="flabel" style="margin-top:0">Apps Script URL</label>
       <input type="text" id="s-surl" placeholder="https://script.google.com/macros/s/.../exec">
-      <label class="slabel">Write to column</label>
+      <label class="flabel">Write status to column</label>
       <div class="cpills" id="wc-pills">
         <div class="cp" onclick="selWC(this,'')">None</div>
         <div class="cp sel" onclick="selWC(this,'C')">C</div>
@@ -368,280 +513,260 @@ input:checked+.tsl:before{transform:translateX(20px)}
         <div class="cp" onclick="selWC(this,'F')">F</div>
         <div class="cp" onclick="selWC(this,'G')">G</div>
       </div>
-      <label class="slabel">Status text (FOUND)</label>
+      <label class="flabel">Status text when FOUND</label>
       <input type="text" id="s-sfound" value="SCANNED ✓">
-      <label class="slabel">Status text (NOT FOUND — blank to skip)</label>
+      <label class="flabel">Status text when NOT FOUND (blank = skip)</label>
       <input type="text" id="s-snotfound" placeholder="Leave blank to skip">
     </div>
   </div>
 
   <div class="card">
     <div class="ctitle">🔊 Scanner settings</div>
-    <div class="trow" style="margin-bottom:10px">
-      <span style="font-size:14px">Beep on scan</span>
-      <label class="tgl"><input type="checkbox" id="beep-en" checked><span class="tsl"></span></label>
-    </div>
-    <div class="trow" style="margin-bottom:10px">
-      <span style="font-size:14px">Vibrate on scan</span>
-      <label class="tgl"><input type="checkbox" id="vib-en" checked><span class="tsl"></span></label>
-    </div>
-    <label class="slabel">Scan cooldown (seconds)</label>
+    <div class="trow"><span style="font-size:14px">Beep on scan</span><label class="tgl"><input type="checkbox" id="beep-en" checked><span class="tsl"></span></label></div>
+    <div class="trow"><span style="font-size:14px">Vibrate on scan</span><label class="tgl"><input type="checkbox" id="vib-en" checked><span class="tsl"></span></label></div>
+    <label class="flabel">Scan cooldown (seconds)</label>
     <input type="number" id="cd-sec" value="2" min="1" max="10" style="width:100px">
-    <div class="shint">Camera auto-resumes after this delay</div>
   </div>
 
   <div class="card">
-    <div class="ctitle">📝 Offline — Paste meter list</div>
-    <textarea id="paste-box" placeholder="12345678&#10;23456789&#10;One per line"></textarea>
-    <button class="btn btn-s" onclick="loadPasted()" style="margin-top:8px;font-size:14px;padding:10px">Load pasted list</button>
+    <div class="ctitle">📝 Offline — paste list</div>
+    <textarea id="paste-box" placeholder="One meter number per line&#10;12345678&#10;23456789"></textarea>
+    <button class="btn btn-out" onclick="loadPasted()" style="margin-top:8px;font-size:14px;padding:10px">Load pasted list</button>
     <div id="paste-msg" class="smsg"></div>
   </div>
-
-  <div class="card" style="background:var(--abg);border-color:var(--amb)">
-    <div class="ctitle" style="color:var(--adk)">⚙️ Apps Script — One-time setup</div>
-    <div style="font-size:12px;color:var(--adk);line-height:1.8;margin-bottom:10px">
-      <strong>Step 1:</strong> Open Google Sheet → Extensions → Apps Script<br>
-      <strong>Step 2:</strong> Delete existing code → paste code below<br>
-      <strong>Step 3:</strong> Save → Deploy → New deployment<br>
-      <strong>Step 4:</strong> Type=Web App, Execute as=Me, Access=Anyone<br>
-      <strong>Step 5:</strong> Deploy → Authorize → Copy URL → paste above
-    </div>
-    <textarea readonly onclick="this.select()" style="height:200px;font-size:11px;background:#fff">function doGet(e){
-  try{
-    var p=e.parameter;
-    var ss=SpreadsheetApp.openById(p.sheetId);
-    var sh=ss.getSheetByName(p.sheetName);
-    // --- READ meters ---
-    if(p.action==='read'){
-      var col=colIdx(p.col);
-      var vals=sh.getRange(1,col,sh.getLastRow(),1).getValues();
-      var list=vals.map(r=>String(r[0]).trim()).filter(r=>r.length>0);
-      return out({success:true,meters:list});
-    }
-    // --- WRITE scan log to Scan Log tab ---
-    if(p.action==='writelog'){
-      var logSh=ss.getSheetByName('Scan Log')||ss.insertSheet('Scan Log');
-      if(logSh.getLastRow()===0)
-        logSh.appendRow(['Meter','Status','Device','Time','Project']);
-      logSh.appendRow([p.meter,p.status,p.device,new Date().toLocaleString(),p.project]);
-    }
-    // --- WRITE status back to meter row ---
-    if(p.action==='writestatus'&&p.writeCol){
-      var mc=colIdx(p.meterCol), wc=colIdx(p.writeCol);
-      var data=sh.getDataRange().getValues();
-      for(var i=0;i<data.length;i++){
-        if(String(data[i][mc-1]).trim()===String(p.meter).trim()){
-          sh.getRange(i+1,wc).setValue(p.status);
-          sh.getRange(i+1,wc+1).setValue(new Date().toLocaleString());
-          sh.getRange(i+1,wc+2).setValue(p.device||'');
-          break;
-        }
-      }
-    }
-    // --- READ scan log ---
-    if(p.action==='readlog'){
-      var ls=ss.getSheetByName('Scan Log');
-      if(!ls) return out({success:true,rows:[]});
-      var rows=ls.getDataRange().getValues();
-      rows.shift(); // remove header
-      var proj=p.project||'';
-      if(proj) rows=rows.filter(r=>r[4]===proj);
-      return out({success:true,rows:rows.slice(-200)});
-    }
-    return out({success:true});
-  }catch(err){return out({success:false,msg:err.toString()});}
-}
-function colIdx(c){
-  c=String(c).toUpperCase();var n=0;
-  for(var i=0;i<c.length;i++)n=n*26+(c.charCodeAt(i)-64);
-  return n;
-}
-function out(obj){
-  return ContentService.createTextOutput(JSON.stringify(obj))
-    .setMimeType(ContentService.MimeType.JSON);
-}
-function doPost(e){return doGet(e);}</textarea>
-    <button onclick="document.querySelector('#screen-setup textarea[readonly]').select();document.execCommand('copy');alert('Copied!')"
-      class="btn-sm" style="margin-top:6px;width:100%">Copy Apps Script code</button>
-  </div>
-
 </div>
-</div><!-- end main-app -->
+
+</div><!-- mapp -->
 
 <script>
 // ══ STATE ══════════════════════════════════════════════════════════════════
-let projects  = {};
-let curProj   = null;
-let meterSet  = new Set();
-let scanLog   = [];
-let scannedMap= new Map();
-let stats     = {t:0,f:0,n:0,d:0};
-let wbStats   = {ok:0,err:0};
-let scanner   = null;
-let camRun    = false;
-let inCD      = false;
-let curFilter = 'all';
-let readCol   = 'A';
-let writeCol  = 'C';
-let newRC     = 'A';
-let newWC     = 'C';
-let autoRefreshTimer = null;
-let lastSync  = null;
-let deviceName= '';
+let projects={}, curPID=null, curProj=null;
+let meterSet=new Set(), scanLog=[], scannedMap=new Map();
+let stats={t:0,f:0,n:0,d:0}, wbStats={ok:0,err:0};
+let scanner=null, camRun=false, inCD=false;
+let curFilter='all', readCol='A', writeCol='C';
+let deviceName='', autoRT=null, lastSync=null;
 
-// ══ AUDIO ═════════════════════════════════════════════════════════════════
+// ══ AUDIO ══════════════════════════════════════════════════════════════════
 let aCtx=null;
 function gAC(){if(!aCtx)aCtx=new(window.AudioContext||window.webkitAudioContext)();return aCtx;}
-function beep(f,d,t='square',v=0.4){
-  if(!document.getElementById('beep-en').checked)return;
-  try{const c=gAC(),o=c.createOscillator(),g=c.createGain();
-    o.connect(g);g.connect(c.destination);o.type=t;o.frequency.value=f;
-    g.gain.setValueAtTime(v,c.currentTime);
-    g.gain.exponentialRampToValueAtTime(0.001,c.currentTime+d);
-    o.start(c.currentTime);o.stop(c.currentTime+d);}catch(e){}}
-function bFound(){beep(1200,0.1);setTimeout(()=>beep(1600,0.1),120);}
-function bNotFound(){beep(350,0.35,'sawtooth',0.5);}
-function bDup(){beep(800,0.08);setTimeout(()=>beep(800,0.08),150);setTimeout(()=>beep(800,0.08),300);}
+function beep(f,d,t='square',v=0.4){if(!document.getElementById('beep-en').checked)return;try{const c=gAC(),o=c.createOscillator(),g=c.createGain();o.connect(g);g.connect(c.destination);o.type=t;o.frequency.value=f;g.gain.setValueAtTime(v,c.currentTime);g.gain.exponentialRampToValueAtTime(0.001,c.currentTime+d);o.start(c.currentTime);o.stop(c.currentTime+d);}catch(e){}}
+function bF(){beep(1200,0.1);setTimeout(()=>beep(1600,0.1),120);}
+function bN(){beep(350,0.35,'sawtooth',0.5);}
+function bD(){beep(800,0.08);setTimeout(()=>beep(800,0.08),150);setTimeout(()=>beep(800,0.08),300);}
 
-// ══ INIT ══════════════════════════════════════════════════════════════════
+// ══ INIT ═══════════════════════════════════════════════════════════════════
 window.onload=function(){
   loadLocal();
   deviceName=localStorage.getItem('dmis_dev')||'';
-  if(deviceName) document.getElementById('device-name').value=deviceName;
+  if(deviceName) document.getElementById('dev-name').value=deviceName;
   setTimeout(()=>{
     document.getElementById('splash').style.display='none';
-    if(Object.keys(projects).length===0||!curProj){
-      showProjScreen();
-    } else {
-      openProject(curProj);
-    }
-  },1200);
+    if(curPID&&projects[curPID]){openProject(curPID);}
+    else showPScreen();
+  },1000);
   document.addEventListener('touchstart',()=>{try{gAC().resume();}catch(e){}},{once:true});
 };
 
-// ══ PERSIST ═══════════════════════════════════════════════════════════════
-function saveLocal(){
-  try{localStorage.setItem('dmis_projs',JSON.stringify(projects));
-      localStorage.setItem('dmis_cur',curProj||'');}catch(e){}
-}
-function loadLocal(){
-  try{
-    const p=localStorage.getItem('dmis_projs');
-    if(p) projects=JSON.parse(p);
-    const c=localStorage.getItem('dmis_cur');
-    if(c&&projects[c]) curProj=c;
-    // also save scan log per project
-    Object.keys(projects).forEach(k=>{
-      const lg=localStorage.getItem('dmis_log_'+k);
-      if(lg) projects[k].log=JSON.parse(lg);
-    });
-  }catch(e){}
-}
-function saveLog(){
-  try{localStorage.setItem('dmis_log_'+curProj,JSON.stringify(scanLog.slice(0,500)));}catch(e){}
-}
-function saveDeviceName(){
-  deviceName=document.getElementById('device-name').value.trim()||'Unknown device';
-  localStorage.setItem('dmis_dev',deviceName);
-  document.getElementById('si-dev').textContent=deviceName;
-  alert('Device name saved: '+deviceName);
+// ══ PERSIST ════════════════════════════════════════════════════════════════
+function saveLocal(){try{localStorage.setItem('dmis_p',JSON.stringify(projects));localStorage.setItem('dmis_cur',curPID||'');}catch(e){}}
+function loadLocal(){try{const p=localStorage.getItem('dmis_p');if(p)projects=JSON.parse(p);const c=localStorage.getItem('dmis_cur');if(c&&projects[c])curPID=c;}catch(e){}}
+function saveLog(){try{if(curPID)localStorage.setItem('dmis_log_'+curPID,JSON.stringify(scanLog.slice(0,500)));}catch(e){}}
+function saveDevName(){deviceName=document.getElementById('dev-name').value.trim()||'Unknown';localStorage.setItem('dmis_dev',deviceName);showM(document.getElementById('dev-msg'),'✅ Saved as: '+deviceName,'ok');document.getElementById('si-dev').textContent=deviceName;}
+
+// ══ PROJECT ID GENERATOR ═══════════════════════════════════════════════════
+function genPID(){
+  const c='ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+  let id='DMIS-';
+  for(let i=0;i<6;i++)id+=c[Math.floor(Math.random()*c.length)];
+  return id;
 }
 
-// ══ PROJECT MANAGEMENT ════════════════════════════════════════════════════
-function showProjScreen(){
-  document.getElementById('main-app').style.display='none';
-  document.getElementById('proj-screen').style.display='block';
-  renderProjects();
+// ══ PROJECT SCREEN ═════════════════════════════════════════════════════════
+function showPScreen(){
+  stopCam();
+  if(autoRT){clearInterval(autoRT);autoRT=null;}
+  document.getElementById('mapp').style.display='none';
+  document.getElementById('pscreen').style.display='block';
+  renderProjList();
 }
-function showNewProject(){
-  document.getElementById('new-proj-form').style.display='block';
-  document.getElementById('new-proj-name').focus();
-}
-function selNewRC(el,v){document.querySelectorAll('#new-rc-pills .cp').forEach(p=>p.classList.remove('sel'));el.classList.add('sel');newRC=v;}
-function selNewWC(el,v){document.querySelectorAll('#new-wc-pills .cp').forEach(p=>p.classList.remove('sel'));el.classList.add('sel');newWC=v;}
+function showCreate(){document.getElementById('create-form').style.display='block';document.getElementById('join-form').style.display='none';document.getElementById('c-name').focus();}
+function showJoin(){document.getElementById('join-form').style.display='block';document.getElementById('create-form').style.display='none';document.getElementById('j-pid').focus();}
+function switchProj(){showPScreen();}
 
+// ══ CREATE PROJECT ═════════════════════════════════════════════════════════
 async function createProject(){
-  const name=document.getElementById('new-proj-name').value.trim();
-  const sid=document.getElementById('new-sheet-id').value.trim();
-  const sname=document.getElementById('new-sheet-name').value.trim()||'Master Sheet PSW';
-  const surl=document.getElementById('new-script-url').value.trim();
-  const msg=document.getElementById('new-proj-msg');
+  const name=document.getElementById('c-name').value.trim();
+  const sid=document.getElementById('c-sid').value.trim();
+  const sname=document.getElementById('c-sname').value.trim()||'Master Sheet PSW';
+  const surl=document.getElementById('c-surl').value.trim();
+  const rc=getSelPill('c-rc')||'A';
+  const wc=getSelPill('c-wc')||'C';
+  const msg=document.getElementById('c-msg');
   if(!name){showM(msg,'Enter project name','err');return;}
   if(!sid){showM(msg,'Enter Google Sheet ID','err');return;}
-  const key='proj_'+Date.now();
-  projects[key]={name,sid,sname,surl,readCol:newRC,writeCol:newWC,
-    created:new Date().toISOString(),log:[],stats:{t:0,f:0,n:0,d:0}};
-  curProj=key; saveLocal();
-  document.getElementById('new-proj-form').style.display='none';
-  openProject(key);
+  showM(msg,'Creating project...','ld');
+  const pid=genPID();
+  const proj={pid,name,sid,sname,surl,readCol:rc,writeCol:wc,
+    created:new Date().toISOString(),createdBy:deviceName||'Unknown',
+    stats:{t:0,f:0,n:0,d:0},log:[]};
+  projects[pid]=proj;
+  curPID=pid;
+  saveLocal();
+  // Save to Google Sheet for sharing (if surl given)
+  if(surl){
+    try{
+      const cfg=btoa(JSON.stringify({pid,name,sid,sname,surl,readCol:rc,writeCol:wc,createdBy:deviceName||'Unknown'}));
+      const params=new URLSearchParams({action:'saveproject',sheetId:sid,sheetName:sname,pid,config:cfg,createdBy:deviceName||'Unknown'});
+      await fetch(surl+'?'+params);
+    }catch(e){}
+  }
+  showM(msg,'✅ Project created! ID: '+pid,'ok');
+  setTimeout(()=>openProject(pid),800);
 }
 
-function renderProjects(){
+// ══ JOIN PROJECT ═══════════════════════════════════════════════════════════
+async function joinProject(){
+  const pidInput=document.getElementById('j-pid').value.trim().toUpperCase();
+  const msg=document.getElementById('j-msg');
+  if(!pidInput||pidInput.length<6){showM(msg,'Enter valid Project ID (e.g. DMIS-K7X9NM)','err');return;}
+  // check if already have locally
+  if(projects[pidInput]){
+    showM(msg,'✅ Project found locally — opening...','ok');
+    setTimeout(()=>openProject(pidInput),600);
+    return;
+  }
+  // need to fetch from Google Sheet — but we don't know which sheet
+  // ask user for the sheet ID or script URL
+  showM(msg,'Project not found locally. If you have the Apps Script URL, enter it below to fetch from sheet.','err');
+  // show extra input
+  let extraDiv=document.getElementById('j-extra');
+  if(!extraDiv){
+    extraDiv=document.createElement('div');
+    extraDiv.id='j-extra';
+    extraDiv.innerHTML=`
+      <label class="flabel" style="margin-top:10px">Apps Script URL (from project creator)</label>
+      <input type="text" id="j-surl" placeholder="https://script.google.com/macros/s/.../exec">
+      <label class="flabel">Google Sheet ID (from project creator)</label>
+      <input type="text" id="j-sid" placeholder="Sheet ID" style="font-family:monospace;font-size:13px">
+      <button class="btn btn-g" onclick="fetchAndJoin('${pidInput}')" style="margin-top:10px;padding:11px;font-size:14px">Fetch & Join Project</button>`;
+    document.getElementById('join-form').appendChild(extraDiv);
+  }
+  extraDiv.style.display='block';
+}
+
+async function fetchAndJoin(pid){
+  const surl=document.getElementById('j-surl').value.trim();
+  const sid=document.getElementById('j-sid').value.trim();
+  const msg=document.getElementById('j-msg');
+  if(!surl||!sid){showM(msg,'Enter both Apps Script URL and Sheet ID','err');return;}
+  showM(msg,'Fetching project from sheet...','ld');
+  try{
+    const params=new URLSearchParams({action:'getproject',sheetId:sid,sheetName:'Master Sheet PSW',pid});
+    const res=await fetch(surl+'?'+params);
+    const data=await res.json();
+    if(!data.success){showM(msg,'Project ID not found: '+pid,'err');return;}
+    const cfg=JSON.parse(atob(data.config));
+    const proj={...cfg,stats:{t:0,f:0,n:0,d:0},log:[],joined:true,joinedAt:new Date().toISOString()};
+    projects[pid]=proj;
+    curPID=pid;
+    saveLocal();
+    showM(msg,'✅ Joined project: '+cfg.name,'ok');
+    setTimeout(()=>openProject(pid),700);
+  }catch(e){showM(msg,'Failed to fetch project. Check URL and Sheet ID.','err');}
+}
+
+// ══ OPEN PROJECT ═══════════════════════════════════════════════════════════
+function openProject(pid){
+  curPID=pid;
+  curProj=projects[pid];
+  if(!curProj)return;
+  // restore log from local
+  try{const lg=localStorage.getItem('dmis_log_'+pid);if(lg)curProj.log=JSON.parse(lg);}catch(e){}
+  scanLog=curProj.log||[];
+  stats=curProj.stats||{t:0,f:0,n:0,d:0};
+  scannedMap=new Map();
+  scanLog.forEach(e=>{if(!scannedMap.has(e.norm))scannedMap.set(e.norm,{time:new Date(e.time),found:e.found});});
+  wbStats={ok:0,err:0};
+  readCol=curProj.readCol||'A';
+  writeCol=curProj.writeCol||'C';
+  // update UI
+  document.getElementById('pscreen').style.display='none';
+  document.getElementById('mapp').style.display='block';
+  document.getElementById('proj-title').textContent=curProj.name;
+  document.getElementById('proj-sub').textContent='ID: '+pid+' · Tap Switch to change';
+  document.getElementById('s-sid').value=curProj.sid;
+  document.getElementById('s-sname').value=curProj.sname;
+  if(curProj.surl){document.getElementById('s-surl').value=curProj.surl;document.getElementById('wb-en').checked=true;document.getElementById('wb-cfg').style.display='block';}
+  document.getElementById('share-pid').textContent=pid;
+  document.getElementById('si-pid').textContent=pid;
+  document.getElementById('si-dev').textContent=deviceName||'(set name)';
+  document.getElementById('si-cby').textContent=curProj.createdBy||'—';
+  setSelPill2('rc-pills',readCol);
+  setSelPill2('wc-pills',writeCol);
+  updateStatBadges();
+  saveLocal();
+  if(curProj.sid)loadMeters();
+  if(autoRT)clearInterval(autoRT);
+  autoRT=setInterval(refreshLog,30000);
+}
+
+// ══ RENDER PROJECT LIST ════════════════════════════════════════════════════
+function renderProjList(){
   const list=document.getElementById('proj-list');
   const keys=Object.keys(projects);
-  if(!keys.length){list.innerHTML='<div class="lempty">No projects — create one above</div>';return;}
-  list.innerHTML=keys.reverse().map(k=>{
+  if(!keys.length){list.innerHTML='<div class="lempty">No projects yet — create or join one</div>';return;}
+  list.innerHTML=keys.slice().reverse().map(k=>{
     const p=projects[k];
     const st=p.stats||{t:0,f:0,n:0,d:0};
     const d=new Date(p.created).toLocaleDateString('en-PK');
-    return `<div class="proj-card" onclick="openProject('${k}')">
-      <div class="proj-name">${p.name}</div>
-      <div class="proj-meta">Created ${d} · ${p.sname}</div>
-      <div class="proj-stats">
-        <span class="proj-stat b">📊 ${st.t} scanned</span>
-        <span class="proj-stat g">✅ ${st.f} found</span>
-        <span class="proj-stat r">❌ ${st.n} not found</span>
-        ${st.d?`<span class="proj-stat" style="background:var(--abg);color:var(--adk)">⚠️ ${st.d} dup</span>`:''}
+    const joined=p.joined?'<span class="pst b">Joined</span>':'<span class="pst g">Created by me</span>';
+    return `<div class="pcard" onclick="openProject('${k}')">
+      <button class="pcard-del" onclick="event.stopPropagation();delProj('${k}')">✕</button>
+      <div class="pcard-name">${p.name}</div>
+      <div class="pcard-meta">${p.sname} · ${d}</div>
+      <div class="pcard-pid">${k}</div>
+      <div class="pcard-stats">
+        ${joined}
+        <span class="pst b">📊 ${st.t}</span>
+        <span class="pst g">✅ ${st.f}</span>
+        <span class="pst r">❌ ${st.n}</span>
+        ${st.d?`<span class="pst a">⚠️ ${st.d}</span>`:''}
       </div>
     </div>`;
   }).join('');
 }
 
-function openProject(key){
-  curProj=key;
-  const p=projects[key];
-  scanLog=p.log||[];
-  stats=p.stats||{t:0,f:0,n:0,d:0};
-  scannedMap=new Map();
-  scanLog.forEach(e=>{if(!scannedMap.has(e.norm)) scannedMap.set(e.norm,{time:new Date(e.time),found:e.found});});
-  wbStats={ok:0,err:0};
-  readCol=p.readCol||'A';
-  writeCol=p.writeCol||'C';
-  document.getElementById('proj-screen').style.display='none';
-  document.getElementById('main-app').style.display='block';
-  document.getElementById('proj-title').textContent=p.name;
-  document.getElementById('proj-sub').textContent=p.sname+' · tap Switch to change';
-  document.getElementById('s-sid').value=p.sid;
-  document.getElementById('s-sname').value=p.sname;
-  if(p.surl){document.getElementById('s-surl').value=p.surl;document.getElementById('wb-en').checked=true;document.getElementById('wb-cfg').style.display='block';}
-  document.getElementById('si-proj').textContent=p.name;
-  document.getElementById('si-dev').textContent=deviceName||'(set name in projects screen)';
-  saveLocal();
-  updateBadge();
-  updateStatBadges();
-  setSelPill('rc-pills',readCol);
-  setSelPill('wc-pills',writeCol);
-  // load meters
-  if(p.sid) loadMeters();
-  // start auto-refresh log every 30 sec
-  if(autoRefreshTimer) clearInterval(autoRefreshTimer);
-  autoRefreshTimer=setInterval(refreshLog,30000);
+function delProj(pid){
+  if(!confirm('Delete project "'+projects[pid]?.name+'"?\nThis only removes it from this device.'))return;
+  delete projects[pid];
+  try{localStorage.removeItem('dmis_log_'+pid);}catch(e){}
+  if(curPID===pid)curPID=null;
+  saveLocal();renderProjList();
 }
 
-function switchProject(){
-  stopCamera();
-  if(autoRefreshTimer){clearInterval(autoRefreshTimer);autoRefreshTimer=null;}
-  showProjScreen();
+// ══ SHARE PROJECT ID ═══════════════════════════════════════════════════════
+function sharePID(){
+  const pid=curProj?.pid||curPID;
+  const name=curProj?.name||'';
+  const surl=document.getElementById('s-surl').value.trim()||curProj?.surl||'';
+  const sid=curProj?.sid||'';
+  const msg=`*DMIS Meter Scanner — Join Project*\n\nProject: ${name}\nProject ID: *${pid}*\n\nApps Script URL:\n${surl}\n\nSheet ID:\n${sid}\n\nSteps:\n1. Open DMIS Meter Scanner app\n2. Tap "Join Existing Project"\n3. Enter Project ID: *${pid}*\n4. Enter Apps Script URL and Sheet ID if asked`;
+  if(navigator.share){
+    navigator.share({title:'Join DMIS Project: '+name,text:msg}).catch(()=>{});
+  } else {
+    const wa='https://wa.me/?text='+encodeURIComponent(msg);
+    window.open(wa,'_blank');
+  }
 }
 
 // ══ LOAD METERS ═══════════════════════════════════════════════════════════
 async function loadMeters(){
-  const p=projects[curProj];
+  const p=curProj;
   const sname=document.getElementById('s-sname').value.trim()||p.sname;
   const msg=document.getElementById('load-msg');
-  showM(msg,'Loading meters from "'+sname+'"...','ld');
-  // try Apps Script first if URL available
   const surl=document.getElementById('s-surl').value.trim()||p.surl||'';
+  showM(msg,'Loading meters...','ld');
   if(surl){
     try{
       const params=new URLSearchParams({action:'read',sheetId:p.sid,sheetName:sname,col:readCol});
@@ -649,80 +774,56 @@ async function loadMeters(){
       const data=await res.json();
       if(data.success&&data.meters){
         meterSet=new Set(data.meters.map(m=>norm(m)));
-        updateBadge();
-        showM(msg,meterSet.size+' meters loaded via Apps Script','ok');
-        setResultReady();
-        return;
+        updBadge();showM(msg,'✅ '+meterSet.size+' meters loaded via Apps Script','ok');setReady();return;
       }
     }catch(e){}
   }
-  // fallback: direct CSV
-  const url=`https://docs.google.com/spreadsheets/d/${p.sid}/gviz/tq?tqx=out:csv&sheet=${encodeURIComponent(sname)}&range=${readCol}:${readCol}`;
+  // fallback CSV
   try{
+    const url=`https://docs.google.com/spreadsheets/d/${p.sid}/gviz/tq?tqx=out:csv&sheet=${encodeURIComponent(sname)}&range=${readCol}:${readCol}`;
     const res=await fetch(url);
-    if(!res.ok) throw new Error();
+    if(!res.ok)throw new Error();
     const text=await res.text();
     const rows=text.split('\n').map(r=>r.replace(/"/g,'').trim()).filter(r=>r.length>1);
     meterSet=new Set(rows.map(r=>norm(r)));
-    updateBadge();
-    showM(msg,meterSet.size+' meters loaded','ok');
-    setResultReady();
-  }catch(e){
-    showM(msg,'Failed — share sheet as Anyone=Viewer and check Sheet ID','err');
-  }
+    updBadge();showM(msg,'✅ '+meterSet.size+' meters loaded','ok');setReady();
+  }catch(e){showM(msg,'Failed — make sure sheet is shared (Anyone = Viewer)','err');}
 }
-
 function loadPasted(){
   const rows=document.getElementById('paste-box').value.split('\n').map(r=>r.trim()).filter(r=>r);
   const msg=document.getElementById('paste-msg');
   if(!rows.length){showM(msg,'Nothing to load','err');return;}
   meterSet=new Set(rows.map(r=>norm(r)));
-  updateBadge(); showM(msg,meterSet.size+' meters loaded (offline)','ok'); setResultReady();
+  updBadge();showM(msg,'✅ '+meterSet.size+' meters loaded (offline)','ok');setReady();
 }
 
-// ══ CAMERA ════════════════════════════════════════════════════════════════
-function toggleCamera(){camRun?stopCamera():startCamera();}
-function startCamera(){
+// ══ CAMERA ═════════════════════════════════════════════════════════════════
+function toggleCam(){camRun?stopCam():startCam();}
+function startCam(){
   document.getElementById('cam-st').textContent='Starting camera...';
   document.getElementById('cam-btn').textContent='⏹ Stop Camera';
   document.getElementById('cam-btn').className='btn btn-stop';
-  document.getElementById('scan-overlay').style.display='block';
+  document.getElementById('scan-ov').style.display='block';
   scanner=new Html5Qrcode('reader');
   const cfg={fps:10,qrbox:{width:220,height:100},aspectRatio:1.6,
-    formatsToSupport:[
-      Html5QrcodeSupportedFormats.CODE_128,Html5QrcodeSupportedFormats.CODE_39,
-      Html5QrcodeSupportedFormats.EAN_13,Html5QrcodeSupportedFormats.EAN_8,
-      Html5QrcodeSupportedFormats.UPC_A,Html5QrcodeSupportedFormats.ITF,
-    ]};
-  scanner.start({facingMode:'environment'},cfg,onScanOK,null)
+    formatsToSupport:[Html5QrcodeSupportedFormats.CODE_128,Html5QrcodeSupportedFormats.CODE_39,Html5QrcodeSupportedFormats.EAN_13,Html5QrcodeSupportedFormats.EAN_8,Html5QrcodeSupportedFormats.UPC_A,Html5QrcodeSupportedFormats.ITF]};
+  scanner.start({facingMode:'environment'},cfg,(code)=>{if(!inCD){startCD();processCode(code);}},null)
     .then(()=>{camRun=true;document.getElementById('cam-st').textContent='📷 Camera active — point at barcode';})
-    .catch(err=>{
-      document.getElementById('cam-st').textContent='Camera error: '+err;
-      document.getElementById('cam-btn').textContent='▶ Start Camera';
-      document.getElementById('cam-btn').className='btn btn-p';
-      document.getElementById('scan-overlay').style.display='none';
-    });
+    .catch(err=>{document.getElementById('cam-st').textContent='Camera error: '+err;document.getElementById('cam-btn').textContent='▶ Start Camera';document.getElementById('cam-btn').className='btn btn-p';document.getElementById('scan-ov').style.display='none';});
 }
-function stopCamera(){
-  if(scanner){scanner.stop().then(()=>{scanner.clear();scanner=null;camRun=false;inCD=false;
-    document.getElementById('cam-btn').textContent='▶ Start Camera';
-    document.getElementById('cam-btn').className='btn btn-p';
-    document.getElementById('cam-st').textContent='Camera stopped';
-    document.getElementById('scan-overlay').style.display='none';
-    document.getElementById('cdbar-wrap').style.display='none';
-  }).catch(()=>{});}
+function stopCam(){
+  if(scanner){scanner.stop().then(()=>{scanner.clear();scanner=null;camRun=false;inCD=false;document.getElementById('cam-btn').textContent='▶ Start Camera';document.getElementById('cam-btn').className='btn btn-p';document.getElementById('cam-st').textContent='Camera stopped';document.getElementById('scan-ov').style.display='none';document.getElementById('cdbar-w').style.display='none';}).catch(()=>{});}
 }
-function onScanOK(code){if(inCD)return;startCD();processCode(code);}
 function startCD(){
   const s=parseInt(document.getElementById('cd-sec').value)||2;
   inCD=true;
-  const w=document.getElementById('cdbar-wrap'),b=document.getElementById('cdbar');
+  const w=document.getElementById('cdbar-w'),b=document.getElementById('cdbar');
   w.style.display='block';b.style.transition='none';b.style.width='100%';
   setTimeout(()=>{b.style.transition=`width ${s}s linear`;b.style.width='0%';},50);
   setTimeout(()=>{inCD=false;w.style.display='none';b.style.width='100%';},s*1000);
 }
 
-// ══ PROCESS SCAN ══════════════════════════════════════════════════════════
+// ══ PROCESS SCAN ═══════════════════════════════════════════════════════════
 function processCode(raw){
   if(!raw||raw.length<2)return;
   const n=norm(raw);
@@ -730,254 +831,161 @@ function processCode(raw){
   const prev=scannedMap.get(n);
   const isDup=!!prev;
   const now=new Date();
-  stats.t++;
-  if(isDup)stats.d++;else if(found)stats.f++;else stats.n++;
+  stats.t++;if(isDup)stats.d++;else if(found)stats.f++;else stats.n++;
   const entry={raw,norm:n,found,isDup,time:now.toISOString(),
-    prevTime:isDup?prev.time.toISOString():null,
-    prevFound:isDup?prev.found:null,
-    device:deviceName||'Unknown',
-    project:projects[curProj]?.name||'',
-    wbSt:'none'};
+    prevTime:isDup?prev.time.toISOString():null,prevFound:isDup?prev.found:null,
+    device:deviceName||'Unknown',project:curProj?.name||'',pid:curPID,wbSt:'none'};
   scanLog.unshift(entry);
   if(!isDup)scannedMap.set(n,{time:now,found});
-  // update project stats
-  projects[curProj].stats=stats;
-  projects[curProj].log=scanLog.slice(0,500);
-  saveLocal(); saveLog();
-  updateStatBadges();
-  showResult(entry);
-  if(isDup)bDup();else if(found)bFound();else bNotFound();
+  curProj.stats=stats;curProj.log=scanLog.slice(0,500);
+  saveLocal();saveLog();
+  updateStatBadges();showResult(entry);
+  if(isDup)bD();else if(found)bF();else bN();
   if(navigator.vibrate&&document.getElementById('vib-en').checked){
-    if(isDup)navigator.vibrate([100,60,100]);
-    else if(found)navigator.vibrate(80);
-    else navigator.vibrate([200,60,200]);
+    if(isDup)navigator.vibrate([100,60,100]);else if(found)navigator.vibrate(80);else navigator.vibrate([200,60,200]);
   }
-  // write to Google Sheet log + status
-  const surl=document.getElementById('s-surl').value.trim();
+  // write to sheet
+  const surl=document.getElementById('s-surl').value.trim()||curProj?.surl||'';
   if(surl){
-    const wbEnabled=document.getElementById('wb-en').checked;
-    // always write to Scan Log tab
-    writeLog(surl,entry);
-    // write status to meter row if found and enabled
-    if(wbEnabled){
-      const stFound=document.getElementById('s-sfound').value||'SCANNED ✓';
-      const stNF=document.getElementById('s-snotfound').value||'';
-      const statusText=found?stFound:stNF;
-      if(statusText) writeStatus(surl,entry,statusText);
+    writeLogToSheet(surl,entry);
+    if(document.getElementById('wb-en').checked){
+      const stF=document.getElementById('s-sfound').value||'SCANNED ✓';
+      const stN=document.getElementById('s-snotfound').value||'';
+      const st=found?stF:stN;
+      if(st)writeStatusToSheet(surl,entry,st);
     }
   }
 }
 
-async function writeLog(surl,entry){
-  const p=projects[curProj];
-  const params=new URLSearchParams({
-    action:'writelog',sheetId:p.sid,sheetName:p.sname,
-    meter:entry.raw,status:entry.isDup?'DUPLICATE':(entry.found?'FOUND':'NOT FOUND'),
-    device:entry.device,project:entry.project
-  });
-  try{await fetch(surl+'?'+params);}catch(e){}
-}
-
-async function writeStatus(surl,entry,statusText){
-  const p=projects[curProj];
-  const params=new URLSearchParams({
-    action:'writestatus',sheetId:p.sid,sheetName:p.sname,
-    meterCol:readCol,writeCol:writeCol,
-    meter:entry.raw,status:statusText,device:entry.device
-  });
+async function writeLogToSheet(surl,e){
+  const p=curProj;
   try{
+    const params=new URLSearchParams({action:'writelog',sheetId:p.sid,sheetName:p.sname,
+      meter:e.raw,status:e.isDup?'DUPLICATE':(e.found?'FOUND':'NOT FOUND'),
+      device:e.device,project:e.project,pid:e.pid||''});
+    await fetch(surl+'?'+params);
+  }catch(err){}
+}
+async function writeStatusToSheet(surl,e,st){
+  const p=curProj;
+  try{
+    const params=new URLSearchParams({action:'writestatus',sheetId:p.sid,sheetName:p.sname,
+      meterCol:readCol,writeCol,meter:e.raw,status:st,device:e.device});
     const res=await fetch(surl+'?'+params);
     const data=await res.json();
-    entry.wbSt=data.success?'ok':'err';
+    e.wbSt=data.success?'ok':'err';
     if(data.success)wbStats.ok++;else wbStats.err++;
     document.getElementById('wb-ok').textContent=wbStats.ok;
-    document.getElementById('wb-err').textContent=wbStats.err;
-  }catch(e){entry.wbSt='err';wbStats.err++;document.getElementById('wb-err').textContent=wbStats.err;}
+  }catch(err){e.wbSt='err';wbStats.err++;}
 }
 
-// ══ REFRESH LOG FROM SHEET ════════════════════════════════════════════════
+// ══ REFRESH LOG ═════════════════════════════════════════════════════════════
 async function refreshLog(){
-  const p=projects[curProj];
-  if(!p)return;
-  const surl=document.getElementById('s-surl').value.trim()||p.surl||'';
-  if(!surl)return;
+  const surl=document.getElementById('s-surl').value.trim()||curProj?.surl||'';
+  if(!surl||!curProj)return;
+  setSyncSt('⏳ Syncing...','var(--adk)');
   try{
-    const params=new URLSearchParams({action:'readlog',sheetId:p.sid,project:p.name});
+    const params=new URLSearchParams({action:'readlog',sheetId:curProj.sid,sheetName:curProj.sname,pid:curPID});
     const res=await fetch(surl+'?'+params);
     const data=await res.json();
-    if(data.success&&data.rows){
-      // merge sheet log with local log
-      const sheetEntries=data.rows.map(r=>({
-        raw:r[0],norm:norm(r[0]),
-        found:r[1]==='FOUND',isDup:r[1]==='DUPLICATE',
-        time:r[2]||new Date().toISOString(),
-        device:r[2]||'',project:r[3]||'',wbSt:'ok'
-      }));
-      // add sheet entries not in local log
-      const localNorms=new Set(scanLog.map(e=>e.norm+'_'+e.time));
-      sheetEntries.forEach(e=>{
-        if(!localNorms.has(e.norm+'_'+e.time)) scanLog.push(e);
+    if(data.success&&data.rows&&data.rows.length){
+      const existing=new Set(scanLog.map(e=>e.raw+'|'+e.time));
+      data.rows.forEach(r=>{
+        const entry={raw:r[0],norm:norm(r[0]),found:r[1]==='FOUND',isDup:r[1]==='DUPLICATE',
+          time:r[2]||new Date().toISOString(),device:r[2]||'Unknown',project:r[3]||'',pid:r[4]||'',wbSt:'ok'};
+        const key=entry.raw+'|'+entry.time;
+        if(!existing.has(key)){scanLog.push(entry);existing.add(key);}
       });
       scanLog.sort((a,b)=>new Date(b.time)-new Date(a.time));
       scanLog=scanLog.slice(0,500);
       lastSync=new Date();
       document.getElementById('si-sync').textContent=fmt(lastSync);
-      setSyncStatus('✅ Synced with sheet','var(--gdk)');
-    }
-  }catch(e){setSyncStatus('⚠️ Sync failed','var(--adk)');}
-  // refresh log view if on log tab
-  if(document.getElementById('screen-log').classList.contains('active')) renderLog();
+      setSyncSt('✅ Synced','var(--gdk)');
+    }else setSyncSt('✅ Up to date','var(--gdk)');
+  }catch(e){setSyncSt('⚠️ Sync failed','var(--adk)');}
+  if(document.getElementById('screen-log').classList.contains('active'))renderLog();
 }
+function setSyncSt(msg,color){const el=document.getElementById('sync-st');el.textContent=msg;el.style.color=color;setTimeout(()=>el.textContent='',4000);}
 
-function setSyncStatus(msg,color){
-  const el=document.getElementById('sync-status');
-  el.textContent=msg;el.style.color=color;
-  setTimeout(()=>el.textContent='',4000);
-}
-
-// ══ SHOW RESULT ═══════════════════════════════════════════════════════════
+// ══ RESULT / LOG / STATS ══════════════════════════════════════════════════
 function showResult(e){
   const box=document.getElementById('result-box');
   box.className='';
-  if(e.isDup){
-    box.classList.add('duplicate','pa');
-    document.getElementById('ri').textContent='⚠️';
-    document.getElementById('rs').textContent='DUPLICATE SCAN';
-    document.getElementById('rs').style.color='var(--amb)';
-    document.getElementById('rd').textContent='First scan: '+fmt(new Date(e.prevTime))+(e.prevFound?' — FOUND':' — NOT FOUND');
-    document.getElementById('rd').style.color='var(--adk)';
-  }else if(e.found){
-    box.classList.add('found','pg');
-    document.getElementById('ri').textContent='✅';
-    document.getElementById('rs').textContent='FOUND IN LIST';
-    document.getElementById('rs').style.color='var(--gdk)';
-    document.getElementById('rd').textContent='Meter is in Master Sheet PSW';
-    document.getElementById('rd').style.color='var(--gdk)';
-  }else{
-    box.classList.add('notfound','pr');
-    document.getElementById('ri').textContent='❌';
-    document.getElementById('rs').textContent='NOT FOUND';
-    document.getElementById('rs').style.color='var(--rdk)';
-    document.getElementById('rd').textContent='Meter is NOT in the list';
-    document.getElementById('rd').style.color='var(--rdk)';
-  }
+  if(e.isDup){box.classList.add('dup','pa');document.getElementById('ri').textContent='⚠️';document.getElementById('rs').textContent='DUPLICATE SCAN';document.getElementById('rs').style.color='var(--amb)';document.getElementById('rd').textContent='First scan: '+fmt(new Date(e.prevTime))+(e.prevFound?' — FOUND':' — NOT FOUND');document.getElementById('rd').style.color='var(--adk)';}
+  else if(e.found){box.classList.add('found','pg');document.getElementById('ri').textContent='✅';document.getElementById('rs').textContent='FOUND IN LIST';document.getElementById('rs').style.color='var(--gdk)';document.getElementById('rd').textContent='Meter is in Master Sheet PSW';document.getElementById('rd').style.color='var(--gdk)';}
+  else{box.classList.add('notfound','pr');document.getElementById('ri').textContent='❌';document.getElementById('rs').textContent='NOT FOUND';document.getElementById('rs').style.color='var(--rdk)';document.getElementById('rd').textContent='Meter is NOT in the list';document.getElementById('rd').style.color='var(--rdk)';}
   document.getElementById('rm').textContent=e.raw;
   setTimeout(()=>box.classList.remove('pg','pr','pa'),500);
 }
-function setResultReady(){
-  document.getElementById('result-box').className='';
-  document.getElementById('ri').textContent='📷';
-  document.getElementById('rs').textContent='Ready — '+meterSet.size+' meters loaded';
-  document.getElementById('rs').style.color='var(--gdk)';
-  document.getElementById('rm').textContent='';
-  document.getElementById('rd').textContent='Start camera or use manual input';
-  document.getElementById('rd').style.color='var(--mut)';
-}
+function setReady(){document.getElementById('result-box').className='';document.getElementById('ri').textContent='📷';document.getElementById('rs').textContent='Ready — '+meterSet.size+' meters loaded';document.getElementById('rs').style.color='var(--gdk)';document.getElementById('rm').textContent='';document.getElementById('rd').textContent='Start camera or use manual input';document.getElementById('rd').style.color='var(--mut)';}
 
-// ══ LOG ═══════════════════════════════════════════════════════════════════
-function filterLog(f){
+function flog(f){
   curFilter=f;
-  ['fa','ff','fn','fd'].forEach((id,i)=>{
-    const btn=document.getElementById(id);
-    const on=['all','found','notfound','dup'][i]===f;
-    btn.style.background=on?'var(--mid)':'';
-    btn.style.color=on?'#fff':'';
-    btn.style.borderColor=on?'var(--mid)':'var(--bdr)';
-  });
+  ['fa','ff','fn','fd'].forEach((id,i)=>{const b=document.getElementById(id),on=['all','found','notfound','dup'][i]===f;b.style.background=on?'var(--mid)':'';b.style.color=on?'#fff':'';b.style.borderColor=on?'var(--mid)':'var(--bdr)';});
   renderLog();
 }
 function renderLog(){
   const list=document.getElementById('log-list');
   let fl=scanLog;
-  if(curFilter==='found')    fl=scanLog.filter(e=>e.found&&!e.isDup);
-  if(curFilter==='notfound') fl=scanLog.filter(e=>!e.found&&!e.isDup);
-  if(curFilter==='dup')      fl=scanLog.filter(e=>e.isDup);
-  if(!fl.length){list.innerHTML='<div class="lempty">'+(scanLog.length?'No entries match filter':'No scans yet')+'</div>';return;}
+  if(curFilter==='found')fl=scanLog.filter(e=>e.found&&!e.isDup);
+  if(curFilter==='notfound')fl=scanLog.filter(e=>!e.found&&!e.isDup);
+  if(curFilter==='dup')fl=scanLog.filter(e=>e.isDup);
+  if(!fl.length){list.innerHTML='<div class="lempty">'+(scanLog.length?'No entries match':'No scans yet')+'</div>';return;}
   list.innerHTML=fl.map(e=>{
     const cls=e.isDup?'di':(e.found?'fi':'ni');
     const ic=e.isDup?'⚠️':(e.found?'✅':'❌');
-    const desc=e.isDup?('Duplicate — first: '+fmt(new Date(e.prevTime))+(e.prevFound?' Found':' Not found')):(e.found?'Found in list':'Not found');
+    const desc=e.isDup?('Dup — first: '+fmt(new Date(e.prevTime))+(e.prevFound?' Found':' Not found')):(e.found?'Found in list':'Not found');
     const dc=e.isDup?'d':(e.found?'f':'n');
-    const wb=e.wbSt==='ok'?'<div class="liwb ok">✓ Written to sheet</div>':e.wbSt==='err'?'<div class="liwb err">✗ Write failed</div>':'';
+    const wb=e.wbSt==='ok'?'<div class="lwb ok">✓ Written to sheet</div>':e.wbSt==='err'?'<div class="lwb err">✗ Write failed</div>':'';
     return `<div class="li ${cls}">
       <div class="lic">${ic}</div>
-      <div class="lin">
-        <div class="linum">${e.raw}</div>
-        <div class="lidesc ${dc}">${desc}</div>
-        <div class="lidev">👤 ${e.device||'Unknown'}</div>
-        ${wb}
-      </div>
-      <div class="liright"><div class="litime">${fmt(new Date(e.time))}</div></div>
+      <div class="lin"><div class="lnum">${e.raw}</div><div class="ldesc ${dc}">${desc}</div><div class="ldev">👤 ${e.device||'Unknown'}</div>${wb}</div>
+      <div class="lr"><div class="ltime">${fmt(new Date(e.time))}</div></div>
     </div>`;
   }).join('');
 }
 
-// ══ STATS ═════════════════════════════════════════════════════════════════
-function updateStatBadges(){
-  document.getElementById('st-t').textContent=stats.t;
-  document.getElementById('st-f').textContent=stats.f;
-  document.getElementById('st-n').textContent=stats.n;
-  document.getElementById('st-d').textContent=stats.d;
-}
+function updateStatBadges(){document.getElementById('st-t').textContent=stats.t;document.getElementById('st-f').textContent=stats.f;document.getElementById('st-n').textContent=stats.n;document.getElementById('st-d').textContent=stats.d;}
 function updateStats(){
   updateStatBadges();
   const pf=stats.t>0?Math.round(stats.f/stats.t*100):0;
   const pl=meterSet.size>0?Math.round(stats.f/meterSet.size*100):0;
-  document.getElementById('pf').textContent=pf+'%';
-  document.getElementById('pl').textContent=pl+'%';
-  document.getElementById('bf').style.width=pf+'%';
-  document.getElementById('bl').style.width=pl+'%';
+  document.getElementById('pf').textContent=pf+'%';document.getElementById('pl').textContent=pl+'%';
+  document.getElementById('bf').style.width=pf+'%';document.getElementById('bl').style.width=pl+'%';
   document.getElementById('si-loaded').textContent=meterSet.size;
   document.getElementById('wb-ok').textContent=wbStats.ok;
-  document.getElementById('wb-err').textContent=wbStats.err;
 }
 
-// ══ EXPORT ════════════════════════════════════════════════════════════════
 function exportCSV(){
   if(!scanLog.length){alert('No log to export');return;}
-  const rows=['Meter,Status,Duplicate,Device,Time,Project'];
-  [...scanLog].reverse().forEach(e=>{
-    const st=e.isDup?'DUPLICATE':(e.found?'FOUND':'NOT FOUND');
-    rows.push(`"${e.raw}","${st}","${e.isDup}","${e.device||''}","${fmt(new Date(e.time))}","${e.project||''}"`);
-  });
-  const a=document.createElement('a');
-  a.href=URL.createObjectURL(new Blob([rows.join('\n')],{type:'text/csv'}));
-  a.download='scan_'+projects[curProj]?.name.replace(/\s/g,'_')+'_'+new Date().toISOString().slice(0,10)+'.csv';
-  a.click();
+  const rows=['Meter,Status,Duplicate,Device,Time,Project,ProjectID'];
+  [...scanLog].reverse().forEach(e=>{const st=e.isDup?'DUPLICATE':(e.found?'FOUND':'NOT FOUND');rows.push(`"${e.raw}","${st}","${e.isDup}","${e.device||''}","${fmt(new Date(e.time))}","${e.project||''}","${e.pid||''}"`)});
+  const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([rows.join('\n')],{type:'text/csv'}));a.download='scan_'+curPID+'_'+new Date().toISOString().slice(0,10)+'.csv';a.click();
 }
+function clearLog(){if(!confirm('Clear all scan history for this project?'))return;scanLog=[];scannedMap.clear();stats={t:0,f:0,n:0,d:0};wbStats={ok:0,err:0};curProj.log=[];curProj.stats=stats;saveLocal();saveLog();updateStatBadges();renderLog();setReady();}
 
-function clearLog(){
-  if(!confirm('Clear all scan history for this project?'))return;
-  scanLog=[];scannedMap.clear();stats={t:0,f:0,n:0,d:0};wbStats={ok:0,err:0};
-  projects[curProj].log=[];projects[curProj].stats=stats;
-  saveLocal();saveLog();updateStatBadges();renderLog();setResultReady();
-}
-
-// ══ TABS ══════════════════════════════════════════════════════════════════
+// ══ TABS ═══════════════════════════════════════════════════════════════════
 function showTab(n){
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
   document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
   document.getElementById('screen-'+n).classList.add('active');
   ['scan','log','stats','setup'].forEach((k,i)=>{if(k===n)document.querySelectorAll('.tab')[i].classList.add('active');});
-  if(n==='stats')updateStats();
-  if(n==='log'){renderLog();refreshLog();}
+  if(n==='stats')updateStats();if(n==='log'){renderLog();refreshLog();}
 }
 
-// ══ COLUMN SELECTORS ══════════════════════════════════════════════════════
-function selRC(el,v){document.querySelectorAll('#rc-pills .cp').forEach(p=>p.classList.remove('sel'));el.classList.add('sel');readCol=v;if(projects[curProj]){projects[curProj].readCol=v;saveLocal();}}
-function selWC(el,v){document.querySelectorAll('#wc-pills .cp').forEach(p=>p.classList.remove('sel'));el.classList.add('sel');writeCol=v;if(projects[curProj]){projects[curProj].writeCol=v;saveLocal();}}
-function setSelPill(pid,val){
-  const pills=document.querySelectorAll('#'+pid+' .cp');
-  pills.forEach(p=>{p.classList.remove('sel');if(p.textContent===val)p.classList.add('sel');});
-}
+// ══ COLUMN SELECTORS ═══════════════════════════════════════════════════════
+function selRC(el,v){selPill2('rc-pills',el,v);readCol=v;if(curProj){curProj.readCol=v;saveLocal();}}
+function selWC(el,v){selPill2('wc-pills',el,v);writeCol=v;if(curProj){curProj.writeCol=v;saveLocal();}}
+function selPill(pid,el,v){document.querySelectorAll('#'+pid+' .cp').forEach(p=>p.classList.remove('sel'));el.classList.add('sel');}
+function selPill2(pid,el,v){document.querySelectorAll('#'+pid+' .cp').forEach(p=>p.classList.remove('sel'));el.classList.add('sel');}
+function setSelPill2(pid,val){document.querySelectorAll('#'+pid+' .cp').forEach(p=>{p.classList.remove('sel');if(p.textContent===val)p.classList.add('sel');});}
+function getSelPill(pid){let v='';document.querySelectorAll('#'+pid+' .cp').forEach(p=>{if(p.classList.contains('sel'))v=p.textContent;});return v;}
 
-// ══ HELPERS ═══════════════════════════════════════════════════════════════
+// ══ HELPERS ════════════════════════════════════════════════════════════════
 function norm(v){return String(v).replace(/\s/g,'').toLowerCase();}
 function fmt(d){try{return d.toLocaleTimeString('en-PK',{hour:'2-digit',minute:'2-digit',second:'2-digit'});}catch(e){return '';}}
-function updateBadge(){document.getElementById('loaded-badge').textContent=meterSet.size+' loaded';}
+function updBadge(){document.getElementById('loaded-badge').textContent=meterSet.size+' loaded';}
 function showM(el,msg,type){el.className='smsg '+type;el.textContent=msg;el.style.display='block';}
-function showScriptInstructions(){alert('Follow steps in Setup tab → Apps Script section at the bottom of Setup page.');}
 </script>
 </body>
 </html>
-
