@@ -14,129 +14,222 @@
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
 :root{
   --blue:#1A3A5C;--mid:#1A5276;--accent:#2E86C1;
-  --green:#1D9E75;--green-bg:#E1F5EE;--green-dark:#085041;
-  --red:#C0392B;--red-bg:#FADBD8;--red-dark:#7B241C;
-  --amber:#B8860B;--amber-bg:#FEF9E7;--amber-dark:#7D6608;
-  --gray:#F4F4F4;--border:#DDD;--text:#1C1C1C;--muted:#666;
-  --white:#FFF;--radius:12px;
+  --green:#1D9E75;--gbg:#E1F5EE;--gdk:#085041;
+  --red:#C0392B;--rbg:#FADBD8;--rdk:#7B241C;
+  --amb:#B8860B;--abg:#FEF9E7;--adk:#7D6608;
+  --gray:#F4F4F4;--bdr:#DDD;--txt:#1C1C1C;--mut:#666;
+  --wht:#FFF;--rad:12px;
 }
-body{background:#F0F2F5;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;min-height:100vh;color:var(--text)}
+body{background:#F0F2F5;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;color:var(--txt);min-height:100vh}
 
-#header{background:var(--blue);color:#fff;padding:14px 16px 12px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
-#header-title{font-size:17px;font-weight:600}
-#header-sub{font-size:11px;opacity:0.75;margin-top:1px}
-#meter-count-badge{background:rgba(255,255,255,0.2);border-radius:20px;padding:4px 10px;font-size:12px;font-weight:500;text-align:center;min-width:80px}
+/* SPLASH */
+#splash{position:fixed;inset:0;background:var(--blue);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:9999;color:#fff}
+#splash h1{font-size:24px;font-weight:700;margin-bottom:6px}
+#splash p{font-size:13px;opacity:0.7;margin-bottom:30px}
+#splash-spinner{width:36px;height:36px;border:3px solid rgba(255,255,255,0.3);border-top-color:#fff;border-radius:50%;animation:spin 0.8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
 
-#tab-bar{display:flex;background:var(--white);border-bottom:1px solid var(--border);position:sticky;top:57px;z-index:99}
-.tab{flex:1;padding:11px 4px;text-align:center;font-size:12px;font-weight:500;color:var(--muted);border-bottom:3px solid transparent;cursor:pointer}
+/* PROJECT SELECTOR */
+#proj-screen{position:fixed;inset:0;background:#F0F2F5;z-index:999;display:none;overflow-y:auto;padding:16px}
+.proj-header{background:var(--blue);color:#fff;border-radius:var(--rad);padding:16px;margin-bottom:14px;text-align:center}
+.proj-header h2{font-size:18px;font-weight:700}
+.proj-header p{font-size:12px;opacity:0.75;margin-top:3px}
+.proj-card{background:var(--wht);border-radius:var(--rad);padding:14px;margin-bottom:10px;border:1.5px solid var(--bdr);cursor:pointer;transition:border-color 0.15s,box-shadow 0.15s}
+.proj-card:hover,.proj-card:active{border-color:var(--accent);box-shadow:0 2px 8px rgba(30,130,200,0.12)}
+.proj-name{font-size:16px;font-weight:600;color:var(--txt)}
+.proj-meta{font-size:12px;color:var(--mut);margin-top:3px}
+.proj-stats{display:flex;gap:10px;margin-top:8px;flex-wrap:wrap}
+.proj-stat{font-size:11px;background:var(--gray);padding:3px 10px;border-radius:20px;font-weight:500}
+.proj-stat.g{background:var(--gbg);color:var(--gdk)}
+.proj-stat.r{background:var(--rbg);color:var(--rdk)}
+.new-proj-card{background:var(--mid);border-radius:var(--rad);padding:16px;margin-bottom:10px;cursor:pointer;text-align:center;color:#fff}
+.new-proj-card:active{opacity:0.85}
+.new-proj-title{font-size:16px;font-weight:600;margin-bottom:4px}
+input[type=text],input[type=number],textarea,select{width:100%;padding:11px 13px;border:1.5px solid var(--bdr);border-radius:10px;font-size:15px;background:var(--wht);color:var(--txt);outline:none;font-family:inherit}
+input[type=text]:focus,input[type=number]:focus,textarea:focus{border-color:var(--accent)}
+textarea{resize:none;font-size:13px;font-family:monospace}
+
+/* MAIN APP */
+#header{background:var(--blue);color:#fff;padding:12px 16px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+#proj-title{font-size:15px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:180px}
+#proj-sub{font-size:10px;opacity:0.7;margin-top:1px}
+#hdr-right{display:flex;align-items:center;gap:8px;flex-shrink:0}
+#loaded-badge{background:rgba(255,255,255,0.2);border-radius:20px;padding:3px 10px;font-size:11px;font-weight:500;white-space:nowrap}
+#tab-bar{display:flex;background:var(--wht);border-bottom:1px solid var(--bdr);position:sticky;top:53px;z-index:99}
+.tab{flex:1;padding:10px 2px;text-align:center;font-size:11px;font-weight:500;color:var(--mut);border-bottom:3px solid transparent;cursor:pointer}
 .tab.active{color:var(--mid);border-bottom-color:var(--mid)}
-
-.screen{display:none;padding:12px;min-height:calc(100vh - 108px)}
+.screen{display:none;padding:12px;min-height:calc(100vh - 100px)}
 .screen.active{display:block}
+.card{background:var(--wht);border-radius:var(--rad);padding:14px;margin-bottom:12px;border:1px solid var(--bdr)}
+.ctitle{font-size:11px;font-weight:600;color:var(--mut);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:10px}
 
-.card{background:var(--white);border-radius:var(--radius);padding:14px;margin-bottom:12px;border:1px solid var(--border)}
-.card-title{font-size:12px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:10px}
-
-/* RESULT BOX */
-#result-box{border-radius:16px;padding:20px 16px;text-align:center;margin-bottom:10px;border:2.5px solid var(--border);background:var(--white);transition:all 0.2s;min-height:110px;display:flex;flex-direction:column;align-items:center;justify-content:center}
-#result-box.found{background:var(--green-bg);border-color:var(--green)}
-#result-box.notfound{background:var(--red-bg);border-color:var(--red)}
-#result-box.duplicate{background:var(--amber-bg);border-color:var(--amber)}
-#result-icon{font-size:40px;margin-bottom:4px}
-#result-status{font-size:22px;font-weight:700}
-#result-meter{font-size:15px;font-weight:600;margin-top:4px;font-family:monospace;letter-spacing:1px}
-#result-detail{font-size:12px;margin-top:4px;opacity:0.8}
+/* RESULT */
+#result-box{border-radius:16px;padding:20px 14px;text-align:center;margin-bottom:10px;border:2.5px solid var(--bdr);background:var(--wht);transition:all 0.2s;min-height:110px;display:flex;flex-direction:column;align-items:center;justify-content:center}
+#result-box.found{background:var(--gbg);border-color:var(--green)}
+#result-box.notfound{background:var(--rbg);border-color:var(--red)}
+#result-box.duplicate{background:var(--abg);border-color:var(--amb)}
+#ri{font-size:42px;margin-bottom:4px}
+#rs{font-size:22px;font-weight:700}
+#rm{font-size:15px;font-weight:600;margin-top:4px;font-family:monospace;letter-spacing:1px}
+#rd{font-size:12px;margin-top:4px;opacity:0.85}
+#sync-status{text-align:center;font-size:11px;padding:3px 0;min-height:18px}
 
 /* CAMERA */
 #reader-wrap{border-radius:12px;overflow:hidden;background:#000;position:relative;margin-bottom:8px}
 #reader video{width:100%;display:block}
-#scan-overlay{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:210px;height:105px;border:2px solid rgba(30,240,150,0.9);border-radius:6px;pointer-events:none}
-#scan-overlay::before{content:'';position:absolute;top:-2px;left:-2px;width:22px;height:22px;border-top:4px solid #1ef096;border-left:4px solid #1ef096;border-radius:3px 0 0 0}
-#scan-overlay::after{content:'';position:absolute;bottom:-2px;right:-2px;width:22px;height:22px;border-bottom:4px solid #1ef096;border-right:4px solid #1ef096;border-radius:0 0 3px 0}
-#scan-line{position:absolute;left:8px;right:8px;height:2px;background:rgba(30,240,150,0.85);animation:scanline 1.8s ease-in-out infinite;top:50%}
+#scan-overlay{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:210px;height:100px;border:2px solid rgba(30,240,150,0.9);border-radius:6px;pointer-events:none;display:none}
+#scan-overlay::before{content:'';position:absolute;top:-2px;left:-2px;width:20px;height:20px;border-top:4px solid #1ef096;border-left:4px solid #1ef096;border-radius:3px 0 0 0}
+#scan-overlay::after{content:'';position:absolute;bottom:-2px;right:-2px;width:20px;height:20px;border-bottom:4px solid #1ef096;border-right:4px solid #1ef096;border-radius:0 0 3px 0}
+#scan-line{position:absolute;left:8px;right:8px;height:2px;background:rgba(30,240,150,0.85);animation:scanline 1.8s ease-in-out infinite}
 @keyframes scanline{0%,100%{top:15%}50%{top:85%}}
-#cam-status{text-align:center;font-size:12px;color:var(--muted);padding:4px 0 6px}
+#cdbar-wrap{height:4px;background:var(--gray);border-radius:2px;margin-bottom:6px;overflow:hidden;display:none}
+#cdbar{height:100%;background:var(--accent);border-radius:2px;width:100%}
 
-/* COOLDOWN BAR */
-#cooldown-bar-wrap{height:4px;background:var(--gray);border-radius:2px;margin-bottom:6px;overflow:hidden;display:none}
-#cooldown-bar{height:100%;background:var(--accent);border-radius:2px;width:100%;transition:width linear}
+/* BUTTONS */
+.btn{display:block;width:100%;padding:13px;border-radius:10px;font-size:15px;font-weight:600;cursor:pointer;border:none;font-family:inherit;text-align:center}
+.btn-p{background:var(--mid);color:#fff}
+.btn-stop{background:var(--red);color:#fff}
+.btn-s{background:transparent;color:var(--mid);border:1.5px solid var(--mid);padding:10px}
+.btn-sm{background:var(--gray);color:var(--txt);border-radius:8px;padding:6px 12px;font-size:12px;font-weight:500;cursor:pointer;border:1px solid var(--bdr);font-family:inherit}
+.btn-danger{background:var(--red);color:#fff;border-radius:8px;padding:6px 12px;font-size:12px;cursor:pointer;border:none;font-family:inherit}
 
-.btn-primary{width:100%;padding:13px;background:var(--mid);color:#fff;border-radius:10px;font-size:15px;font-weight:600;cursor:pointer;border:none}
-.btn-stop{width:100%;padding:13px;background:var(--red);color:#fff;border-radius:10px;font-size:15px;font-weight:600;cursor:pointer;border:none}
-.btn-secondary{width:100%;padding:11px;background:transparent;color:var(--mid);border:1.5px solid var(--mid);border-radius:10px;font-size:14px;font-weight:500;cursor:pointer;margin-top:8px}
-.btn-danger{background:var(--red);color:#fff;border-radius:8px;padding:7px 14px;font-size:13px;font-weight:500;cursor:pointer;border:none}
-.btn-sm{background:var(--gray);color:var(--text);border-radius:8px;padding:7px 12px;font-size:12px;font-weight:500;cursor:pointer;border:1px solid var(--border)}
+/* STATS */
+.sgrid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px}
+.sc{background:var(--wht);border-radius:10px;padding:12px;text-align:center;border:1px solid var(--bdr)}
+.sn{font-size:28px;font-weight:700;line-height:1}
+.sl{font-size:11px;color:var(--mut);margin-top:3px}
+.sc.g .sn{color:var(--green)}.sc.r .sn{color:var(--red)}.sc.a .sn{color:var(--amb)}.sc.b .sn{color:var(--mid)}
 
-input[type=text],input[type=number]{width:100%;padding:11px 13px;border:1.5px solid var(--border);border-radius:10px;font-size:15px;background:var(--white);color:var(--text);outline:none}
-input[type=text]:focus,input[type=number]:focus{border-color:var(--accent)}
-textarea{width:100%;padding:10px 12px;border:1.5px solid var(--border);border-radius:10px;font-size:13px;font-family:monospace;background:var(--white);color:var(--text);outline:none;resize:none;height:120px}
-select{width:100%;padding:11px 13px;border:1.5px solid var(--border);border-radius:10px;font-size:14px;background:var(--white);color:var(--text);outline:none}
+/* LOG */
+.li{display:flex;align-items:center;gap:10px;padding:10px 12px;border-bottom:1px solid var(--bdr)}
+.li:last-child{border-bottom:none}
+.li.fi{background:rgba(29,158,117,0.06)}.li.ni{background:rgba(192,57,43,0.06)}.li.di{background:rgba(184,134,11,0.06)}
+.lic{font-size:22px;width:28px;text-align:center;flex-shrink:0}
+.lin{flex:1;min-width:0}
+.linum{font-size:14px;font-weight:600;font-family:monospace;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.lidesc{font-size:11px;margin-top:1px}
+.lidesc.f{color:var(--gdk)}.lidesc.n{color:var(--rdk)}.lidesc.d{color:var(--adk)}
+.lidev{font-size:10px;color:var(--mut);margin-top:1px}
+.liright{text-align:right;flex-shrink:0}
+.litime{font-size:11px;color:var(--mut)}
+.liwb{font-size:10px;margin-top:2px}
+.liwb.ok{color:var(--gdk)}.liwb.err{color:var(--rdk)}
+.lempty{text-align:center;padding:32px;color:var(--mut);font-size:14px}
 
-.stats-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px}
-.stat-card{background:var(--white);border-radius:10px;padding:12px;text-align:center;border:1px solid var(--border)}
-.stat-num{font-size:28px;font-weight:700;line-height:1}
-.stat-label{font-size:11px;color:var(--muted);margin-top:3px;font-weight:500}
-.stat-card.green .stat-num{color:var(--green)}
-.stat-card.red .stat-num{color:var(--red)}
-.stat-card.amber .stat-num{color:var(--amber)}
-.stat-card.blue .stat-num{color:var(--mid)}
+/* SETUP */
+.slabel{font-size:13px;font-weight:500;margin-bottom:5px;display:block;margin-top:10px}
+.shint{font-size:11px;color:var(--mut);margin-top:3px;line-height:1.4}
+.smsg{border-radius:8px;padding:9px 12px;font-size:13px;margin-top:8px;font-weight:500;display:none;line-height:1.4}
+.smsg.ok{background:var(--gbg);color:var(--gdk);display:block}
+.smsg.err{background:var(--rbg);color:var(--rdk);display:block}
+.smsg.ld{background:var(--abg);color:var(--adk);display:block}
+.cpills{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
+.cp{padding:6px 14px;border-radius:20px;border:1.5px solid var(--bdr);font-size:13px;cursor:pointer;font-weight:500;background:var(--wht);font-family:inherit}
+.cp.sel{background:var(--mid);color:#fff;border-color:var(--mid)}
+.trow{display:flex;align-items:center;justify-content:space-between;padding:4px 0}
+.tgl{position:relative;width:44px;height:24px;cursor:pointer;flex-shrink:0}
+.tgl input{opacity:0;width:0;height:0}
+.tsl{position:absolute;inset:0;background:#ccc;border-radius:12px;transition:0.2s}
+.tsl:before{content:'';position:absolute;width:18px;height:18px;left:3px;top:3px;background:#fff;border-radius:50%;transition:0.2s}
+input:checked+.tsl{background:var(--green)}
+input:checked+.tsl:before{transform:translateX(20px)}
 
-.log-item{display:flex;align-items:center;gap:10px;padding:10px 12px;border-bottom:1px solid var(--border)}
-.log-item:last-child{border-bottom:none}
-.log-item.fi{background:rgba(29,158,117,0.06)}
-.log-item.ni{background:rgba(192,57,43,0.06)}
-.log-item.di{background:rgba(184,134,11,0.06)}
-.log-icon{font-size:22px;width:28px;text-align:center;flex-shrink:0}
-.log-info{flex:1;min-width:0}
-.log-num{font-size:14px;font-weight:600;font-family:monospace}
-.log-desc{font-size:11px;margin-top:1px}
-.log-desc.f{color:var(--green-dark)}.log-desc.n{color:var(--red-dark)}.log-desc.d{color:var(--amber-dark)}
-.log-right{text-align:right;flex-shrink:0}
-.log-time{font-size:11px;color:var(--muted)}
-.log-write{font-size:10px;margin-top:2px}
-.log-write.ws{color:var(--green-dark)}.log-write.we{color:var(--red-dark)}.log-write.wp{color:var(--amber-dark)}
-.log-empty{text-align:center;padding:32px;color:var(--muted);font-size:14px}
+/* ANIMATIONS */
+@keyframes pg{0%{box-shadow:0 0 0 0 rgba(29,158,117,0.5)}100%{box-shadow:0 0 0 18px rgba(29,158,117,0)}}
+@keyframes pr{0%{box-shadow:0 0 0 0 rgba(192,57,43,0.5)}100%{box-shadow:0 0 0 18px rgba(192,57,43,0)}}
+@keyframes pa{0%{box-shadow:0 0 0 0 rgba(184,134,11,0.5)}100%{box-shadow:0 0 0 18px rgba(184,134,11,0)}}
+.pg{animation:pg 0.45s ease-out}.pr{animation:pr 0.45s ease-out}.pa{animation:pa 0.45s ease-out}
 
-.setup-label{font-size:13px;font-weight:500;color:var(--text);margin-bottom:5px;display:block;margin-top:10px}
-.setup-hint{font-size:11px;color:var(--muted);margin-top:3px;line-height:1.4}
-.status-msg{border-radius:8px;padding:9px 12px;font-size:13px;margin-top:8px;font-weight:500;display:none;line-height:1.4}
-.status-msg.ok{background:var(--green-bg);color:var(--green-dark);display:block}
-.status-msg.err{background:var(--red-bg);color:var(--red-dark);display:block}
-.status-msg.loading{background:var(--amber-bg);color:var(--amber-dark);display:block}
-
-.col-selector{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:6px}
-.col-pill{padding:6px 14px;border-radius:20px;border:1.5px solid var(--border);font-size:13px;cursor:pointer;font-weight:500;background:var(--white)}
-.col-pill.selected{background:var(--mid);color:#fff;border-color:var(--mid)}
-
-.toggle-row{display:flex;align-items:center;justify-content:space-between;padding:4px 0}
-.toggle-label{font-size:14px;color:var(--text)}
-.toggle{position:relative;width:44px;height:24px;cursor:pointer}
-.toggle input{opacity:0;width:0;height:0}
-.toggle-slider{position:absolute;inset:0;background:#ccc;border-radius:12px;transition:0.2s}
-.toggle-slider:before{content:'';position:absolute;width:18px;height:18px;left:3px;top:3px;background:#fff;border-radius:50%;transition:0.2s}
-input:checked+.toggle-slider{background:var(--green)}
-input:checked+.toggle-slider:before{transform:translateX(20px)}
-
-@keyframes pulse-green{0%{box-shadow:0 0 0 0 rgba(29,158,117,0.5)}100%{box-shadow:0 0 0 18px rgba(29,158,117,0)}}
-@keyframes pulse-red{0%{box-shadow:0 0 0 0 rgba(192,57,43,0.5)}100%{box-shadow:0 0 0 18px rgba(192,57,43,0)}}
-@keyframes pulse-amb{0%{box-shadow:0 0 0 0 rgba(184,134,11,0.5)}100%{box-shadow:0 0 0 18px rgba(184,134,11,0)}}
-.pg{animation:pulse-green 0.45s ease-out}
-.pr{animation:pulse-red 0.45s ease-out}
-.pa{animation:pulse-amb 0.45s ease-out}
-
-/* write-back status dot */
-.wb-dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:4px}
-.wb-dot.ok{background:var(--green)}.wb-dot.err{background:var(--red)}.wb-dot.pend{background:var(--amber)}
+/* DEVICE BADGE */
+.dev-badge{display:inline-block;background:var(--mid);color:#fff;font-size:10px;padding:1px 7px;border-radius:10px;font-weight:500}
 </style>
 </head>
 <body>
 
-<div id="header">
-  <div>
-    <div id="header-title">DMIS Meter Scanner</div>
-    <div id="header-sub">SNGPL — Faisalabad-D</div>
+<!-- SPLASH -->
+<div id="splash">
+  <h1>DMIS Meter Scanner</h1>
+  <p>SNGPL — Faisalabad-D</p>
+  <div id="splash-spinner"></div>
+  <div id="splash-msg" style="font-size:12px;margin-top:14px;opacity:0.6">Loading...</div>
+</div>
+
+<!-- PROJECT SCREEN -->
+<div id="proj-screen">
+  <div class="proj-header">
+    <h2>📂 DMIS Meter Scanner</h2>
+    <p>Select a project or create new</p>
   </div>
-  <div id="meter-count-badge">0 loaded</div>
+
+  <div style="margin-bottom:14px">
+    <div style="font-size:13px;font-weight:600;margin-bottom:8px;color:var(--mut)">YOUR DEVICE</div>
+    <div style="display:flex;gap:8px;align-items:center">
+      <input type="text" id="device-name" placeholder="Enter your name (e.g. Asif - Phone 1)" style="flex:1;font-size:14px">
+      <button class="btn-sm" onclick="saveDeviceName()">Save</button>
+    </div>
+    <div class="shint">Your name appears in scan log so supervisor knows who scanned each meter</div>
+  </div>
+
+  <div class="new-proj-card" onclick="showNewProject()">
+    <div class="new-proj-title">＋ Create New Project</div>
+    <div style="font-size:12px;opacity:0.8">Start a new scanning session</div>
+  </div>
+
+  <div id="new-proj-form" style="display:none;background:var(--wht);border-radius:var(--rad);padding:14px;margin-bottom:12px;border:1.5px solid var(--accent)">
+    <div style="font-size:14px;font-weight:600;margin-bottom:10px">New Project</div>
+    <label class="slabel" style="margin-top:0">Project name</label>
+    <input type="text" id="new-proj-name" placeholder="e.g. DMIS July 2026 Batch-1">
+    <label class="slabel">Google Sheet ID</label>
+    <input type="text" id="new-sheet-id" placeholder="44-character Sheet ID from URL" style="font-family:monospace;font-size:13px">
+    <label class="slabel">Sheet tab name</label>
+    <input type="text" id="new-sheet-name" value="Master Sheet PSW">
+    <label class="slabel">Meter number column</label>
+    <div class="cpills" id="new-rc-pills">
+      <div class="cp sel" onclick="selNewRC(this,'A')">A</div>
+      <div class="cp" onclick="selNewRC(this,'B')">B</div>
+      <div class="cp" onclick="selNewRC(this,'C')">C</div>
+      <div class="cp" onclick="selNewRC(this,'D')">D</div>
+      <div class="cp" onclick="selNewRC(this,'E')">E</div>
+    </div>
+    <label class="slabel">Apps Script URL (for write-back — optional)</label>
+    <input type="text" id="new-script-url" placeholder="https://script.google.com/macros/s/.../exec">
+    <label class="slabel">Write status to column (optional)</label>
+    <div class="cpills" id="new-wc-pills">
+      <div class="cp" onclick="selNewWC(this,'')">None</div>
+      <div class="cp sel" onclick="selNewWC(this,'C')">C</div>
+      <div class="cp" onclick="selNewWC(this,'D')">D</div>
+      <div class="cp" onclick="selNewWC(this,'E')">E</div>
+      <div class="cp" onclick="selNewWC(this,'F')">F</div>
+      <div class="cp" onclick="selNewWC(this,'G')">G</div>
+    </div>
+    <div id="new-proj-msg" class="smsg"></div>
+    <div style="display:flex;gap:8px;margin-top:12px">
+      <button class="btn btn-p" onclick="createProject()" style="flex:1;padding:11px;font-size:14px">Create & Open</button>
+      <button class="btn btn-s" onclick="document.getElementById('new-proj-form').style.display='none'" style="width:80px;padding:11px;font-size:14px">Cancel</button>
+    </div>
+  </div>
+
+  <div id="proj-list">
+    <div class="lempty">No projects yet — create one above</div>
+  </div>
+
+  <div style="margin-top:12px">
+    <button class="btn btn-s" style="font-size:13px;padding:10px" onclick="showScriptInstructions()">📋 How to set up Apps Script (write-back)</button>
+  </div>
+</div>
+
+<!-- MAIN APP -->
+<div id="main-app" style="display:none">
+
+<div id="header">
+  <div style="min-width:0;flex:1">
+    <div id="proj-title">DMIS Scanner</div>
+    <div id="proj-sub">Tap to switch project</div>
+  </div>
+  <div id="hdr-right">
+    <div id="loaded-badge">0 loaded</div>
+    <button onclick="switchProject()" style="background:rgba(255,255,255,0.2);border:none;color:#fff;border-radius:8px;padding:5px 10px;font-size:12px;cursor:pointer;font-family:inherit">Switch</button>
+  </div>
 </div>
 
 <div id="tab-bar">
@@ -146,44 +239,40 @@ input:checked+.toggle-slider:before{transform:translateX(20px)}
   <div class="tab" onclick="showTab('setup')">⚙️ Setup</div>
 </div>
 
-<!-- ══ SCAN ══ -->
+<!-- SCAN TAB -->
 <div class="screen active" id="screen-scan">
-
   <div id="result-box">
-    <div id="result-icon">📷</div>
-    <div id="result-status" style="font-size:15px;color:var(--muted);font-weight:400">Ready to scan</div>
-    <div id="result-meter"></div>
-    <div id="result-detail" style="color:var(--muted)">Load meter list in Setup tab first</div>
+    <div id="ri">📷</div>
+    <div id="rs" style="font-size:15px;color:var(--mut);font-weight:400">Ready to scan</div>
+    <div id="rm"></div>
+    <div id="rd" style="color:var(--mut)">Load meter list in Setup tab</div>
   </div>
-
-  <div id="cooldown-bar-wrap"><div id="cooldown-bar"></div></div>
+  <div id="sync-status"></div>
+  <div id="cdbar-wrap"><div id="cdbar"></div></div>
 
   <div class="card" style="padding:10px">
-    <div id="reader-wrap">
-      <div id="reader"></div>
-      <div id="scan-overlay" style="display:none"><div id="scan-line"></div></div>
-    </div>
-    <div id="cam-status">Camera not started</div>
-    <button class="btn-primary" id="cam-btn" onclick="toggleCamera()">▶ Start Camera</button>
+    <div id="reader-wrap"><div id="reader"></div><div id="scan-overlay"><div id="scan-line"></div></div></div>
+    <div id="cam-st" style="text-align:center;font-size:12px;color:var(--mut);padding:4px 0 6px">Camera not started</div>
+    <button class="btn btn-p" id="cam-btn" onclick="toggleCamera()">▶ Start Camera</button>
   </div>
 
   <div class="card">
-    <div class="card-title">Manual / Bluetooth scanner input</div>
+    <div class="ctitle">Manual / Bluetooth scanner</div>
     <div style="display:flex;gap:8px">
-      <input type="text" id="manual-in" placeholder="Meter number" inputmode="numeric" autocomplete="off"
+      <input type="text" id="min" placeholder="Meter number" inputmode="numeric" autocomplete="off"
         onkeydown="if(event.key==='Enter'){let v=this.value.trim();if(v){processCode(v);this.value=''}}">
-      <button onclick="let v=document.getElementById('manual-in').value.trim();if(v){processCode(v);document.getElementById('manual-in').value=''}"
+      <button onclick="let v=document.getElementById('min').value.trim();if(v){processCode(v);document.getElementById('min').value=''}"
         style="background:var(--mid);color:#fff;border:none;border-radius:10px;padding:0 16px;font-size:18px;cursor:pointer;flex-shrink:0">→</button>
     </div>
   </div>
-
 </div>
 
-<!-- ══ LOG ══ -->
+<!-- LOG TAB -->
 <div class="screen" id="screen-log">
   <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
-    <div style="font-size:15px;font-weight:600">Scan history</div>
+    <div style="font-size:14px;font-weight:600">Scan history — all devices</div>
     <div style="display:flex;gap:6px">
+      <button class="btn-sm" onclick="refreshLog()">↻</button>
       <button class="btn-sm" onclick="exportCSV()">CSV</button>
       <button class="btn-danger" onclick="clearLog()">Clear</button>
     </div>
@@ -194,324 +283,409 @@ input:checked+.toggle-slider:before{transform:translateX(20px)}
     <button class="btn-sm" id="fn" onclick="filterLog('notfound')">Not found</button>
     <button class="btn-sm" id="fd" onclick="filterLog('dup')">Duplicate</button>
   </div>
+  <div style="font-size:11px;color:var(--mut);margin-bottom:8px">Shows scans from ALL devices on this project</div>
   <div class="card" style="padding:0;overflow:hidden">
-    <div id="log-list"><div class="log-empty">No scans yet</div></div>
+    <div id="log-list"><div class="lempty">No scans yet</div></div>
   </div>
 </div>
 
-<!-- ══ STATS ══ -->
+<!-- STATS TAB -->
 <div class="screen" id="screen-stats">
-  <div class="stats-grid">
-    <div class="stat-card blue"><div class="stat-num" id="st-total">0</div><div class="stat-label">Total scanned</div></div>
-    <div class="stat-card green"><div class="stat-num" id="st-found">0</div><div class="stat-label">Found</div></div>
-    <div class="stat-card red"><div class="stat-num" id="st-notfound">0</div><div class="stat-label">Not found</div></div>
-    <div class="stat-card amber"><div class="stat-num" id="st-dup">0</div><div class="stat-label">Duplicates</div></div>
+  <div class="sgrid">
+    <div class="sc b"><div class="sn" id="st-t">0</div><div class="sl">Total scanned</div></div>
+    <div class="sc g"><div class="sn" id="st-f">0</div><div class="sl">Found</div></div>
+    <div class="sc r"><div class="sn" id="st-n">0</div><div class="sl">Not found</div></div>
+    <div class="sc a"><div class="sn" id="st-d">0</div><div class="sl">Duplicates</div></div>
   </div>
   <div class="card">
-    <div class="card-title">Progress</div>
+    <div class="ctitle">Progress</div>
     <div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:4px">
-      <span>Found / Total scanned</span><span id="pf" style="font-weight:600;color:var(--green)">0%</span>
+      <span>Found / Scanned</span><span id="pf" style="font-weight:600;color:var(--green)">0%</span>
     </div>
     <div style="background:var(--gray);border-radius:6px;height:10px;overflow:hidden;margin-bottom:10px">
       <div id="bf" style="height:100%;background:var(--green);border-radius:6px;width:0%;transition:width 0.4s"></div>
     </div>
     <div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:4px">
-      <span>Found / Total loaded</span><span id="pl" style="font-weight:600;color:var(--mid)">0%</span>
+      <span>Found / Total in list</span><span id="pl" style="font-weight:600;color:var(--mid)">0%</span>
     </div>
     <div style="background:var(--gray);border-radius:6px;height:10px;overflow:hidden">
       <div id="bl" style="height:100%;background:var(--mid);border-radius:6px;width:0%;transition:width 0.4s"></div>
     </div>
   </div>
   <div class="card">
-    <div class="card-title">Sheet write-back</div>
-    <div style="font-size:13px;display:grid;grid-template-columns:1fr 1fr;gap:8px">
-      <div><span style="color:var(--muted)">Written OK</span><br><strong id="wb-ok" style="color:var(--green)">0</strong></div>
-      <div><span style="color:var(--muted)">Write failed</span><br><strong id="wb-err" style="color:var(--red)">0</strong></div>
+    <div class="ctitle">Session info</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;font-size:13px">
+      <div><span style="color:var(--mut)">Project</span><br><strong id="si-proj" style="font-size:12px">—</strong></div>
+      <div><span style="color:var(--mut)">Meters loaded</span><br><strong id="si-loaded">0</strong></div>
+      <div><span style="color:var(--mut)">Your device</span><br><strong id="si-dev" style="font-size:12px">—</strong></div>
+      <div><span style="color:var(--mut)">Last sync</span><br><strong id="si-sync" style="font-size:12px">—</strong></div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="ctitle">Write-back to sheet</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;font-size:13px">
+      <div><span style="color:var(--mut)">Written OK</span><br><strong id="wb-ok" style="color:var(--green)">0</strong></div>
+      <div><span style="color:var(--mut)">Failed</span><br><strong id="wb-err" style="color:var(--red)">0</strong></div>
     </div>
   </div>
 </div>
 
-<!-- ══ SETUP ══ -->
+<!-- SETUP TAB -->
 <div class="screen" id="screen-setup">
-
-  <!-- GOOGLE SHEET -->
   <div class="card">
-    <div class="card-title">📋 Google Sheet — Master List</div>
-
-    <label class="setup-label">Google Sheet ID</label>
-    <input type="text" id="sheet-id" placeholder="Paste 44-character Sheet ID" style="font-family:monospace;font-size:13px">
-    <div class="setup-hint">From URL: docs.google.com/spreadsheets/d/<strong>ID_HERE</strong>/edit</div>
-
-    <label class="setup-label">Sheet tab name (exact)</label>
-    <input type="text" id="sheet-name" value="Master Sheet PSW">
-
-    <label class="setup-label">Column with meter numbers</label>
-    <div class="col-selector" id="read-col-pills">
-      <div class="col-pill selected" onclick="selectReadCol(this,'A')">A</div>
-      <div class="col-pill" onclick="selectReadCol(this,'B')">B</div>
-      <div class="col-pill" onclick="selectReadCol(this,'C')">C</div>
-      <div class="col-pill" onclick="selectReadCol(this,'D')">D</div>
-      <div class="col-pill" onclick="selectReadCol(this,'E')">E</div>
-      <div class="col-pill" onclick="selectReadCol(this,'F')">F</div>
+    <div class="ctitle">📋 Master Meter List</div>
+    <label class="slabel" style="margin-top:0">Sheet ID</label>
+    <input type="text" id="s-sid" style="font-family:monospace;font-size:13px" readonly>
+    <label class="slabel">Sheet tab</label>
+    <input type="text" id="s-sname">
+    <label class="slabel">Meter column</label>
+    <div class="cpills" id="rc-pills">
+      <div class="cp sel" onclick="selRC(this,'A')">A</div>
+      <div class="cp" onclick="selRC(this,'B')">B</div>
+      <div class="cp" onclick="selRC(this,'C')">C</div>
+      <div class="cp" onclick="selRC(this,'D')">D</div>
+      <div class="cp" onclick="selRC(this,'E')">E</div>
     </div>
-    <input type="text" id="read-col-custom" placeholder="Or type column: G, H, AA ..." style="margin-top:8px;width:160px">
-
-    <button class="btn-primary" onclick="loadFromSheet()" style="margin-top:12px">Load meter list from sheet</button>
-    <div id="sheet-msg" class="status-msg"></div>
+    <button class="btn btn-p" onclick="loadMeters()" style="margin-top:12px;padding:11px;font-size:14px">↻ Reload meter list</button>
+    <div id="load-msg" class="smsg"></div>
   </div>
 
-  <!-- WRITE BACK -->
   <div class="card">
-    <div class="card-title">✍️ Write scan result back to sheet</div>
-
-    <div class="toggle-row" style="margin-bottom:10px">
-      <span class="toggle-label">Enable write-back</span>
-      <label class="toggle"><input type="checkbox" id="wb-enable" onchange="toggleWriteback(this.checked)"><span class="toggle-slider"></span></label>
+    <div class="ctitle">✍️ Write-back to sheet</div>
+    <div class="trow" style="margin-bottom:10px">
+      <span style="font-size:14px">Enable write-back</span>
+      <label class="tgl"><input type="checkbox" id="wb-en" onchange="document.getElementById('wb-cfg').style.display=this.checked?'block':'none'"><span class="tsl"></span></label>
     </div>
-
-    <div id="wb-settings" style="display:none">
-      <div class="setup-hint" style="background:var(--amber-bg);color:var(--amber-dark);padding:8px 10px;border-radius:8px;margin-bottom:10px">
-        ⚠️ Write-back requires Google Apps Script. Follow setup instructions below.
+    <div id="wb-cfg" style="display:none">
+      <label class="slabel" style="margin-top:0">Apps Script URL</label>
+      <input type="text" id="s-surl" placeholder="https://script.google.com/macros/s/.../exec">
+      <label class="slabel">Write to column</label>
+      <div class="cpills" id="wc-pills">
+        <div class="cp" onclick="selWC(this,'')">None</div>
+        <div class="cp sel" onclick="selWC(this,'C')">C</div>
+        <div class="cp" onclick="selWC(this,'D')">D</div>
+        <div class="cp" onclick="selWC(this,'E')">E</div>
+        <div class="cp" onclick="selWC(this,'F')">F</div>
+        <div class="cp" onclick="selWC(this,'G')">G</div>
       </div>
+      <label class="slabel">Status text (FOUND)</label>
+      <input type="text" id="s-sfound" value="SCANNED ✓">
+      <label class="slabel">Status text (NOT FOUND — blank to skip)</label>
+      <input type="text" id="s-snotfound" placeholder="Leave blank to skip">
+    </div>
+  </div>
 
-      <label class="setup-label">Apps Script Web App URL</label>
-      <input type="text" id="script-url" placeholder="https://script.google.com/macros/s/YOUR_ID/exec">
-      <div class="setup-hint">Paste the URL after deploying your Apps Script (instructions below)</div>
+  <div class="card">
+    <div class="ctitle">🔊 Scanner settings</div>
+    <div class="trow" style="margin-bottom:10px">
+      <span style="font-size:14px">Beep on scan</span>
+      <label class="tgl"><input type="checkbox" id="beep-en" checked><span class="tsl"></span></label>
+    </div>
+    <div class="trow" style="margin-bottom:10px">
+      <span style="font-size:14px">Vibrate on scan</span>
+      <label class="tgl"><input type="checkbox" id="vib-en" checked><span class="tsl"></span></label>
+    </div>
+    <label class="slabel">Scan cooldown (seconds)</label>
+    <input type="number" id="cd-sec" value="2" min="1" max="10" style="width:100px">
+    <div class="shint">Camera auto-resumes after this delay</div>
+  </div>
 
-      <label class="setup-label">Write status to column</label>
-      <div class="col-selector" id="write-col-pills">
-        <div class="col-pill" onclick="selectWriteCol(this,'B')">B</div>
-        <div class="col-pill selected" onclick="selectWriteCol(this,'C')">C</div>
-        <div class="col-pill" onclick="selectWriteCol(this,'D')">D</div>
-        <div class="col-pill" onclick="selectWriteCol(this,'E')">E</div>
-        <div class="col-pill" onclick="selectWriteCol(this,'F')">F</div>
-        <div class="col-pill" onclick="selectWriteCol(this,'G')">G</div>
-      </div>
-      <input type="text" id="write-col-custom" placeholder="Or type: H, I, Z ..." style="margin-top:8px;width:160px">
+  <div class="card">
+    <div class="ctitle">📝 Offline — Paste meter list</div>
+    <textarea id="paste-box" placeholder="12345678&#10;23456789&#10;One per line"></textarea>
+    <button class="btn btn-s" onclick="loadPasted()" style="margin-top:8px;font-size:14px;padding:10px">Load pasted list</button>
+    <div id="paste-msg" class="smsg"></div>
+  </div>
 
-      <label class="setup-label">Status text to write when FOUND</label>
-      <input type="text" id="status-found" value="SCANNED ✓">
-
-      <label class="setup-label">Status text to write when NOT FOUND (leave blank to skip)</label>
-      <input type="text" id="status-notfound" placeholder="Leave blank to not write anything">
-
-      <button class="btn-secondary" onclick="testWriteback()">Test write-back connection</button>
-      <div id="wb-test-msg" class="status-msg"></div>
-
-      <!-- APPS SCRIPT INSTRUCTIONS -->
-      <div style="margin-top:14px;background:var(--gray);border-radius:10px;padding:12px">
-        <div style="font-size:13px;font-weight:600;margin-bottom:8px;color:var(--text)">📋 How to set up Apps Script (one time only)</div>
-        <div style="font-size:12px;color:var(--muted);line-height:1.8">
-          <strong style="color:var(--text)">Step 1:</strong> Open your Google Sheet<br>
-          <strong style="color:var(--text)">Step 2:</strong> Click <em>Extensions → Apps Script</em><br>
-          <strong style="color:var(--text)">Step 3:</strong> Delete existing code. Paste the code below<br>
-          <strong style="color:var(--text)">Step 4:</strong> Click Save (💾) → Deploy → New deployment<br>
-          <strong style="color:var(--text)">Step 5:</strong> Type = Web App → Execute as: Me → Who has access: Anyone<br>
-          <strong style="color:var(--text)">Step 6:</strong> Click Deploy → Copy the Web App URL<br>
-          <strong style="color:var(--text)">Step 7:</strong> Paste URL above
-        </div>
-        <div style="margin-top:10px">
-          <div style="font-size:12px;font-weight:600;color:var(--text);margin-bottom:4px">Apps Script code to paste:</div>
-          <textarea readonly onclick="this.select()" style="height:220px;font-size:11px;background:#fff;color:#1C1C1C" id="script-code">function doGet(e){
+  <div class="card" style="background:var(--abg);border-color:var(--amb)">
+    <div class="ctitle" style="color:var(--adk)">⚙️ Apps Script — One-time setup</div>
+    <div style="font-size:12px;color:var(--adk);line-height:1.8;margin-bottom:10px">
+      <strong>Step 1:</strong> Open Google Sheet → Extensions → Apps Script<br>
+      <strong>Step 2:</strong> Delete existing code → paste code below<br>
+      <strong>Step 3:</strong> Save → Deploy → New deployment<br>
+      <strong>Step 4:</strong> Type=Web App, Execute as=Me, Access=Anyone<br>
+      <strong>Step 5:</strong> Deploy → Authorize → Copy URL → paste above
+    </div>
+    <textarea readonly onclick="this.select()" style="height:200px;font-size:11px;background:#fff">function doGet(e){
   try{
-    var ss = SpreadsheetApp.openById(e.parameter.sheetId);
-    var sheet = ss.getSheetByName(e.parameter.sheetName);
-    var meterCol = columnToIndex(e.parameter.meterCol);
-    var writeCol = columnToIndex(e.parameter.writeCol);
-    var meterNum = e.parameter.meter;
-    var statusText = e.parameter.status;
-    var data = sheet.getDataRange().getValues();
-    for(var i=0; i<data.length; i++){
-      if(String(data[i][meterCol-1]).trim() === String(meterNum).trim()){
-        sheet.getRange(i+1, writeCol).setValue(statusText);
-        sheet.getRange(i+1, writeCol+1).setValue(new Date().toLocaleString());
-        return ContentService.createTextOutput(
-          JSON.stringify({success:true,row:i+1})
-        ).setMimeType(ContentService.MimeType.JSON);
+    var p=e.parameter;
+    var ss=SpreadsheetApp.openById(p.sheetId);
+    var sh=ss.getSheetByName(p.sheetName);
+    // --- READ meters ---
+    if(p.action==='read'){
+      var col=colIdx(p.col);
+      var vals=sh.getRange(1,col,sh.getLastRow(),1).getValues();
+      var list=vals.map(r=>String(r[0]).trim()).filter(r=>r.length>0);
+      return out({success:true,meters:list});
+    }
+    // --- WRITE scan log to Scan Log tab ---
+    if(p.action==='writelog'){
+      var logSh=ss.getSheetByName('Scan Log')||ss.insertSheet('Scan Log');
+      if(logSh.getLastRow()===0)
+        logSh.appendRow(['Meter','Status','Device','Time','Project']);
+      logSh.appendRow([p.meter,p.status,p.device,new Date().toLocaleString(),p.project]);
+    }
+    // --- WRITE status back to meter row ---
+    if(p.action==='writestatus'&&p.writeCol){
+      var mc=colIdx(p.meterCol), wc=colIdx(p.writeCol);
+      var data=sh.getDataRange().getValues();
+      for(var i=0;i<data.length;i++){
+        if(String(data[i][mc-1]).trim()===String(p.meter).trim()){
+          sh.getRange(i+1,wc).setValue(p.status);
+          sh.getRange(i+1,wc+1).setValue(new Date().toLocaleString());
+          sh.getRange(i+1,wc+2).setValue(p.device||'');
+          break;
+        }
       }
     }
-    return ContentService.createTextOutput(
-      JSON.stringify({success:false,msg:'Meter not found in sheet'})
-    ).setMimeType(ContentService.MimeType.JSON);
-  } catch(err){
-    return ContentService.createTextOutput(
-      JSON.stringify({success:false,msg:err.toString()})
-    ).setMimeType(ContentService.MimeType.JSON);
-  }
+    // --- READ scan log ---
+    if(p.action==='readlog'){
+      var ls=ss.getSheetByName('Scan Log');
+      if(!ls) return out({success:true,rows:[]});
+      var rows=ls.getDataRange().getValues();
+      rows.shift(); // remove header
+      var proj=p.project||'';
+      if(proj) rows=rows.filter(r=>r[4]===proj);
+      return out({success:true,rows:rows.slice(-200)});
+    }
+    return out({success:true});
+  }catch(err){return out({success:false,msg:err.toString()});}
 }
-function columnToIndex(col){
-  col = col.toUpperCase();
-  var n=0;
-  for(var i=0;i<col.length;i++) n=n*26+(col.charCodeAt(i)-64);
+function colIdx(c){
+  c=String(c).toUpperCase();var n=0;
+  for(var i=0;i<c.length;i++)n=n*26+(c.charCodeAt(i)-64);
   return n;
 }
+function out(obj){
+  return ContentService.createTextOutput(JSON.stringify(obj))
+    .setMimeType(ContentService.MimeType.JSON);
+}
 function doPost(e){return doGet(e);}</textarea>
-          <button onclick="document.getElementById('script-code').select();document.execCommand('copy');alert('Code copied!')"
-            class="btn-sm" style="margin-top:6px;width:100%">Copy script code</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- SOUND & COOLDOWN -->
-  <div class="card">
-    <div class="card-title">🔊 Scanner settings</div>
-    <div class="toggle-row" style="margin-bottom:12px">
-      <span class="toggle-label">Beep on scan</span>
-      <label class="toggle"><input type="checkbox" id="beep-enable" checked><span class="toggle-slider"></span></label>
-    </div>
-    <div class="toggle-row" style="margin-bottom:12px">
-      <span class="toggle-label">Vibrate on scan</span>
-      <label class="toggle"><input type="checkbox" id="vib-enable" checked><span class="toggle-slider"></span></label>
-    </div>
-    <label class="setup-label">Scan cooldown (seconds) — prevents double scan</label>
-    <input type="number" id="cooldown-sec" value="2" min="1" max="10" style="width:100px">
-    <div class="setup-hint">Camera pauses for this many seconds after each scan, then resumes automatically</div>
-  </div>
-
-  <!-- PASTE LIST -->
-  <div class="card">
-    <div class="card-title">📝 Paste meter list (offline)</div>
-    <textarea id="paste-box" placeholder="12345678&#10;23456789&#10;34567890&#10;One meter number per line"></textarea>
-    <button class="btn-secondary" onclick="loadPasted()">Load pasted list</button>
-    <div id="paste-msg" class="status-msg"></div>
+    <button onclick="document.querySelector('#screen-setup textarea[readonly]').select();document.execCommand('copy');alert('Copied!')"
+      class="btn-sm" style="margin-top:6px;width:100%">Copy Apps Script code</button>
   </div>
 
 </div>
+</div><!-- end main-app -->
 
 <script>
-// ── STATE ─────────────────────────────────────────────────────────────────
-let meterSet    = new Set();
-let meterRowMap = new Map(); // meter norm -> row number in sheet (1-based)
-let scanLog     = [];
-let scannedMap  = new Map();
-let stats       = {total:0,found:0,notfound:0,dup:0};
-let wbStats     = {ok:0,err:0};
-let sessionStart= null;
-let scanner     = null;
-let camRunning  = false;
-let inCooldown  = false;
-let currentFilter='all';
-let readCol     = 'A';
-let writeCol    = 'C';
+// ══ STATE ══════════════════════════════════════════════════════════════════
+let projects  = {};
+let curProj   = null;
+let meterSet  = new Set();
+let scanLog   = [];
+let scannedMap= new Map();
+let stats     = {t:0,f:0,n:0,d:0};
+let wbStats   = {ok:0,err:0};
+let scanner   = null;
+let camRun    = false;
+let inCD      = false;
+let curFilter = 'all';
+let readCol   = 'A';
+let writeCol  = 'C';
+let newRC     = 'A';
+let newWC     = 'C';
+let autoRefreshTimer = null;
+let lastSync  = null;
+let deviceName= '';
 
-// ── AUDIO BEEP ────────────────────────────────────────────────────────────
-let audioCtx = null;
-function getAudioCtx(){
-  if(!audioCtx) audioCtx = new (window.AudioContext||window.webkitAudioContext)();
-  return audioCtx;
+// ══ AUDIO ═════════════════════════════════════════════════════════════════
+let aCtx=null;
+function gAC(){if(!aCtx)aCtx=new(window.AudioContext||window.webkitAudioContext)();return aCtx;}
+function beep(f,d,t='square',v=0.4){
+  if(!document.getElementById('beep-en').checked)return;
+  try{const c=gAC(),o=c.createOscillator(),g=c.createGain();
+    o.connect(g);g.connect(c.destination);o.type=t;o.frequency.value=f;
+    g.gain.setValueAtTime(v,c.currentTime);
+    g.gain.exponentialRampToValueAtTime(0.001,c.currentTime+d);
+    o.start(c.currentTime);o.stop(c.currentTime+d);}catch(e){}}
+function bFound(){beep(1200,0.1);setTimeout(()=>beep(1600,0.1),120);}
+function bNotFound(){beep(350,0.35,'sawtooth',0.5);}
+function bDup(){beep(800,0.08);setTimeout(()=>beep(800,0.08),150);setTimeout(()=>beep(800,0.08),300);}
+
+// ══ INIT ══════════════════════════════════════════════════════════════════
+window.onload=function(){
+  loadLocal();
+  deviceName=localStorage.getItem('dmis_dev')||'';
+  if(deviceName) document.getElementById('device-name').value=deviceName;
+  setTimeout(()=>{
+    document.getElementById('splash').style.display='none';
+    if(Object.keys(projects).length===0||!curProj){
+      showProjScreen();
+    } else {
+      openProject(curProj);
+    }
+  },1200);
+  document.addEventListener('touchstart',()=>{try{gAC().resume();}catch(e){}},{once:true});
+};
+
+// ══ PERSIST ═══════════════════════════════════════════════════════════════
+function saveLocal(){
+  try{localStorage.setItem('dmis_projs',JSON.stringify(projects));
+      localStorage.setItem('dmis_cur',curProj||'');}catch(e){}
 }
-function beep(freq, dur, type='square', vol=0.4){
-  if(!document.getElementById('beep-enable').checked) return;
+function loadLocal(){
   try{
-    const ctx = getAudioCtx();
-    const osc = ctx.createOscillator();
-    const gain= ctx.createGain();
-    osc.connect(gain); gain.connect(ctx.destination);
-    osc.type=type; osc.frequency.value=freq;
-    gain.gain.setValueAtTime(vol, ctx.currentTime);
-    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime+dur);
-    osc.start(ctx.currentTime);
-    osc.stop(ctx.currentTime+dur);
+    const p=localStorage.getItem('dmis_projs');
+    if(p) projects=JSON.parse(p);
+    const c=localStorage.getItem('dmis_cur');
+    if(c&&projects[c]) curProj=c;
+    // also save scan log per project
+    Object.keys(projects).forEach(k=>{
+      const lg=localStorage.getItem('dmis_log_'+k);
+      if(lg) projects[k].log=JSON.parse(lg);
+    });
   }catch(e){}
 }
-function beepFound()    { beep(1200,0.12,'square'); setTimeout(()=>beep(1600,0.10,'square'),120); }
-function beepNotFound() { beep(350,0.35,'sawtooth',0.5); }
-function beepDuplicate(){ beep(800,0.1,'square'); setTimeout(()=>beep(800,0.1,'square'),150); setTimeout(()=>beep(800,0.1,'square'),300); }
-
-// ── TABS ──────────────────────────────────────────────────────────────────
-function showTab(n){
-  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
-  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
-  document.getElementById('screen-'+n).classList.add('active');
-  ['scan','log','stats','setup'].forEach((k,i)=>{
-    if(k===n) document.querySelectorAll('.tab')[i].classList.add('active');
-  });
-  if(n==='stats') updateStats();
-  if(n==='log')   renderLog();
+function saveLog(){
+  try{localStorage.setItem('dmis_log_'+curProj,JSON.stringify(scanLog.slice(0,500)));}catch(e){}
+}
+function saveDeviceName(){
+  deviceName=document.getElementById('device-name').value.trim()||'Unknown device';
+  localStorage.setItem('dmis_dev',deviceName);
+  document.getElementById('si-dev').textContent=deviceName;
+  alert('Device name saved: '+deviceName);
 }
 
-// ── COL SELECTORS ─────────────────────────────────────────────────────────
-function selectReadCol(el,col){
-  document.querySelectorAll('#read-col-pills .col-pill').forEach(p=>p.classList.remove('selected'));
-  el.classList.add('selected');
-  readCol=col;
-  document.getElementById('read-col-custom').value='';
+// ══ PROJECT MANAGEMENT ════════════════════════════════════════════════════
+function showProjScreen(){
+  document.getElementById('main-app').style.display='none';
+  document.getElementById('proj-screen').style.display='block';
+  renderProjects();
 }
-function selectWriteCol(el,col){
-  document.querySelectorAll('#write-col-pills .col-pill').forEach(p=>p.classList.remove('selected'));
-  el.classList.add('selected');
-  writeCol=col;
-  document.getElementById('write-col-custom').value='';
+function showNewProject(){
+  document.getElementById('new-proj-form').style.display='block';
+  document.getElementById('new-proj-name').focus();
 }
-function getReadCol(){
-  const c=document.getElementById('read-col-custom').value.trim().toUpperCase();
-  return c||readCol;
-}
-function getWriteCol(){
-  const c=document.getElementById('write-col-custom').value.trim().toUpperCase();
-  return c||writeCol;
+function selNewRC(el,v){document.querySelectorAll('#new-rc-pills .cp').forEach(p=>p.classList.remove('sel'));el.classList.add('sel');newRC=v;}
+function selNewWC(el,v){document.querySelectorAll('#new-wc-pills .cp').forEach(p=>p.classList.remove('sel'));el.classList.add('sel');newWC=v;}
+
+async function createProject(){
+  const name=document.getElementById('new-proj-name').value.trim();
+  const sid=document.getElementById('new-sheet-id').value.trim();
+  const sname=document.getElementById('new-sheet-name').value.trim()||'Master Sheet PSW';
+  const surl=document.getElementById('new-script-url').value.trim();
+  const msg=document.getElementById('new-proj-msg');
+  if(!name){showM(msg,'Enter project name','err');return;}
+  if(!sid){showM(msg,'Enter Google Sheet ID','err');return;}
+  const key='proj_'+Date.now();
+  projects[key]={name,sid,sname,surl,readCol:newRC,writeCol:newWC,
+    created:new Date().toISOString(),log:[],stats:{t:0,f:0,n:0,d:0}};
+  curProj=key; saveLocal();
+  document.getElementById('new-proj-form').style.display='none';
+  openProject(key);
 }
 
-// ── NORMALISE ─────────────────────────────────────────────────────────────
-function norm(v){ return String(v).replace(/\s/g,'').toLowerCase(); }
+function renderProjects(){
+  const list=document.getElementById('proj-list');
+  const keys=Object.keys(projects);
+  if(!keys.length){list.innerHTML='<div class="lempty">No projects — create one above</div>';return;}
+  list.innerHTML=keys.reverse().map(k=>{
+    const p=projects[k];
+    const st=p.stats||{t:0,f:0,n:0,d:0};
+    const d=new Date(p.created).toLocaleDateString('en-PK');
+    return `<div class="proj-card" onclick="openProject('${k}')">
+      <div class="proj-name">${p.name}</div>
+      <div class="proj-meta">Created ${d} · ${p.sname}</div>
+      <div class="proj-stats">
+        <span class="proj-stat b">📊 ${st.t} scanned</span>
+        <span class="proj-stat g">✅ ${st.f} found</span>
+        <span class="proj-stat r">❌ ${st.n} not found</span>
+        ${st.d?`<span class="proj-stat" style="background:var(--abg);color:var(--adk)">⚠️ ${st.d} dup</span>`:''}
+      </div>
+    </div>`;
+  }).join('');
+}
 
-// ── LOAD FROM SHEET ───────────────────────────────────────────────────────
-async function loadFromSheet(){
-  const id  = document.getElementById('sheet-id').value.trim();
-  const sn  = document.getElementById('sheet-name').value.trim()||'Master Sheet PSW';
-  const col = getReadCol();
-  const msg = document.getElementById('sheet-msg');
-  if(!id){ showMsg(msg,'Paste your Google Sheet ID first','err'); return; }
-  showMsg(msg,'Loading from "'+sn+'" column '+col+'...','loading');
-  const url=`https://docs.google.com/spreadsheets/d/${id}/gviz/tq?tqx=out:csv&sheet=${encodeURIComponent(sn)}&range=${col}:${col}`;
+function openProject(key){
+  curProj=key;
+  const p=projects[key];
+  scanLog=p.log||[];
+  stats=p.stats||{t:0,f:0,n:0,d:0};
+  scannedMap=new Map();
+  scanLog.forEach(e=>{if(!scannedMap.has(e.norm)) scannedMap.set(e.norm,{time:new Date(e.time),found:e.found});});
+  wbStats={ok:0,err:0};
+  readCol=p.readCol||'A';
+  writeCol=p.writeCol||'C';
+  document.getElementById('proj-screen').style.display='none';
+  document.getElementById('main-app').style.display='block';
+  document.getElementById('proj-title').textContent=p.name;
+  document.getElementById('proj-sub').textContent=p.sname+' · tap Switch to change';
+  document.getElementById('s-sid').value=p.sid;
+  document.getElementById('s-sname').value=p.sname;
+  if(p.surl){document.getElementById('s-surl').value=p.surl;document.getElementById('wb-en').checked=true;document.getElementById('wb-cfg').style.display='block';}
+  document.getElementById('si-proj').textContent=p.name;
+  document.getElementById('si-dev').textContent=deviceName||'(set name in projects screen)';
+  saveLocal();
+  updateBadge();
+  updateStatBadges();
+  setSelPill('rc-pills',readCol);
+  setSelPill('wc-pills',writeCol);
+  // load meters
+  if(p.sid) loadMeters();
+  // start auto-refresh log every 30 sec
+  if(autoRefreshTimer) clearInterval(autoRefreshTimer);
+  autoRefreshTimer=setInterval(refreshLog,30000);
+}
+
+function switchProject(){
+  stopCamera();
+  if(autoRefreshTimer){clearInterval(autoRefreshTimer);autoRefreshTimer=null;}
+  showProjScreen();
+}
+
+// ══ LOAD METERS ═══════════════════════════════════════════════════════════
+async function loadMeters(){
+  const p=projects[curProj];
+  const sname=document.getElementById('s-sname').value.trim()||p.sname;
+  const msg=document.getElementById('load-msg');
+  showM(msg,'Loading meters from "'+sname+'"...','ld');
+  // try Apps Script first if URL available
+  const surl=document.getElementById('s-surl').value.trim()||p.surl||'';
+  if(surl){
+    try{
+      const params=new URLSearchParams({action:'read',sheetId:p.sid,sheetName:sname,col:readCol});
+      const res=await fetch(surl+'?'+params);
+      const data=await res.json();
+      if(data.success&&data.meters){
+        meterSet=new Set(data.meters.map(m=>norm(m)));
+        updateBadge();
+        showM(msg,meterSet.size+' meters loaded via Apps Script','ok');
+        setResultReady();
+        return;
+      }
+    }catch(e){}
+  }
+  // fallback: direct CSV
+  const url=`https://docs.google.com/spreadsheets/d/${p.sid}/gviz/tq?tqx=out:csv&sheet=${encodeURIComponent(sname)}&range=${readCol}:${readCol}`;
   try{
     const res=await fetch(url);
     if(!res.ok) throw new Error();
     const text=await res.text();
     const rows=text.split('\n').map(r=>r.replace(/"/g,'').trim()).filter(r=>r.length>1);
-    meterSet.clear(); meterRowMap.clear();
-    rows.forEach((r,i)=>{ if(r){ meterSet.add(norm(r)); meterRowMap.set(norm(r),i+1); }});
-    saveMeterSet();
+    meterSet=new Set(rows.map(r=>norm(r)));
     updateBadge();
-    showMsg(msg,meterSet.size+' meters loaded from "'+sn+'" (Col '+col+')','ok');
+    showM(msg,meterSet.size+' meters loaded','ok');
     setResultReady();
   }catch(e){
-    showMsg(msg,'Failed — share sheet as "Anyone with link = Viewer" and check Sheet ID','err');
+    showM(msg,'Failed — share sheet as Anyone=Viewer and check Sheet ID','err');
   }
 }
 
-// ── LOAD PASTED ───────────────────────────────────────────────────────────
 function loadPasted(){
   const rows=document.getElementById('paste-box').value.split('\n').map(r=>r.trim()).filter(r=>r);
   const msg=document.getElementById('paste-msg');
-  if(!rows.length){ showMsg(msg,'Nothing to load','err'); return; }
-  meterSet.clear(); meterRowMap.clear();
-  rows.forEach((r,i)=>{ meterSet.add(norm(r)); meterRowMap.set(norm(r),i+1); });
-  saveMeterSet(); updateBadge();
-  showMsg(msg,meterSet.size+' meters loaded','ok');
-  setResultReady();
+  if(!rows.length){showM(msg,'Nothing to load','err');return;}
+  meterSet=new Set(rows.map(r=>norm(r)));
+  updateBadge(); showM(msg,meterSet.size+' meters loaded (offline)','ok'); setResultReady();
 }
 
-// ── PERSIST ───────────────────────────────────────────────────────────────
-function saveMeterSet(){ try{ localStorage.setItem('dmis_m',JSON.stringify([...meterSet])); }catch(e){} }
-function loadSaved(){
-  try{
-    const s=localStorage.getItem('dmis_m');
-    if(s){ meterSet=new Set(JSON.parse(s)); updateBadge(); }
-    const sid=localStorage.getItem('dmis_sid'); if(sid) document.getElementById('sheet-id').value=sid;
-    const sn =localStorage.getItem('dmis_sn');  if(sn)  document.getElementById('sheet-name').value=sn;
-    const su =localStorage.getItem('dmis_su');  if(su)  document.getElementById('script-url').value=su;
-  }catch(e){}
-}
-
-// ── CAMERA ────────────────────────────────────────────────────────────────
-function toggleCamera(){ camRunning ? stopCamera() : startCamera(); }
-
+// ══ CAMERA ════════════════════════════════════════════════════════════════
+function toggleCamera(){camRun?stopCamera():startCamera();}
 function startCamera(){
-  document.getElementById('cam-status').textContent='Starting camera...';
+  document.getElementById('cam-st').textContent='Starting camera...';
   document.getElementById('cam-btn').textContent='⏹ Stop Camera';
-  document.getElementById('cam-btn').className='btn-stop';
+  document.getElementById('cam-btn').className='btn btn-stop';
   document.getElementById('scan-overlay').style.display='block';
   scanner=new Html5Qrcode('reader');
   const cfg={fps:10,qrbox:{width:220,height:100},aspectRatio:1.6,
@@ -519,278 +693,291 @@ function startCamera(){
       Html5QrcodeSupportedFormats.CODE_128,Html5QrcodeSupportedFormats.CODE_39,
       Html5QrcodeSupportedFormats.EAN_13,Html5QrcodeSupportedFormats.EAN_8,
       Html5QrcodeSupportedFormats.UPC_A,Html5QrcodeSupportedFormats.ITF,
-      Html5QrcodeSupportedFormats.CODE_93,
     ]};
-  scanner.start({facingMode:'environment'},cfg,onScanSuccess,null)
-    .then(()=>{
-      camRunning=true;
-      document.getElementById('cam-status').textContent='📷 Camera active — point at barcode';
-    })
+  scanner.start({facingMode:'environment'},cfg,onScanOK,null)
+    .then(()=>{camRun=true;document.getElementById('cam-st').textContent='📷 Camera active — point at barcode';})
     .catch(err=>{
-      document.getElementById('cam-status').textContent='Camera error: '+err;
+      document.getElementById('cam-st').textContent='Camera error: '+err;
       document.getElementById('cam-btn').textContent='▶ Start Camera';
-      document.getElementById('cam-btn').className='btn-primary';
+      document.getElementById('cam-btn').className='btn btn-p';
       document.getElementById('scan-overlay').style.display='none';
     });
 }
-
 function stopCamera(){
-  if(scanner){
-    scanner.stop().then(()=>{
-      scanner.clear(); scanner=null; camRunning=false; inCooldown=false;
-      document.getElementById('cam-btn').textContent='▶ Start Camera';
-      document.getElementById('cam-btn').className='btn-primary';
-      document.getElementById('cam-status').textContent='Camera stopped';
-      document.getElementById('scan-overlay').style.display='none';
-      document.getElementById('cooldown-bar-wrap').style.display='none';
-    }).catch(()=>{});
-  }
+  if(scanner){scanner.stop().then(()=>{scanner.clear();scanner=null;camRun=false;inCD=false;
+    document.getElementById('cam-btn').textContent='▶ Start Camera';
+    document.getElementById('cam-btn').className='btn btn-p';
+    document.getElementById('cam-st').textContent='Camera stopped';
+    document.getElementById('scan-overlay').style.display='none';
+    document.getElementById('cdbar-wrap').style.display='none';
+  }).catch(()=>{});}
+}
+function onScanOK(code){if(inCD)return;startCD();processCode(code);}
+function startCD(){
+  const s=parseInt(document.getElementById('cd-sec').value)||2;
+  inCD=true;
+  const w=document.getElementById('cdbar-wrap'),b=document.getElementById('cdbar');
+  w.style.display='block';b.style.transition='none';b.style.width='100%';
+  setTimeout(()=>{b.style.transition=`width ${s}s linear`;b.style.width='0%';},50);
+  setTimeout(()=>{inCD=false;w.style.display='none';b.style.width='100%';},s*1000);
 }
 
-// ── SCAN SUCCESS — CONTINUOUS WITH COOLDOWN ────────────────────────────────
-function onScanSuccess(code){
-  if(inCooldown) return;        // ignore scans during cooldown
-  startCooldown();
-  processCode(code);
-}
-
-function startCooldown(){
-  const secs=parseInt(document.getElementById('cooldown-sec').value)||2;
-  inCooldown=true;
-  const wrap=document.getElementById('cooldown-bar-wrap');
-  const bar =document.getElementById('cooldown-bar');
-  wrap.style.display='block';
-  bar.style.transition='none'; bar.style.width='100%';
-  setTimeout(()=>{
-    bar.style.transition=`width ${secs}s linear`;
-    bar.style.width='0%';
-  },50);
-  setTimeout(()=>{
-    inCooldown=false;
-    wrap.style.display='none';
-    bar.style.width='100%';
-  },secs*1000);
-}
-
-// ── PROCESS SCAN ──────────────────────────────────────────────────────────
+// ══ PROCESS SCAN ══════════════════════════════════════════════════════════
 function processCode(raw){
-  if(!raw||raw.length<2) return;
-  if(!sessionStart){ sessionStart=new Date(); }
+  if(!raw||raw.length<2)return;
   const n=norm(raw);
   const found=meterSet.has(n);
-  const prevEntry=scannedMap.get(n);
-  const isDup=!!prevEntry;
+  const prev=scannedMap.get(n);
+  const isDup=!!prev;
   const now=new Date();
-  stats.total++;
-  if(isDup) stats.dup++; else if(found) stats.found++; else stats.notfound++;
-  const entry={raw,norm:n,found,isDup,time:now,
-    prevTime:isDup?prevEntry.time:null,
-    prevFound:isDup?prevEntry.found:null,
-    wbStatus:'none',rowNum:meterRowMap.get(n)||null};
+  stats.t++;
+  if(isDup)stats.d++;else if(found)stats.f++;else stats.n++;
+  const entry={raw,norm:n,found,isDup,time:now.toISOString(),
+    prevTime:isDup?prev.time.toISOString():null,
+    prevFound:isDup?prev.found:null,
+    device:deviceName||'Unknown',
+    project:projects[curProj]?.name||'',
+    wbSt:'none'};
   scanLog.unshift(entry);
-  if(!isDup) scannedMap.set(n,{time:now,found});
-
-  // Beep
-  if(isDup) beepDuplicate();
-  else if(found) beepFound();
-  else beepNotFound();
-
-  // Vibrate
-  if(navigator.vibrate&&document.getElementById('vib-enable').checked){
-    if(isDup) navigator.vibrate([100,60,100]);
-    else if(found) navigator.vibrate(80);
+  if(!isDup)scannedMap.set(n,{time:now,found});
+  // update project stats
+  projects[curProj].stats=stats;
+  projects[curProj].log=scanLog.slice(0,500);
+  saveLocal(); saveLog();
+  updateStatBadges();
+  showResult(entry);
+  if(isDup)bDup();else if(found)bFound();else bNotFound();
+  if(navigator.vibrate&&document.getElementById('vib-en').checked){
+    if(isDup)navigator.vibrate([100,60,100]);
+    else if(found)navigator.vibrate(80);
     else navigator.vibrate([200,60,200]);
   }
-
-  showResult(entry);
-  updateStatBadges();
-
-  // Write back to sheet if enabled and found
-  if(document.getElementById('wb-enable').checked){
-    const statusText = found
-      ? document.getElementById('status-found').value||'SCANNED ✓'
-      : document.getElementById('status-notfound').value||'';
-    if(statusText) writeBackToSheet(entry, statusText);
+  // write to Google Sheet log + status
+  const surl=document.getElementById('s-surl').value.trim();
+  if(surl){
+    const wbEnabled=document.getElementById('wb-en').checked;
+    // always write to Scan Log tab
+    writeLog(surl,entry);
+    // write status to meter row if found and enabled
+    if(wbEnabled){
+      const stFound=document.getElementById('s-sfound').value||'SCANNED ✓';
+      const stNF=document.getElementById('s-snotfound').value||'';
+      const statusText=found?stFound:stNF;
+      if(statusText) writeStatus(surl,entry,statusText);
+    }
   }
 }
 
-// ── WRITE BACK TO GOOGLE SHEET ────────────────────────────────────────────
-async function writeBackToSheet(entry, statusText){
-  const url   = document.getElementById('script-url').value.trim();
-  const id    = document.getElementById('sheet-id').value.trim();
-  const sn    = document.getElementById('sheet-name').value.trim()||'Master Sheet PSW';
-  const mCol  = getReadCol();
-  const wCol  = getWriteCol();
-  if(!url||!id){ entry.wbStatus='err'; return; }
-  entry.wbStatus='pending';
+async function writeLog(surl,entry){
+  const p=projects[curProj];
   const params=new URLSearchParams({
-    sheetId:id, sheetName:sn, meterCol:mCol, writeCol:wCol,
-    meter:entry.raw, status:statusText
+    action:'writelog',sheetId:p.sid,sheetName:p.sname,
+    meter:entry.raw,status:entry.isDup?'DUPLICATE':(entry.found?'FOUND':'NOT FOUND'),
+    device:entry.device,project:entry.project
+  });
+  try{await fetch(surl+'?'+params);}catch(e){}
+}
+
+async function writeStatus(surl,entry,statusText){
+  const p=projects[curProj];
+  const params=new URLSearchParams({
+    action:'writestatus',sheetId:p.sid,sheetName:p.sname,
+    meterCol:readCol,writeCol:writeCol,
+    meter:entry.raw,status:statusText,device:entry.device
   });
   try{
-    const res=await fetch(url+'?'+params.toString());
+    const res=await fetch(surl+'?'+params);
     const data=await res.json();
-    if(data.success){ entry.wbStatus='ok'; wbStats.ok++; localStorage.setItem('dmis_sid',id); localStorage.setItem('dmis_sn',sn); }
-    else{ entry.wbStatus='err'; wbStats.err++; }
-  }catch(e){ entry.wbStatus='err'; wbStats.err++; }
-  document.getElementById('wb-ok').textContent=wbStats.ok;
-  document.getElementById('wb-err').textContent=wbStats.err;
+    entry.wbSt=data.success?'ok':'err';
+    if(data.success)wbStats.ok++;else wbStats.err++;
+    document.getElementById('wb-ok').textContent=wbStats.ok;
+    document.getElementById('wb-err').textContent=wbStats.err;
+  }catch(e){entry.wbSt='err';wbStats.err++;document.getElementById('wb-err').textContent=wbStats.err;}
 }
 
-async function testWriteback(){
-  const msg=document.getElementById('wb-test-msg');
-  const url=document.getElementById('script-url').value.trim();
-  if(!url){ showMsg(msg,'Paste Apps Script URL first','err'); return; }
-  showMsg(msg,'Testing connection...','loading');
+// ══ REFRESH LOG FROM SHEET ════════════════════════════════════════════════
+async function refreshLog(){
+  const p=projects[curProj];
+  if(!p)return;
+  const surl=document.getElementById('s-surl').value.trim()||p.surl||'';
+  if(!surl)return;
   try{
-    const params=new URLSearchParams({sheetId:'TEST',sheetName:'TEST',meterCol:'A',writeCol:'B',meter:'TEST',status:'TEST'});
-    const res=await fetch(url+'?'+params.toString());
-    showMsg(msg,'Connected successfully ✓ Write-back is working','ok');
-  }catch(e){
-    showMsg(msg,'Could not reach Apps Script URL — check URL is correct and deployed as "Anyone"','err');
-  }
+    const params=new URLSearchParams({action:'readlog',sheetId:p.sid,project:p.name});
+    const res=await fetch(surl+'?'+params);
+    const data=await res.json();
+    if(data.success&&data.rows){
+      // merge sheet log with local log
+      const sheetEntries=data.rows.map(r=>({
+        raw:r[0],norm:norm(r[0]),
+        found:r[1]==='FOUND',isDup:r[1]==='DUPLICATE',
+        time:r[2]||new Date().toISOString(),
+        device:r[2]||'',project:r[3]||'',wbSt:'ok'
+      }));
+      // add sheet entries not in local log
+      const localNorms=new Set(scanLog.map(e=>e.norm+'_'+e.time));
+      sheetEntries.forEach(e=>{
+        if(!localNorms.has(e.norm+'_'+e.time)) scanLog.push(e);
+      });
+      scanLog.sort((a,b)=>new Date(b.time)-new Date(a.time));
+      scanLog=scanLog.slice(0,500);
+      lastSync=new Date();
+      document.getElementById('si-sync').textContent=fmt(lastSync);
+      setSyncStatus('✅ Synced with sheet','var(--gdk)');
+    }
+  }catch(e){setSyncStatus('⚠️ Sync failed','var(--adk)');}
+  // refresh log view if on log tab
+  if(document.getElementById('screen-log').classList.contains('active')) renderLog();
 }
 
-function toggleWriteback(on){
-  document.getElementById('wb-settings').style.display=on?'block':'none';
+function setSyncStatus(msg,color){
+  const el=document.getElementById('sync-status');
+  el.textContent=msg;el.style.color=color;
+  setTimeout(()=>el.textContent='',4000);
 }
 
-// ── SHOW RESULT ───────────────────────────────────────────────────────────
+// ══ SHOW RESULT ═══════════════════════════════════════════════════════════
 function showResult(e){
   const box=document.getElementById('result-box');
-  const icon=document.getElementById('result-icon');
-  const status=document.getElementById('result-status');
-  const meter=document.getElementById('result-meter');
-  const detail=document.getElementById('result-detail');
   box.className='';
   if(e.isDup){
     box.classList.add('duplicate','pa');
-    icon.textContent='⚠️';
-    status.textContent='DUPLICATE SCAN';
-    status.style.color='var(--amber)';
-    detail.textContent='First scanned at '+fmt(e.prevTime)+(e.prevFound?' — was FOUND':' — was NOT FOUND');
-    detail.style.color='var(--amber-dark)';
-  } else if(e.found){
+    document.getElementById('ri').textContent='⚠️';
+    document.getElementById('rs').textContent='DUPLICATE SCAN';
+    document.getElementById('rs').style.color='var(--amb)';
+    document.getElementById('rd').textContent='First scan: '+fmt(new Date(e.prevTime))+(e.prevFound?' — FOUND':' — NOT FOUND');
+    document.getElementById('rd').style.color='var(--adk)';
+  }else if(e.found){
     box.classList.add('found','pg');
-    icon.textContent='✅';
-    status.textContent='FOUND IN LIST';
-    status.style.color='var(--green-dark)';
-    detail.textContent='Meter is in Master Sheet PSW';
-    detail.style.color='var(--green-dark)';
-  } else {
+    document.getElementById('ri').textContent='✅';
+    document.getElementById('rs').textContent='FOUND IN LIST';
+    document.getElementById('rs').style.color='var(--gdk)';
+    document.getElementById('rd').textContent='Meter is in Master Sheet PSW';
+    document.getElementById('rd').style.color='var(--gdk)';
+  }else{
     box.classList.add('notfound','pr');
-    icon.textContent='❌';
-    status.textContent='NOT FOUND';
-    status.style.color='var(--red-dark)';
-    detail.textContent='This meter is NOT in the list';
-    detail.style.color='var(--red-dark)';
+    document.getElementById('ri').textContent='❌';
+    document.getElementById('rs').textContent='NOT FOUND';
+    document.getElementById('rs').style.color='var(--rdk)';
+    document.getElementById('rd').textContent='Meter is NOT in the list';
+    document.getElementById('rd').style.color='var(--rdk)';
   }
-  meter.textContent=e.raw;
-  setTimeout(()=>{box.classList.remove('pg','pr','pa');},500);
+  document.getElementById('rm').textContent=e.raw;
+  setTimeout(()=>box.classList.remove('pg','pr','pa'),500);
 }
-
 function setResultReady(){
   document.getElementById('result-box').className='';
-  document.getElementById('result-icon').textContent='📷';
-  document.getElementById('result-status').textContent='Ready — '+meterSet.size+' meters loaded';
-  document.getElementById('result-status').style.color='var(--green-dark)';
-  document.getElementById('result-meter').textContent='';
-  document.getElementById('result-detail').textContent='Start camera or use manual input';
-  document.getElementById('result-detail').style.color='var(--muted)';
+  document.getElementById('ri').textContent='📷';
+  document.getElementById('rs').textContent='Ready — '+meterSet.size+' meters loaded';
+  document.getElementById('rs').style.color='var(--gdk)';
+  document.getElementById('rm').textContent='';
+  document.getElementById('rd').textContent='Start camera or use manual input';
+  document.getElementById('rd').style.color='var(--mut)';
 }
 
-// ── LOG ───────────────────────────────────────────────────────────────────
+// ══ LOG ═══════════════════════════════════════════════════════════════════
 function filterLog(f){
-  currentFilter=f;
+  curFilter=f;
   ['fa','ff','fn','fd'].forEach((id,i)=>{
     const btn=document.getElementById(id);
-    const active=(['all','found','notfound','dup'][i]===f);
-    btn.style.background=active?'var(--mid)':'';
-    btn.style.color=active?'#fff':'';
-    btn.style.borderColor=active?'var(--mid)':'var(--border)';
+    const on=['all','found','notfound','dup'][i]===f;
+    btn.style.background=on?'var(--mid)':'';
+    btn.style.color=on?'#fff':'';
+    btn.style.borderColor=on?'var(--mid)':'var(--bdr)';
   });
   renderLog();
 }
-
 function renderLog(){
   const list=document.getElementById('log-list');
   let fl=scanLog;
-  if(currentFilter==='found')    fl=scanLog.filter(e=>e.found&&!e.isDup);
-  if(currentFilter==='notfound') fl=scanLog.filter(e=>!e.found&&!e.isDup);
-  if(currentFilter==='dup')      fl=scanLog.filter(e=>e.isDup);
-  if(!fl.length){ list.innerHTML='<div class="log-empty">'+(scanLog.length?'No entries match':'No scans yet')+'</div>'; return; }
+  if(curFilter==='found')    fl=scanLog.filter(e=>e.found&&!e.isDup);
+  if(curFilter==='notfound') fl=scanLog.filter(e=>!e.found&&!e.isDup);
+  if(curFilter==='dup')      fl=scanLog.filter(e=>e.isDup);
+  if(!fl.length){list.innerHTML='<div class="lempty">'+(scanLog.length?'No entries match filter':'No scans yet')+'</div>';return;}
   list.innerHTML=fl.map(e=>{
     const cls=e.isDup?'di':(e.found?'fi':'ni');
     const ic=e.isDup?'⚠️':(e.found?'✅':'❌');
-    const desc=e.isDup?('Duplicate — first: '+fmt(e.prevTime)+(e.prevFound?' Found':' Not found')):(e.found?'Found in list':'Not found');
-    const dcls=e.isDup?'d':(e.found?'f':'n');
-    const wb=e.wbStatus==='ok'?'<span class="wb-dot ok"></span>Written to sheet'
-            :e.wbStatus==='err'?'<span class="wb-dot err"></span>Write failed'
-            :e.wbStatus==='pending'?'<span class="wb-dot pend"></span>Writing...'
-            :'';
-    const wbcls=e.wbStatus==='ok'?'ws':e.wbStatus==='err'?'we':e.wbStatus==='pending'?'wp':'';
-    return `<div class="log-item ${cls}">
-      <div class="log-icon">${ic}</div>
-      <div class="log-info">
-        <div class="log-num">${e.raw}</div>
-        <div class="log-desc ${dcls}">${desc}</div>
-        ${wb?`<div class="log-write ${wbcls}">${wb}</div>`:''}
+    const desc=e.isDup?('Duplicate — first: '+fmt(new Date(e.prevTime))+(e.prevFound?' Found':' Not found')):(e.found?'Found in list':'Not found');
+    const dc=e.isDup?'d':(e.found?'f':'n');
+    const wb=e.wbSt==='ok'?'<div class="liwb ok">✓ Written to sheet</div>':e.wbSt==='err'?'<div class="liwb err">✗ Write failed</div>':'';
+    return `<div class="li ${cls}">
+      <div class="lic">${ic}</div>
+      <div class="lin">
+        <div class="linum">${e.raw}</div>
+        <div class="lidesc ${dc}">${desc}</div>
+        <div class="lidev">👤 ${e.device||'Unknown'}</div>
+        ${wb}
       </div>
-      <div class="log-right"><div class="log-time">${fmt(e.time)}</div></div>
+      <div class="liright"><div class="litime">${fmt(new Date(e.time))}</div></div>
     </div>`;
   }).join('');
 }
 
-// ── STATS ─────────────────────────────────────────────────────────────────
+// ══ STATS ═════════════════════════════════════════════════════════════════
 function updateStatBadges(){
-  document.getElementById('st-total').textContent=stats.total;
-  document.getElementById('st-found').textContent=stats.found;
-  document.getElementById('st-notfound').textContent=stats.notfound;
-  document.getElementById('st-dup').textContent=stats.dup;
+  document.getElementById('st-t').textContent=stats.t;
+  document.getElementById('st-f').textContent=stats.f;
+  document.getElementById('st-n').textContent=stats.n;
+  document.getElementById('st-d').textContent=stats.d;
 }
 function updateStats(){
   updateStatBadges();
-  const pf=stats.total>0?Math.round(stats.found/stats.total*100):0;
-  const pl=meterSet.size>0?Math.round(stats.found/meterSet.size*100):0;
+  const pf=stats.t>0?Math.round(stats.f/stats.t*100):0;
+  const pl=meterSet.size>0?Math.round(stats.f/meterSet.size*100):0;
   document.getElementById('pf').textContent=pf+'%';
   document.getElementById('pl').textContent=pl+'%';
   document.getElementById('bf').style.width=pf+'%';
   document.getElementById('bl').style.width=pl+'%';
+  document.getElementById('si-loaded').textContent=meterSet.size;
   document.getElementById('wb-ok').textContent=wbStats.ok;
   document.getElementById('wb-err').textContent=wbStats.err;
 }
-function updateBadge(){ document.getElementById('meter-count-badge').textContent=meterSet.size+' loaded'; }
 
-// ── EXPORT ────────────────────────────────────────────────────────────────
+// ══ EXPORT ════════════════════════════════════════════════════════════════
 function exportCSV(){
-  if(!scanLog.length){ alert('No scan log to export'); return; }
-  const rows=['Meter Number,Status,Duplicate,Time,Sheet Write'];
+  if(!scanLog.length){alert('No log to export');return;}
+  const rows=['Meter,Status,Duplicate,Device,Time,Project'];
   [...scanLog].reverse().forEach(e=>{
     const st=e.isDup?'DUPLICATE':(e.found?'FOUND':'NOT FOUND');
-    rows.push(`"${e.raw}","${st}","${e.isDup}","${fmt(e.time)}","${e.wbStatus||'n/a'}"`);
+    rows.push(`"${e.raw}","${st}","${e.isDup}","${e.device||''}","${fmt(new Date(e.time))}","${e.project||''}"`);
   });
   const a=document.createElement('a');
   a.href=URL.createObjectURL(new Blob([rows.join('\n')],{type:'text/csv'}));
-  a.download='meter_scan_'+new Date().toISOString().slice(0,10)+'.csv';
+  a.download='scan_'+projects[curProj]?.name.replace(/\s/g,'_')+'_'+new Date().toISOString().slice(0,10)+'.csv';
   a.click();
 }
 
-// ── CLEAR ─────────────────────────────────────────────────────────────────
 function clearLog(){
-  if(!confirm('Clear scan history?')) return;
-  scanLog=[]; scannedMap.clear(); stats={total:0,found:0,notfound:0,dup:0}; wbStats={ok:0,err:0};
-  sessionStart=null; updateStatBadges(); renderLog(); setResultReady();
+  if(!confirm('Clear all scan history for this project?'))return;
+  scanLog=[];scannedMap.clear();stats={t:0,f:0,n:0,d:0};wbStats={ok:0,err:0};
+  projects[curProj].log=[];projects[curProj].stats=stats;
+  saveLocal();saveLog();updateStatBadges();renderLog();setResultReady();
 }
 
-// ── HELPERS ───────────────────────────────────────────────────────────────
-function fmt(d){ return d?d.toLocaleTimeString('en-PK',{hour:'2-digit',minute:'2-digit',second:'2-digit'}):'—'; }
-function showMsg(el,msg,type){ el.className='status-msg '+type; el.textContent=msg; el.style.display='block'; }
+// ══ TABS ══════════════════════════════════════════════════════════════════
+function showTab(n){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById('screen-'+n).classList.add('active');
+  ['scan','log','stats','setup'].forEach((k,i)=>{if(k===n)document.querySelectorAll('.tab')[i].classList.add('active');});
+  if(n==='stats')updateStats();
+  if(n==='log'){renderLog();refreshLog();}
+}
 
-// ── INIT ──────────────────────────────────────────────────────────────────
-loadSaved();
-// unlock audio on first touch
-document.addEventListener('touchstart',()=>{ try{getAudioCtx().resume();}catch(e){} },{once:true});
-document.addEventListener('click',()=>{ try{getAudioCtx().resume();}catch(e){} },{once:true});
+// ══ COLUMN SELECTORS ══════════════════════════════════════════════════════
+function selRC(el,v){document.querySelectorAll('#rc-pills .cp').forEach(p=>p.classList.remove('sel'));el.classList.add('sel');readCol=v;if(projects[curProj]){projects[curProj].readCol=v;saveLocal();}}
+function selWC(el,v){document.querySelectorAll('#wc-pills .cp').forEach(p=>p.classList.remove('sel'));el.classList.add('sel');writeCol=v;if(projects[curProj]){projects[curProj].writeCol=v;saveLocal();}}
+function setSelPill(pid,val){
+  const pills=document.querySelectorAll('#'+pid+' .cp');
+  pills.forEach(p=>{p.classList.remove('sel');if(p.textContent===val)p.classList.add('sel');});
+}
+
+// ══ HELPERS ═══════════════════════════════════════════════════════════════
+function norm(v){return String(v).replace(/\s/g,'').toLowerCase();}
+function fmt(d){try{return d.toLocaleTimeString('en-PK',{hour:'2-digit',minute:'2-digit',second:'2-digit'});}catch(e){return '';}}
+function updateBadge(){document.getElementById('loaded-badge').textContent=meterSet.size+' loaded';}
+function showM(el,msg,type){el.className='smsg '+type;el.textContent=msg;el.style.display='block';}
+function showScriptInstructions(){alert('Follow steps in Setup tab → Apps Script section at the bottom of Setup page.');}
 </script>
 </body>
 </html>
+
